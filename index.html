@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#116329" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="عقاراتي" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <title>عقاراتي | منصة العقارات الجزائرية</title>
+  <meta name="description" content="منصة العقارات الجزائرية الأولى - إيجار وبيع في 58 ولاية" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#116329;}
+    #splash{position:fixed;inset:0;background:linear-gradient(135deg,#116329,#1a7f37);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s ease;}
+    #splash .logo{font-size:72px;margin-bottom:16px;animation:bounce 1s infinite alternate;}
+    #splash h1{color:#fff;font-size:32px;font-weight:900;margin-bottom:6px;}
+    #splash p{color:rgba(255,255,255,0.8);font-size:14px;margin-bottom:40px;}
+    .loader{width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    @keyframes bounce{from{transform:translateY(0);}to{transform:translateY(-10px);}}
+    #splash.hidden{opacity:0;pointer-events:none;}
+    #root{width:100%;min-height:100vh;background:#f6f8fa;}
+  </style>
+</head>
+<body>
+  <div id="splash">
+    <div class="logo">🏘️</div>
+    <h1>عقاراتي</h1>
+    <p>منصة العقارات الجزائرية الأولى</p>
+    <div class="loader"></div>
+  </div>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+import { useState } from "react";
+
+const T = {
+  ar: {
+    dir:"rtl", appName:"عقاراتي", tagline:"منصة العقارات الجزائرية الأولى",
+    heroTitle:"اعثر على عقارك المثالي", heroSub:"58 ولاية · إيجار وبيع · شقق وفيلات ومحلات وأراضي",
+    search:"ابحث بالمدينة أو العنوان...", browse:"تصفح", post:"أضف إعلان",
+    favorites:"المفضلة", settings:"الإعدادات", rent:"إيجار", sale:"بيع",
+    all:"الكل", allCities:"كل الولايات", apartment:"شقة", villa:"فيلا",
+    commercial:"محل", land:"أرض", office:"مكتب", studio:"ستوديو",
+    results:"نتيجة", rooms:"غرف", area:"م²", floor:"طابق", verified:"موثق",
+    sendMessage:"راسل المالك", msgPlaceholder:"مرحباً، أنا مهتم بعقارك...",
+    send:"إرسال", msgSent:"✅ تم الإرسال! سيتصل بك المالك قريباً.",
+    back:"رجوع", addAd:"أضف إعلانك العقاري", step:"الخطوة", of:"من",
+    adType:"نوع الإعلان", propType:"نوع العقار", wilaya:"الولاية",
+    commune:"البلدية / الحي", adTitle:"عنوان الإعلان",
+    titlePlaceholder:"مثال: شقة 3 غرف في حيدرة",
+    price:"السعر (دج)", areaLabel:"المساحة (م²)", roomsLabel:"عدد الغرف",
+    descLabel:"الوصف", descPlaceholder:"صف حالة العقار والمميزات...",
+    phone:"رقم الهاتف", phonePlaceholder:"0555 123 456",
+    next:"التالي →", prev:"→ رجوع", publish:"🚀 نشر الإعلان",
+    postedTitle:"تم نشر إعلانك بنجاح!", postedSub:"سيظهر بعد المراجعة خلال 24 ساعة.",
+    browseBtn:"تصفح العقارات", noResults:"لا توجد نتائج",
+    perMonth:"/شهر", priceUnit:"دج", language:"اللغة", theme:"المظهر",
+    dark:"داكن", light:"فاتح", notifications:"الإشعارات", about:"عن التطبيق",
+    version:"الإصدار 2.0.0", settingsTitle:"الإعدادات", favEmpty:"لا توجد عقارات في المفضلة",
+    selectWilaya:"اختر الولاية", owner:"صاحب الإعلان", callNow:"اتصل الآن",
+    shareAd:"مشاركة", reportAd:"إبلاغ", featuredAds:"إعلانات مميزة",
+    latestAds:"أحدث الإعلانات", summary:"ملخص الإعلان", notifOn:"مُفعَّلة", notifOff:"معطَّلة",
+    priceRange:"نطاق السعر", filterBtn:"تصفية", resetFilter:"إعادة تعيين",
+    loginTitle:"تسجيل الدخول", loginSub:"أدخل رقم هاتفك للمتابعة",
+    otpTitle:"رمز التحقق", otpSub:"أدخل الرمز المُرسَل إلى هاتفك",
+    confirm:"تأكيد", profile:"ملفي", logout:"تسجيل الخروج",
+    myAds:"إعلاناتي", welcome:"مرحباً", guest:"زائر",
+    uploadPhoto:"رفع صورة", photos:"الصور", addPhoto:"أضف صورة",
+    mapView:"عرض الخريطة", listView:"قائمة", newBadge:"جديد",
+    priceNeg:"قابل للتفاوض", contact:"تواصل",
+  },
+  fr: {
+    dir:"ltr", appName:"Aqarati", tagline:"La 1ère plateforme immobilière algérienne",
+    heroTitle:"Trouvez votre bien idéal", heroSub:"58 wilayas · Location & Vente · Appartements, villas, locaux, terrains",
+    search:"Rechercher par ville ou titre...", browse:"Annonces", post:"Publier",
+    favorites:"Favoris", settings:"Paramètres", rent:"Location", sale:"Vente",
+    all:"Tout", allCities:"Toutes les wilayas", apartment:"Appartement", villa:"Villa",
+    commercial:"Local", land:"Terrain", office:"Bureau", studio:"Studio",
+    results:"résultat(s)", rooms:"pièces", area:"m²", floor:"étage", verified:"Vérifié",
+    sendMessage:"Envoyer un message", msgPlaceholder:"Bonjour, je suis intéressé...",
+    send:"Envoyer", msgSent:"✅ Message envoyé! Le propriétaire vous contactera bientôt.",
+    back:"Retour", addAd:"Publier une annonce", step:"Étape", of:"sur",
+    adType:"Type d'annonce", propType:"Type de bien", wilaya:"Wilaya",
+    commune:"Commune / Quartier", adTitle:"Titre de l'annonce",
+    titlePlaceholder:"Ex: Appartement F3 à Hydra",
+    price:"Prix (DA)", areaLabel:"Superficie (m²)", roomsLabel:"Nbre de pièces",
+    descLabel:"Description", descPlaceholder:"Décrivez le bien et ses équipements...",
+    phone:"Téléphone", phonePlaceholder:"0555 123 456",
+    next:"Suivant →", prev:"← Retour", publish:"🚀 Publier l'annonce",
+    postedTitle:"Annonce publiée avec succès!", postedSub:"Visible après vérification sous 24h.",
+    browseBtn:"Voir les annonces", noResults:"Aucun résultat",
+    perMonth:"/mois", priceUnit:"DA", language:"Langue", theme:"Thème",
+    dark:"Sombre", light:"Clair", notifications:"Notifications", about:"À propos",
+    version:"Version 2.0.0", settingsTitle:"Paramètres", favEmpty:"Aucun bien en favoris",
+    selectWilaya:"Choisir la wilaya", owner:"Propriétaire", callNow:"Appeler",
+    shareAd:"Partager", reportAd:"Signaler", featuredAds:"À la une",
+    latestAds:"Dernières annonces", summary:"Récapitulatif", notifOn:"Activées", notifOff:"Désactivées",
+    priceRange:"Fourchette de prix", filterBtn:"Filtrer", resetFilter:"Réinitialiser",
+    loginTitle:"Connexion", loginSub:"Entrez votre numéro de téléphone",
+    otpTitle:"Code de vérification", otpSub:"Entrez le code envoyé à votre téléphone",
+    confirm:"Confirmer", profile:"Mon profil", logout:"Déconnexion",
+    myAds:"Mes annonces", welcome:"Bienvenue", guest:"Visiteur",
+    uploadPhoto:"Ajouter photo", photos:"Photos", addPhoto:"Ajouter",
+    mapView:"Carte", listView:"Liste", newBadge:"Nouveau",
+    priceNeg:"Prix négociable", contact:"Contacter",
+  },
+  en: {
+    dir:"ltr", appName:"Aqarati", tagline:"Algeria's #1 Real Estate Platform",
+    heroTitle:"Find Your Perfect Property", heroSub:"58 wilayas · Rent & Sale · Apartments, villas, shops & land",
+    search:"Search by city or title...", browse:"Browse", post:"Post Ad",
+    favorites:"Favorites", settings:"Settings", rent:"Rent", sale:"Sale",
+    all:"All", allCities:"All Wilayas", apartment:"Apartment", villa:"Villa",
+    commercial:"Shop", land:"Land", office:"Office", studio:"Studio",
+    results:"result(s)", rooms:"rooms", area:"m²", floor:"floor", verified:"Verified",
+    sendMessage:"Send a Message", msgPlaceholder:"Hello, I'm interested in your property...",
+    send:"Send", msgSent:"✅ Message sent! The owner will contact you soon.",
+    back:"Back", addAd:"Post Your Property", step:"Step", of:"of",
+    adType:"Ad Type", propType:"Property Type", wilaya:"Wilaya",
+    commune:"Commune / District", adTitle:"Ad Title",
+    titlePlaceholder:"E.g. 3-room apartment in Hydra",
+    price:"Price (DZD)", areaLabel:"Area (m²)", roomsLabel:"Number of Rooms",
+    descLabel:"Description", descPlaceholder:"Describe the property and its features...",
+    phone:"Phone Number", phonePlaceholder:"0555 123 456",
+    next:"Next →", prev:"← Back", publish:"🚀 Publish Ad",
+    postedTitle:"Ad Published Successfully!", postedSub:"Your ad will appear after review within 24h.",
+    browseBtn:"Browse Properties", noResults:"No results found",
+    perMonth:"/month", priceUnit:"DZD", language:"Language", theme:"Theme",
+    dark:"Dark", light:"Light", notifications:"Notifications", about:"About",
+    version:"Version 2.0.0", settingsTitle:"Settings", favEmpty:"No saved properties",
+    selectWilaya:"Select Wilaya", owner:"Owner", callNow:"Call Now",
+    shareAd:"Share", reportAd:"Report", featuredAds:"Featured",
+    latestAds:"Latest Listings", summary:"Summary", notifOn:"Enabled", notifOff:"Disabled",
+    priceRange:"Price Range", filterBtn:"Filter", resetFilter:"Reset",
+    loginTitle:"Sign In", loginSub:"Enter your phone number to continue",
+    otpTitle:"Verification Code", otpSub:"Enter the code sent to your phone",
+    confirm:"Confirm", profile:"My Profile", logout:"Sign Out",
+    myAds:"My Ads", welcome:"Welcome", guest:"Guest",
+    uploadPhoto:"Upload Photo", photos:"Photos", addPhoto:"Add Photo",
+    mapView:"Map View", listView:"List", newBadge:"New",
+    priceNeg:"Negotiable", contact:"Contact",
+  }
+};
+
+const WILAYAS = [
+  "01 - أدرار","02 - الشلف","03 - الأغواط","04 - أم البواقي","05 - باتنة",
+  "06 - بجاية","07 - بسكرة","08 - بشار","09 - البليدة","10 - البويرة",
+  "11 - تمنراست","12 - تبسة","13 - تلمسان","14 - تيارت","15 - تيزي وزو",
+  "16 - الجزائر","17 - الجلفة","18 - جيجل","19 - سطيف","20 - سعيدة",
+  "21 - سكيكدة","22 - سيدي بلعباس","23 - عنابة","24 - قالمة","25 - قسنطينة",
+  "26 - المدية","27 - مستغانم","28 - المسيلة","29 - معسكر","30 - ورقلة",
+  "31 - وهران","32 - البيض","33 - إليزي","34 - برج بوعريريج","35 - بومرداس",
+  "36 - الطارف","37 - تندوف","38 - تيسمسيلت","39 - الوادي","40 - خنشلة",
+  "41 - سوق أهراس","42 - تيبازة","43 - ميلة","44 - عين الدفلى","45 - النعامة",
+  "46 - عين تموشنت","47 - غرداية","48 - غليزان","49 - تيميمون","50 - برج باجي مختار",
+  "51 - أولاد جلال","52 - بني عباس","53 - عين صالح","54 - عين قزام","55 - توقرت",
+  "56 - جانت","57 - المغير","58 - المنيعة"
+];
+
+const PROPERTIES = [
+  { id:1, type:"rent", category:"apartment", price:35000, wilaya:"16 - الجزائر", city:"حيدرة", rooms:3, area:90, floor:4, emoji:"🏢",
+    title:{ar:"شقة راقية في حيدرة",fr:"Appartement à Hydra",en:"Luxury Apartment in Hydra"},
+    desc:{ar:"شقة مفروشة بالكامل، قريبة من المرافق والمدارس والمستشفيات. حالة ممتازة.",fr:"Appartement entièrement meublé, proche des commodités, écoles et hôpitaux. Excellent état.",en:"Fully furnished apartment, close to amenities, schools and hospitals. Excellent condition."},
+    phone:"0555 123 456", owner:"محمد بن عمر", featured:true, verified:true, date:"2026-06-20", negotiable:false },
+  { id:2, type:"sale", category:"villa", price:28000000, wilaya:"31 - وهران", city:"وهران الجديدة", rooms:5, area:280, floor:0, emoji:"🏡",
+    title:{ar:"فيلا فاخرة بوهران",fr:"Villa de luxe à Oran",en:"Luxury Villa in Oran"},
+    desc:{ar:"فيلا مع حديقة ومسبح، موقع استراتيجي ممتاز. 5 غرف نوم، 3 حمامات.",fr:"Villa avec jardin et piscine, emplacement stratégique. 5 chambres, 3 salles de bain.",en:"Villa with garden and pool, prime location. 5 bedrooms, 3 bathrooms."},
+    phone:"0661 789 012", owner:"فاطمة حداد", featured:true, verified:true, date:"2026-06-19", negotiable:true },
+  { id:3, type:"rent", category:"commercial", price:80000, wilaya:"25 - قسنطينة", city:"وسط المدينة", rooms:0, area:55, floor:1, emoji:"🏪",
+    title:{ar:"محل تجاري في القلب",fr:"Local commercial centre-ville",en:"Commercial Space Downtown"},
+    desc:{ar:"واجهة زجاجية عريضة، ركن استراتيجي بقلب المدينة، حركة مرور عالية.",fr:"Vitrine vitrée large, coin stratégique, fort passage piétonnier.",en:"Wide glass front, strategic corner, high foot traffic."},
+    phone:"0770 345 678", owner:"كريم بلعيد", featured:false, verified:false, date:"2026-06-18", negotiable:true },
+  { id:4, type:"sale", category:"apartment", price:8500000, wilaya:"23 - عنابة", city:"سيدي عمار", rooms:2, area:65, floor:2, emoji:"🏠",
+    title:{ar:"شقة اقتصادية بعنابة",fr:"Appartement économique Annaba",en:"Affordable Apartment in Annaba"},
+    desc:{ar:"حالة ممتازة، سند ملكية نظيف جاهز، إطلالة جميلة، قريب من البحر.",fr:"Excellent état, titre de propriété prêt, belle vue, proche de la mer.",en:"Excellent condition, clean title deed, nice view, close to the sea."},
+    phone:"0699 901 234", owner:"سامية مرزاق", featured:false, verified:true, date:"2026-06-17", negotiable:false },
+  { id:5, type:"rent", category:"villa", price:120000, wilaya:"16 - الجزائر", city:"الدار البيضاء", rooms:6, area:350, floor:0, emoji:"🏰",
+    title:{ar:"فيلا فاخرة مع حديقة",fr:"Villa de prestige avec jardin",en:"Prestige Villa with Garden"},
+    desc:{ar:"فيلا فاخرة بحديقة كبيرة وأمن على مدار الساعة، مجهزة بالكامل.",fr:"Villa luxueuse avec grand jardin et gardiennage 24h, entièrement équipée.",en:"Luxury villa with large garden and 24h security, fully equipped."},
+    phone:"0555 567 890", owner:"نور الدين عياشي", featured:true, verified:true, date:"2026-06-16", negotiable:false },
+  { id:6, type:"sale", category:"land", price:15000000, wilaya:"19 - سطيف", city:"سطيف المدينة", rooms:0, area:500, floor:0, emoji:"🌿",
+    title:{ar:"أرض بناء بسطيف",fr:"Terrain à bâtir Sétif",en:"Building Land in Sétif"},
+    desc:{ar:"رخصة بناء متاحة، موقع هادئ وقريب من الطريق السريع والمرافق العامة.",fr:"Permis de construire disponible, calme et proche autoroute et services publics.",en:"Building permit available, quiet, near highway and public services."},
+    phone:"0771 234 567", owner:"عبد القادر زروق", featured:false, verified:false, date:"2026-06-15", negotiable:true },
+  { id:7, type:"rent", category:"studio", price:18000, wilaya:"06 - بجاية", city:"بجاية المركز", rooms:1, area:35, floor:3, emoji:"🛏",
+    title:{ar:"ستوديو مفروش ببجاية",fr:"Studio meublé à Béjaïa",en:"Furnished Studio in Béjaïa"},
+    desc:{ar:"ستوديو مجهز بالكامل مناسب للطلبة، إنترنت مجاني، قريب من الجامعة.",fr:"Studio tout équipé idéal étudiants, internet gratuit, proche université.",en:"Fully equipped studio ideal for students, free internet, near university."},
+    phone:"0556 112 233", owner:"ياسمين أيت علي", featured:false, verified:true, date:"2026-06-14", negotiable:false },
+  { id:8, type:"sale", category:"office", price:5200000, wilaya:"31 - وهران", city:"وهران الجديدة", rooms:0, area:80, floor:5, emoji:"🏢",
+    title:{ar:"مكتب بمبنى حديث",fr:"Bureau dans immeuble moderne",en:"Office in Modern Building"},
+    desc:{ar:"مكتب مكيف بالكامل بمبنى حديث مع مصعد وأمن، مناسب لكل الشركات.",fr:"Bureau climatisé dans immeuble moderne avec ascenseur et gardiennage.",en:"Fully air-conditioned office in modern building with elevator and security."},
+    phone:"0661 445 566", owner:"رشيد بن حميدة", featured:false, verified:true, date:"2026-06-13", negotiable:false },
+  { id:9, type:"rent", category:"apartment", price:45000, wilaya:"05 - باتنة", city:"باتنة المدينة", rooms:4, area:110, floor:1, emoji:"🏢",
+    title:{ar:"شقة واسعة بباتنة",fr:"Grand appartement à Batna",en:"Spacious Apartment in Batna"},
+    desc:{ar:"شقة واسعة في حي هادئ، 4 غرف، مطبخ مجهز، قريبة من المدارس.",fr:"Grand appartement dans quartier calme, 4 pièces, cuisine équipée.",en:"Spacious apartment in quiet neighborhood, 4 rooms, equipped kitchen."},
+    phone:"0777 889 900", owner:"عمر بوزيان", featured:false, verified:true, date:"2026-06-12", negotiable:true },
+  { id:10, type:"sale", category:"villa", price:42000000, wilaya:"15 - تيزي وزو", city:"تيزي وزو", rooms:7, area:400, floor:0, emoji:"🏡",
+    title:{ar:"فيلا كبيرة بتيزي وزو",fr:"Grande villa à Tizi Ouzou",en:"Large Villa in Tizi Ouzou"},
+    desc:{ar:"فيلا كبيرة بإطلالة على الجبال، 7 غرف، حديقة كبيرة، بناء ممتاز.",fr:"Grande villa avec vue sur les montagnes, 7 chambres, grand jardin.",en:"Large villa with mountain view, 7 bedrooms, large garden, excellent construction."},
+    phone:"0662 334 455", owner:"مازيغ بلقاسم", featured:true, verified:true, date:"2026-06-11", negotiable:true },
+  { id:11, type:"rent", category:"commercial", price:150000, wilaya:"16 - الجزائر", city:"العاصمة وسط", rooms:0, area:120, floor:0, emoji:"🏪",
+    title:{ar:"محل كبير بالجزائر العاصمة",fr:"Grand local à Alger Centre",en:"Large Shop in Algiers Centre"},
+    desc:{ar:"محل تجاري كبير في موقع استراتيجي بقلب العاصمة، حركة تجارية عالية.",fr:"Grand local commercial en position stratégique au centre d'Alger.",en:"Large commercial space in strategic position in the heart of Algiers."},
+    phone:"0555 667 788", owner:"حميد صالحي", featured:false, verified:true, date:"2026-06-10", negotiable:false },
+  { id:12, type:"sale", category:"apartment", price:12000000, wilaya:"35 - بومرداس", city:"بومرداس المركز", rooms:3, area:85, floor:3, emoji:"🏠",
+    title:{ar:"شقة بإطلالة البحر",fr:"Appartement vue mer",en:"Sea View Apartment"},
+    desc:{ar:"شقة جميلة بإطلالة مباشرة على البحر المتوسط، حالة جيدة جداً.",fr:"Bel appartement avec vue directe sur la mer Méditerranée, très bon état.",en:"Beautiful apartment with direct Mediterranean sea view, very good condition."},
+    phone:"0699 112 334", owner:"نادية كريمي", featured:true, verified:true, date:"2026-06-09", negotiable:false },
+];
+
+const CAT_EMOJI = { apartment:"🏢", villa:"🏡", commercial:"🏪", land:"🌿", office:"🏗️", studio:"🛋️" };
+const CATS = ["all","apartment","villa","commercial","land","office","studio"];
+
+function fmt(price, type, t) {
+  return price.toLocaleString("fr-DZ") + " " + t.priceUnit + (type==="rent" ? t.perMonth : "");
+}
+
+export default function App() {
+  const [lang, setLang] = useState("ar");
+  const [dark, setDark] = useState(false);
+  const [tab, setTab] = useState("browse");
+  const [search, setSearch] = useState("");
+  const [fType, setFType] = useState("all");
+  const [fWilaya, setFWilaya] = useState("all");
+  const [fCat, setFCat] = useState("all");
+  const [selected, setSelected] = useState(null);
+  const [favs, setFavs] = useState([1,5]);
+  const [step, setStep] = useState(1);
+  const [posted, setPosted] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [msgSent, setMsgSent] = useState(false);
+  const [notif, setNotif] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loginStep, setLoginStep] = useState(1);
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+  const [minP, setMinP] = useState("");
+  const [maxP, setMaxP] = useState("");
+  const [form, setForm] = useState({ type:"rent", category:"apartment", wilaya:"", commune:"", title:"", price:"", area:"", rooms:"", desc:"", phone:"", negotiable:false });
+
+  const t = T[lang];
+  const rtl = lang === "ar";
+
+  const C = dark ? {
+    bg:"#0d1117", card:"#161b22", border:"#30363d", text:"#e6edf3",
+    sub:"#7d8590", accent:"#3fb950", accentD:"#238636", hero:"#1a2332",
+    input:"#21262d", nav:"#161b22", badge:"#1f6feb", shadow:"0 4px 20px rgba(0,0,0,0.5)",
+    featured:"#1c2128", pill:"#21262d"
+  } : {
+    bg:"#f6f8fa", card:"#ffffff", border:"#d0d7de", text:"#1f2328",
+    sub:"#6e7781", accent:"#1a7f37", accentD:"#116329", hero:"#dafbe1",
+    input:"#ffffff", nav:"#ffffff", badge:"#0550ae", shadow:"0 2px 16px rgba(0,0,0,0.08)",
+    featured:"#f6f8fa", pill:"#eaeef2"
+  };
+
+  const inp = { width:"100%", border:`1.5px solid ${C.border}`, borderRadius:10, padding:"10px 13px", fontSize:14, background:C.input, color:C.text, textAlign:rtl?"right":"left", boxSizing:"border-box", fontFamily:"inherit", outline:"none" };
+  const lbl = { fontSize:12, color:C.sub, display:"block", marginBottom:5, fontWeight:600, textAlign:rtl?"right":"left" };
+
+  const togFav = id => setFavs(f => f.includes(id) ? f.filter(x=>x!==id) : [...f,id]);
+
+  const filtered = PROPERTIES.filter(p => {
+    if (fType!=="all" && p.type!==fType) return false;
+    if (fWilaya!=="all" && p.wilaya!==fWilaya) return false;
+    if (fCat!=="all" && p.category!==fCat) return false;
+    if (minP && p.price < Number(minP)) return false;
+    if (maxP && p.price > Number(maxP)) return false;
+    const q = search.toLowerCase();
+    if (q && !p.title[lang].toLowerCase().includes(q) && !p.wilaya.includes(q) && !p.city.includes(q)) return false;
+    return true;
+  });
+
+  const featured = PROPERTIES.filter(p => p.featured);
+
+  function Nav() {
+    const items = [
+      {id:"browse", em:"🏠", lb:t.browse},
+      {id:"post", em:"➕", lb:t.post},
+      {id:"favorites", em:"❤️", lb:t.favorites},
+      {id:"settings", em:"⚙️", lb:t.settings},
+    ];
+    return (
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:200,background:C.nav,borderTop:`1px solid ${C.border}`,display:"flex",padding:"6px 8px 10px",gap:4,maxWidth:640,margin:"0 auto"}}>
+        {items.map(({id,em,lb}) => {
+          const active = tab===id;
+          return (
+            <button key={id} onClick={()=>{setTab(id);setSelected(null);setPosted(false);setStep(1);}}
+              style={{flex:1,background:active?C.accentD:"transparent",color:active?"#fff":C.sub,border:"none",borderRadius:10,padding:"8px 4px",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:2,fontSize:10,fontWeight:active?700:400,transition:"all .2s"}}>
+              <span style={{fontSize:20}}>{em}</span>{lb}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  function Header({ showSearch }) {
+    return (
+      <header style={{background:`linear-gradient(135deg,${C.accentD},${C.accent})`,color:"#fff",position:"sticky",top:0,zIndex:100}}>
+        <div style={{maxWidth:640,margin:"0 auto",padding:"0 14px"}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"11px 0"}}>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:26}}>🏘️</span>
+              <div>
+                <div style={{fontSize:19,fontWeight:900,letterSpacing:0.5}}>{t.appName}</div>
+                <div style={{fontSize:10,opacity:0.8}}>{t.tagline}</div>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:5,alignItems:"center"}}>
+              {["ar","fr","en"].map(l => (
+                <button key={l} onClick={()=>setLang(l)}
+                  style={{background:lang===l?"rgba(255,255,255,0.3)":"rgba(255,255,255,0.1)",border:"none",borderRadius:7,padding:"4px 8px",color:"#fff",cursor:"pointer",fontSize:11,fontWeight:lang===l?700:400}}>
+                  {l==="ar"?"ع":l==="fr"?"FR":"EN"}
+                </button>
+              ))}
+              <button onClick={()=>setDark(d=>!d)}
+                style={{background:"rgba(255,255,255,0.15)",border:"none",borderRadius:7,padding:"5px 7px",color:"#fff",cursor:"pointer",fontSize:15}}>
+                {dark?"☀️":"🌙"}
+              </button>
+              <button onClick={()=>setShowLogin(true)}
+                style={{background:"rgba(255,255,255,0.15)",border:"none",borderRadius:7,padding:"5px 7px",color:"#fff",cursor:"pointer",fontSize:15}}>
+                {user?"👤":"🔑"}
+              </button>
+            </div>
+          </div>
+          {showSearch && (
+            <div style={{paddingBottom:12}}>
+              <div style={{background:"rgba(255,255,255,0.18)",borderRadius:12,padding:"10px 13px",display:"flex",alignItems:"center",gap:9}}>
+                <span style={{fontSize:16}}>🔍</span>
+                <input value={search} onChange={e=>setSearch(e.target.value)} placeholder={t.search}
+                  style={{flex:1,background:"transparent",border:"none",outline:"none",color:"#fff",fontSize:13,textAlign:rtl?"right":"left"}}/>
+                {search&&<button onClick={()=>setSearch("")} style={{background:"none",border:"none",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:14}}>✕</button>}
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+    );
+  }
+
+  function Card({ p, compact }) {
+    const isFav = favs.includes(p.id);
+    const isNew = new Date(p.date) > new Date(Date.now()-3*86400000);
+    return (
+      <div style={{background:C.card,borderRadius:16,overflow:"hidden",boxShadow:C.shadow,cursor:"pointer",transition:"transform .18s,box-shadow .18s"}}
+        onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow=dark?"0 8px 32px rgba(0,0,0,0.6)":"0 8px 28px rgba(0,0,0,0.14)";}}
+        onMouseLeave={e=>{e.currentTarget.style.transform="none";e.currentTarget.style.boxShadow=C.shadow;}}>
+        <div onClick={()=>{setSelected(p);setMsgSent(false);setMsg("");}}
+          style={{height:compact?100:130,background:dark?"linear-gradient(135deg,#1c2e1c,#1e3a1e)":"linear-gradient(135deg,#dcfce7,#a7f3d0)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:compact?40:52,position:"relative"}}>
+          {p.emoji}
+          <span style={{position:"absolute",top:9,[rtl?"right":"left"]:9,background:p.type==="rent"?C.accent:"#cf222e",color:"#fff",borderRadius:20,padding:"2px 9px",fontSize:10,fontWeight:700}}>
+            {p.type==="rent"?t.rent:t.sale}
+          </span>
+          {isNew&&<span style={{position:"absolute",top:9,[rtl?"left":"right"]:38,background:C.badge,color:"#fff",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>{t.newBadge}</span>}
+          {p.featured&&<span style={{position:"absolute",top:9,[rtl?"left":"right"]:9,background:"#bf8700",color:"#fff",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>⭐</span>}
+          <button onClick={e=>{e.stopPropagation();togFav(p.id);}}
+            style={{position:"absolute",bottom:9,[rtl?"left":"right"]:9,background:isFav?"#ef4444":"rgba(255,255,255,0.85)",border:"none",borderRadius:"50%",width:28,height:28,cursor:"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>
+            {isFav?"❤️":"🤍"}
+          </button>
+        </div>
+        <div style={{padding:"11px 12px"}} onClick={()=>{setSelected(p);setMsgSent(false);setMsg("");}}>
+          <div style={{fontSize:10,color:C.sub,marginBottom:2}}>📍 {p.city} · {p.wilaya.split(" - ")[1]||p.wilaya}</div>
+          <h3 style={{margin:"0 0 5px",fontSize:13,fontWeight:700,color:C.text,lineHeight:1.4}}>{p.title[lang]}</h3>
+          <div style={{display:"flex",gap:8,fontSize:11,color:C.sub,marginBottom:7,flexWrap:"wrap"}}>
+            {p.rooms>0&&<span>🛏 {p.rooms} {t.rooms}</span>}
+            <span>📐 {p.area} {t.area}</span>
+            {p.floor>0&&<span>🏢 {t.floor} {p.floor}</span>}
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontSize:14,fontWeight:900,color:C.accent}}>{fmt(p.price,p.type,t)}</span>
+            <div style={{display:"flex",gap:4}}>
+              {p.negotiable&&<span style={{fontSize:9,background:dark?"#1c2e1c":"#dcfce7",color:C.accent,borderRadius:10,padding:"2px 7px",fontWeight:600}}>{t.priceNeg}</span>}
+              {p.verified&&<span style={{fontSize:9,background:"#fff8c5",color:"#9a6700",borderRadius:10,padding:"2px 7px",fontWeight:600}}>✓</span>}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── LOGIN MODAL ──
+  if (showLogin) return (
+    <div dir={t.dir} style={{background:C.bg,minHeight:"100vh",fontFamily:"'Segoe UI',Tahoma,Arial,sans-serif",color:C.text,display:"flex",alignItems:"center",justifyContent:"center",padding:"1rem"}}>
+      <div style={{background:C.card,borderRadius:20,padding:"2rem",width:"100%",maxWidth:360,boxShadow:C.shadow}}>
+        <div style={{textAlign:"center",marginBottom:"1.5rem"}}>
+          <span style={{fontSize:48}}>🏘️</span>
+          <h2 style={{margin:"8px 0 4px",color:C.accent}}>{t.appName}</h2>
+          <p style={{color:C.sub,fontSize:13}}>{loginStep===1?t.loginSub:t.otpSub}</p>
+        </div>
+        {loginStep===1?(
+          <>
+            <label style={lbl}>{t.phone}</label>
+            <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="0555 000 000" style={{...inp,marginBottom:14,fontSize:16,letterSpacing:2,textAlign:"center"}}/>
+            <button onClick={()=>{if(phone.length>=9)setLoginStep(2);}}
+              style={{width:"100%",background:C.accent,color:"#fff",border:"none",borderRadius:12,padding:"13px",fontWeight:700,cursor:"pointer",fontSize:15}}>
+              {t.next}
+            </button>
+          </>
+        ):(
+          <>
+            <div style={{background:dark?"#1c2e1c":"#dcfce7",borderRadius:12,padding:"10px",textAlign:"center",marginBottom:14,fontSize:13,color:C.accent}}>
+              📱 {phone} — رمز التجربة: <b>1234</b>
+            </div>
+            <label style={lbl}>{t.otpTitle}</label>
+            <input value={otp} onChange={e=>setOtp(e.target.value)} placeholder="0 0 0 0" maxLength={4}
+              style={{...inp,marginBottom:14,fontSize:24,letterSpacing:8,textAlign:"center"}}/>
+            <button onClick={()=>{if(otp==="1234"){setUser({name:"سيدي شهاب",phone});setShowLogin(false);setLoginStep(1);}}}
+              style={{width:"100%",background:C.accent,color:"#fff",border:"none",borderRadius:12,padding:"13px",fontWeight:700,cursor:"pointer",fontSize:15,marginBottom:10}}>
+              {t.confirm}
+            </button>
+            <button onClick={()=>setLoginStep(1)} style={{width:"100%",background:"transparent",border:`1.5px solid ${C.border}`,borderRadius:12,padding:"11px",cursor:"pointer",color:C.sub,fontSize:14}}>
+              {t.prev}
+            </button>
+          </>
+        )}
+        <button onClick={()=>{setShowLogin(false);setLoginStep(1);}} style={{width:"100%",marginTop:10,background:"transparent",border:"none",cursor:"pointer",color:C.sub,fontSize:13}}>
+          {t.back}
+        </button>
+      </div>
+    </div>
+  );
+
+  // ── DETAIL VIEW ──
+  if (selected && tab==="browse") {
+    const isFav = favs.includes(selected.id);
+    return (
+      <div dir={t.dir} style={{background:C.bg,minHeight:"100vh",fontFamily:"'Segoe UI',Tahoma,Arial,sans-serif",color:C.text}}>
+        <div style={{maxWidth:640,margin:"0 auto"}}>
+          <div style={{height:210,background:dark?"linear-gradient(135deg,#1c2e1c,#1e3a1e)":"linear-gradient(135deg,#dcfce7,#a7f3d0)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:90,position:"relative"}}>
+            {selected.emoji}
+            <button onClick={()=>setSelected(null)} style={{position:"absolute",top:14,[rtl?"right":"left"]:14,background:"rgba(255,255,255,0.9)",border:"none",borderRadius:10,padding:"6px 14px",fontWeight:700,cursor:"pointer",fontSize:12,color:C.accentD}}>
+              ← {t.back}
+            </button>
+            <button onClick={()=>togFav(selected.id)} style={{position:"absolute",top:14,[rtl?"left":"right"]:14,background:isFav?"#ef4444":"rgba(255,255,255,0.9)",border:"none",borderRadius:"50%",width:38,height:38,cursor:"pointer",fontSize:18,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              {isFav?"❤️":"🤍"}
+            </button>
+            {selected.featured&&<span style={{position:"absolute",bottom:14,[rtl?"right":"left"]:14,background:"#bf8700",color:"#fff",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700}}>⭐ {t.featuredAds}</span>}
+          </div>
+
+          <div style={{padding:"1.2rem"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:10,marginBottom:12}}>
+              <div style={{flex:1}}>
+                <div style={{fontSize:11,color:C.sub,marginBottom:3}}>📍 {selected.city} · {selected.wilaya}</div>
+                <h2 style={{margin:"0 0 6px",fontSize:19,fontWeight:900}}>{selected.title[lang]}</h2>
+                <p style={{color:C.sub,fontSize:13,lineHeight:1.7,margin:0}}>{selected.desc[lang]}</p>
+              </div>
+              <div style={{textAlign:"center"}}>
+                <div style={{background:selected.type==="rent"?C.accent:"#cf222e",color:"#fff",borderRadius:20,padding:"4px 14px",fontSize:12,fontWeight:700,marginBottom:6}}>
+                  {selected.type==="rent"?t.rent:t.sale}
+                </div>
+                <div style={{fontSize:18,fontWeight:900,color:C.accent,whiteSpace:"nowrap"}}>{fmt(selected.price,selected.type,t)}</div>
+                {selected.negotiable&&<div style={{fontSize:10,color:C.accent,marginTop:2}}>{t.priceNeg}</div>}
+              </div>
+            </div>
+
+            <div style={{display:"flex",gap:10,margin:"1rem 0",flexWrap:"wrap"}}>
+              {[
+                selected.rooms>0 && ["🛏",`${selected.rooms} ${t.rooms}`],
+                ["📐",`${selected.area} ${t.area}`],
+                selected.floor>0 && ["🏢",`${t.floor} ${selected.floor}`],
+                selected.verified && ["✅",t.verified],
+              ].filter(Boolean).map(([em,lb],i)=>(
+                <div key={i} style={{background:dark?"#21262d":"#f6f8fa",borderRadius:10,padding:"9px 14px",textAlign:"center",minWidth:60}}>
+                  <div style={{fontSize:17}}>{em}</div>
+                  <div style={{fontSize:11,color:C.sub,marginTop:2}}>{lb}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{display:"flex",gap:8,marginBottom:"1rem",flexWrap:"wrap"}}>
+              <a href={`tel:${selected.phone}`} style={{flex:2,background:C.accent,color:"#fff",padding:"12px",borderRadius:12,textDecoration:"none",fontSize:14,fontWeight:700,textAlign:"center",display:"block",minWidth:120}}>
+                📞 {t.callNow}
+              </a>
+              <button style={{background:C.pill,border:"none",borderRadius:12,padding:"12px 14px",cursor:"pointer",fontSize:14,color:C.text}}>📤</button>
+              <button style={{background:C.pill,border:"none",borderRadius:12,padding:"12px 14px",cursor:"pointer",fontSize:14,color:C.text}}>🚩</button>
+            </div>
+
+            <div style={{background:dark?"#21262d":"#f6f8fa",borderRadius:14,padding:"12px",marginBottom:"1rem",display:"flex",alignItems:"center",gap:12}}>
+              <div style={{width:42,height:42,background:C.accentD,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:17,flexShrink:0}}>👤</div>
+              <div><div style={{fontWeight:700,fontSize:14}}>{selected.owner}</div><div style={{fontSize:11,color:C.sub}}>{t.owner}</div></div>
+              <div style={{marginInlineStart:"auto",fontSize:12,color:C.sub}}>{selected.phone}</div>
+            </div>
+
+            {!msgSent?(
+              <div style={{background:dark?"#21262d":"#f6f8fa",borderRadius:14,padding:"1rem"}}>
+                <h4 style={{margin:"0 0 10px",color:C.accent,fontSize:14}}>💬 {t.sendMessage}</h4>
+                <textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder={t.msgPlaceholder} rows={3}
+                  style={{...inp,resize:"none"}}/>
+                <button onClick={()=>{if(msg.trim())setMsgSent(true);}}
+                  style={{marginTop:10,background:C.accent,color:"#fff",border:"none",borderRadius:10,padding:"10px 22px",fontWeight:700,cursor:"pointer",fontSize:14}}>
+                  {t.send}
+                </button>
+              </div>
+            ):(
+              <div style={{background:"#d1fae5",borderRadius:14,padding:"1rem",textAlign:"center",color:"#065f46",fontWeight:700,fontSize:14}}>{t.msgSent}</div>
+            )}
+          </div>
+          <div style={{height:80}}/>
+        </div>
+        <Nav/>
+      </div>
+    );
+  }
+
+  // ── MAIN ──
+  return (
+    <div dir={t.dir} style={{background:C.bg,minHeight:"100vh",fontFamily:"'Segoe UI',Tahoma,Arial,sans-serif",color:C.text}}>
+      <Header showSearch={tab==="browse"}/>
+
+      <main style={{maxWidth:640,margin:"0 auto",padding:"1rem",paddingBottom:90}}>
+
+        {/* ── BROWSE ── */}
+        {tab==="browse" && (
+          <>
+            {/* Filters */}
+            <div style={{background:C.card,borderRadius:14,padding:"10px 12px",marginBottom:12,boxShadow:C.shadow}}>
+              <div style={{display:"flex",gap:6,alignItems:"center",flexWrap:"wrap"}}>
+                <div style={{display:"flex",gap:4}}>
+                  {["all","rent","sale"].map(tp=>(
+                    <button key={tp} onClick={()=>setFType(tp)}
+                      style={{border:"none",borderRadius:20,padding:"5px 12px",cursor:"pointer",fontWeight:fType===tp?700:400,background:fType===tp?C.accentD:C.pill,color:fType===tp?"#fff":C.sub,fontSize:11,transition:"all .2s"}}>
+                      {tp==="all"?t.all:tp==="rent"?t.rent:t.sale}
+                    </button>
+                  ))}
+                </div>
+                <select value={fWilaya} onChange={e=>setFWilaya(e.target.value)}
+                  style={{border:`1px solid ${C.border}`,borderRadius:9,padding:"5px 9px",background:C.input,color:C.text,fontSize:11,cursor:"pointer",flex:1,minWidth:0}}>
+                  <option value="all">{t.allCities}</option>
+                  {WILAYAS.map(w=><option key={w} value={w}>{w}</option>)}
+                </select>
+                <select value={fCat} onChange={e=>setFCat(e.target.value)}
+                  style={{border:`1px solid ${C.border}`,borderRadius:9,padding:"5px 9px",background:C.input,color:C.text,fontSize:11,cursor:"pointer"}}>
+                  {CATS.map(c=><option key={c} value={c}>{c==="all"?t.all:t[c]}</option>)}
+                </select>
+                <button onClick={()=>setShowFilter(f=>!f)}
+                  style={{background:showFilter?C.accentD:C.pill,border:"none",borderRadius:9,padding:"5px 10px",cursor:"pointer",fontSize:12,color:showFilter?"#fff":C.sub,fontWeight:700}}>
+                  ⚙️
+                </button>
+              </div>
+              {showFilter&&(
+                <div style={{marginTop:10,paddingTop:10,borderTop:`1px solid ${C.border}`,display:"flex",gap:8,alignItems:"flex-end",flexWrap:"wrap"}}>
+                  <div style={{flex:1,minWidth:100}}>
+                    <label style={lbl}>{t.minPrice}</label>
+                    <input type="number" value={minP} onChange={e=>setMinP(e.target.value)} placeholder="0" style={{...inp,padding:"7px 10px",fontSize:12}}/>
+                  </div>
+                  <div style={{flex:1,minWidth:100}}>
+                    <label style={lbl}>{t.maxPrice}</label>
+                    <input type="number" value={maxP} onChange={e=>setMaxP(e.target.value)} placeholder="50000000" style={{...inp,padding:"7px 10px",fontSize:12}}/>
+                  </div>
+                  <button onClick={()=>{setMinP("");setMaxP("");}}
+                    style={{background:C.pill,border:"none",borderRadius:9,padding:"7px 12px",cursor:"pointer",fontSize:12,color:C.sub}}>
+                    {t.resetFilter}
+                  </button>
+                </div>
+              )}
+              <div style={{fontSize:11,color:C.sub,marginTop:7}}>{filtered.length} {t.results}</div>
+            </div>
+
+            {/* Featured horizontal scroll */}
+            {fType==="all"&&fWilaya==="all"&&fCat==="all"&&!search&&!minP&&!maxP&&(
+              <div style={{marginBottom:14}}>
+                <h3 style={{margin:"0 0 8px",fontSize:13,fontWeight:700,color:C.sub,display:"flex",alignItems:"center",gap:6}}>
+                  ⭐ {t.featuredAds}
+                </h3>
+                <div style={{display:"flex",gap:10,overflowX:"auto",paddingBottom:6,scrollbarWidth:"none"}}>
+                  {featured.map(p=>(
+                    <div key={p.id} onClick={()=>{setSelected(p);setMsgSent(false);setMsg("");}}
+                      style={{minWidth:180,background:C.card,borderRadius:14,overflow:"hidden",cursor:"pointer",flexShrink:0,boxShadow:C.shadow}}>
+                      <div style={{height:85,background:dark?"linear-gradient(135deg,#1c2e1c,#1e3a1e)":"linear-gradient(135deg,#dcfce7,#a7f3d0)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:36}}>
+                        {p.emoji}
+                      </div>
+                      <div style={{padding:"8px 10px"}}>
+                        <div style={{fontSize:11,fontWeight:700,color:C.text,marginBottom:2,lineHeight:1.3}}>{p.title[lang]}</div>
+                        <div style={{fontSize:12,fontWeight:900,color:C.accent}}>{fmt(p.price,p.type,t)}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Category pills */}
+            <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:4,marginBottom:12,scrollbarWidth:"none"}}>
+              {CATS.map(c=>(
+                <button key={c} onClick={()=>setFCat(c)}
+                  style={{flexShrink:0,border:"none",borderRadius:20,padding:"6px 13px",cursor:"pointer",background:fCat===c?C.accentD:C.pill,color:fCat===c?"#fff":C.sub,fontSize:12,fontWeight:fCat===c?700:400,display:"flex",alignItems:"center",gap:5,transition:"all .2s"}}>
+                  {c!=="all"&&<span>{CAT_EMOJI[c]}</span>}
+                  {c==="all"?t.all:t[c]}
+                </button>
+              ))}
+            </div>
+
+            {/* Grid */}
+            <h3 style={{margin:"0 0 10px",fontSize:13,fontWeight:700,color:C.sub}}>🏘️ {t.latestAds}</h3>
+            {filtered.length===0?(
+              <div style={{textAlign:"center",padding:"3rem",color:C.sub}}>
+                <div style={{fontSize:48}}>🏚️</div>
+                <p>{t.noResults}</p>
+              </div>
+            ):(
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))",gap:"1rem"}}>
+                {filtered.map(p=><Card key={p.id} p={p}/>)}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── POST ── */}
+        {tab==="post" && (
+          <div style={{background:C.card,borderRadius:20,padding:"1.5rem",boxShadow:C.shadow,maxWidth:500,margin:"0 auto"}}>
+            {posted?(
+              <div style={{textAlign:"center",padding:"2rem 0"}}>
+                <div style={{fontSize:60}}>🎉</div>
+                <h2 style={{color:C.accent}}>{t.postedTitle}</h2>
+                <p style={{color:C.sub,fontSize:13}}>{t.postedSub}</p>
+                <button onClick={()=>{setTab("browse");setPosted(false);setStep(1);setForm({type:"rent",category:"apartment",wilaya:"",commune:"",title:"",price:"",area:"",rooms:"",desc:"",phone:"",negotiable:false});}}
+                  style={{background:C.accent,color:"#fff",border:"none",borderRadius:12,padding:"12px 28px",fontWeight:700,cursor:"pointer",marginTop:10,fontSize:14}}>
+                  {t.browseBtn}
+                </button>
+              </div>
+            ):(
+              <>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:4}}>
+                  <h2 style={{color:C.text,margin:0,fontSize:18}}>{t.addAd}</h2>
+                  <span style={{fontSize:12,color:C.sub}}>{t.step} {step} {t.of} 3</span>
+                </div>
+                <div style={{display:"flex",gap:5,marginBottom:"1.4rem"}}>
+                  {[1,2,3].map(s=><div key={s} style={{flex:1,height:5,borderRadius:3,background:s<=step?C.accent:C.border,transition:"background .3s"}}/>)}
+                </div>
+
+                {step===1&&(
+                  <div style={{display:"flex",flexDirection:"column",gap:13}}>
+                    <div>
+                      <label style={lbl}>{t.adType}</label>
+                      <div style={{display:"flex",gap:8}}>
+                        {["rent","sale"].map(tp=>(
+                          <button key={tp} onClick={()=>setForm(d=>({...d,type:tp}))}
+                            style={{flex:1,border:`2px solid ${form.type===tp?C.accent:C.border}`,borderRadius:11,padding:"11px",fontWeight:form.type===tp?700:400,background:form.type===tp?(dark?"#1c2e1c":"#f0fdf4"):C.card,cursor:"pointer",fontSize:13,color:C.text}}>
+                            {tp==="rent"?`🔑 ${t.rent}`:`🏷️ ${t.sale}`}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <label style={lbl}>{t.propType}</label>
+                      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:7}}>
+                        {["apartment","villa","commercial","land","office","studio"].map(c=>(
+                          <button key={c} onClick={()=>setForm(d=>({...d,category:c}))}
+                            style={{border:`2px solid ${form.category===c?C.accent:C.border}`,borderRadius:11,padding:"9px 5px",cursor:"pointer",background:form.category===c?(dark?"#1c2e1c":"#f0fdf4"):C.card,color:C.text,fontSize:10,fontWeight:form.category===c?700:400,display:"flex",flexDirection:"column",alignItems:"center",gap:3}}>
+                            <span style={{fontSize:19}}>{CAT_EMOJI[c]}</span>{t[c]}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <button onClick={()=>setStep(2)}
+                      style={{background:C.accent,color:"#fff",border:"none",borderRadius:11,padding:"12px",fontWeight:700,cursor:"pointer",fontSize:14,marginTop:2}}>
+                      {t.next}
+                    </button>
+                  </div>
+                )}
+
+                {step===2&&(
+                  <div style={{display:"flex",flexDirection:"column",gap:13}}>
+                    <div>
+                      <label style={lbl}>{t.wilaya}</label>
+                      <select value={form.wilaya} onChange={e=>setForm(d=>({...d,wilaya:e.target.value}))} style={inp}>
+                        <option value="">{t.selectWilaya}</option>
+                        {WILAYAS.map(w=><option key={w} value={w}>{w}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label style={lbl}>{t.commune}</label>
+                      <input value={form.commune} onChange={e=>setForm(d=>({...d,commune:e.target.value}))} placeholder={rtl?"الحي أو البلدية":"Commune / Quartier"} style={inp}/>
+                    </div>
+                    <div>
+                      <label style={lbl}>{t.adTitle}</label>
+                      <input value={form.title} onChange={e=>setForm(d=>({...d,title:e.target.value}))} placeholder={t.titlePlaceholder} style={inp}/>
+                    </div>
+                    <div style={{display:"flex",gap:10}}>
+                      <div style={{flex:1}}>
+                        <label style={lbl}>{t.price}</label>
+                        <input type="number" value={form.price} onChange={e=>setForm(d=>({...d,price:e.target.value}))} placeholder="35000" style={inp}/>
+                      </div>
+                      <div style={{flex:1}}>
+                        <label style={lbl}>{t.areaLabel}</label>
+                        <input type="number" value={form.area} onChange={e=>setForm(d=>({...d,area:e.target.value}))} placeholder="90" style={inp}/>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={lbl}>{t.roomsLabel}</label>
+                      <div style={{display:"flex",gap:6}}>
+                        {[0,1,2,3,4,5,6,7].map(n=>(
+                          <button key={n} onClick={()=>setForm(d=>({...d,rooms:n}))}
+                            style={{flex:1,border:`1.5px solid ${form.rooms===n?C.accent:C.border}`,borderRadius:8,padding:"8px 2px",cursor:"pointer",background:form.rooms===n?(dark?"#1c2e1c":"#f0fdf4"):C.card,color:form.rooms===n?C.accent:C.sub,fontSize:12,fontWeight:form.rooms===n?700:400}}>
+                            {n===0?"—":n===7?"7+":n}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{display:"flex",alignItems:"center",gap:10}}>
+                      <label style={{...lbl,margin:0,flex:1}}>{t.priceNeg}</label>
+                      <button onClick={()=>setForm(d=>({...d,negotiable:!d.negotiable}))}
+                        style={{width:44,height:24,borderRadius:12,border:"none",background:form.negotiable?C.accent:C.border,cursor:"pointer",position:"relative",transition:"background .3s",flexShrink:0}}>
+                        <div style={{width:18,height:18,borderRadius:"50%",background:"#fff",position:"absolute",top:3,transition:"left .3s",left:form.negotiable?(rtl?4:22):(rtl?22:4)}}/>
+                      </button>
+                    </div>
+                    <div style={{display:"flex",gap:8}}>
+                      <button onClick={()=>setStep(1)} style={{flex:1,border:`1.5px solid ${C.accent}`,background:C.card,color:C.accent,borderRadius:11,padding:"11px",fontWeight:700,cursor:"pointer",fontSize:13}}>{t.prev}</button>
+                      <button onClick={()=>{if(form.wilaya&&form.title)setStep(3);}} style={{flex:2,background:C.accent,color:"#fff",border:"none",borderRadius:11,padding:"11px",fontWeight:700,cursor:"pointer",fontSize:13}}>{t.next}</button>
+                    </div>
+                  </div>
+                )}
+
+                {step===3&&(
+                  <div style={{display:"flex",flexDirection:"column",gap:13}}>
+                    <div>
+                      <label style={lbl}>{t.descLabel}</label>
+                      <textarea value={form.desc} onChange={e=>setForm(d=>({...d,desc:e.target.value}))}
+                        placeholder={t.descPlaceholder} rows={4} style={{...inp,resize:"none"}}/>
+                    </div>
+                    <div>
+                      <label style={lbl}>{t.phone}</label>
+                      <input value={form.phone} onChange={e=>setForm(d=>({...d,phone:e.target.value}))} placeholder={t.phonePlaceholder} style={inp}/>
+                    </div>
+                    {/* Summary */}
+                    <div style={{background:dark?"#21262d":"#f6f8fa",borderRadius:11,padding:"12px",fontSize:12,color:C.sub,lineHeight:2,borderRight:`4px solid ${C.accent}`}}>
+                      <div><b style={{color:C.text}}>{CAT_EMOJI[form.category]} {form.title||"—"}</b></div>
+                      <div>📍 {form.wilaya||"—"}{form.commune?` · ${form.commune}`:""}</div>
+                      <div>💰 {form.price?Number(form.price).toLocaleString("fr-DZ")+" "+t.priceUnit+(form.type==="rent"?t.perMonth:""):"—"}</div>
+                      <div>📐 {form.area||"—"} {t.area} {form.rooms>0?`· 🛏 ${form.rooms} ${t.rooms}`:""}</div>
+                      {form.negotiable&&<div style={{color:C.accent}}>✓ {t.priceNeg}</div>}
+                    </div>
+                    <div style={{display:"flex",gap:8}}>
+                      <button onClick={()=>setStep(2)} style={{flex:1,border:`1.5px solid ${C.accent}`,background:C.card,color:C.accent,borderRadius:11,padding:"11px",fontWeight:700,cursor:"pointer",fontSize:13}}>{t.prev}</button>
+                      <button onClick={()=>{if(form.phone)setPosted(true);}} style={{flex:2,background:C.accent,color:"#fff",border:"none",borderRadius:11,padding:"11px",fontWeight:700,cursor:"pointer",fontSize:13}}>{t.publish}</button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* ── FAVORITES ── */}
+        {tab==="favorites" && (
+          <>
+            <h2 style={{margin:"0 0 1rem",fontSize:19}}>❤️ {t.favorites}</h2>
+            {favs.length===0?(
+              <div style={{textAlign:"center",padding:"3rem",color:C.sub}}>
+                <div style={{fontSize:52}}>🤍</div>
+                <p>{t.favEmpty}</p>
+              </div>
+            ):(
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))",gap:"1rem"}}>
+                {PROPERTIES.filter(p=>favs.includes(p.id)).map(p=><Card key={p.id} p={p}/>)}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── SETTINGS ── */}
+        {tab==="settings" && (
+          <div style={{maxWidth:480,margin:"0 auto"}}>
+            {/* Profile card */}
+            <div style={{background:`linear-gradient(135deg,${C.accentD},${C.accent})`,borderRadius:16,padding:"1.2rem",marginBottom:14,color:"#fff",display:"flex",alignItems:"center",gap:14}}>
+              <div style={{width:52,height:52,background:"rgba(255,255,255,0.2)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,flexShrink:0}}>
+                {user?"👤":"🔑"}
+              </div>
+              <div style={{flex:1}}>
+                <div style={{fontWeight:900,fontSize:16}}>{user?user.name:t.guest}</div>
+                <div style={{opacity:0.8,fontSize:12}}>{user?user.phone:t.loginSub}</div>
+              </div>
+              {user?(
+                <button onClick={()=>setUser(null)} style={{background:"rgba(255,255,255,0.2)",border:"none",borderRadius:9,padding:"7px 12px",color:"#fff",cursor:"pointer",fontSize:12,fontWeight:700}}>
+                  {t.logout}
+                </button>
+              ):(
+                <button onClick={()=>setShowLogin(true)} style={{background:"rgba(255,255,255,0.2)",border:"none",borderRadius:9,padding:"7px 12px",color:"#fff",cursor:"pointer",fontSize:12,fontWeight:700}}>
+                  {t.loginTitle}
+                </button>
+              )}
+            </div>
+
+            {/* Language */}
+            <div style={{background:C.card,borderRadius:15,padding:"1.2rem",marginBottom:10,boxShadow:C.shadow}}>
+              <div style={{fontWeight:700,marginBottom:11,fontSize:13,color:C.sub}}>🌍 {t.language}</div>
+              <div style={{display:"flex",gap:8}}>
+                {[["ar","العربية","🇩🇿"],["fr","Français","🇫🇷"],["en","English","🇬🇧"]].map(([code,label,flag])=>(
+                  <button key={code} onClick={()=>setLang(code)}
+                    style={{flex:1,border:`2px solid ${lang===code?C.accent:C.border}`,borderRadius:13,padding:"11px 5px",cursor:"pointer",background:lang===code?(dark?"#1c2e1c":"#f0fdf4"):C.card,color:C.text,fontWeight:lang===code?700:400,fontSize:12,display:"flex",flexDirection:"column",alignItems:"center",gap:4,transition:"all .2s"}}>
+                    <span style={{fontSize:22}}>{flag}</span>{label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Theme */}
+            <div style={{background:C.card,borderRadius:15,padding:"1.2rem",marginBottom:10,boxShadow:C.shadow}}>
+              <div style={{fontWeight:700,marginBottom:11,fontSize:13,color:C.sub}}>🎨 {t.theme}</div>
+              <div style={{display:"flex",gap:8}}>
+                {[[false,"☀️",t.light],[true,"🌙",t.dark]].map(([val,emoji,label])=>(
+                  <button key={label} onClick={()=>setDark(val)}
+                    style={{flex:1,border:`2px solid ${dark===val?C.accent:C.border}`,borderRadius:13,padding:"11px",cursor:"pointer",background:dark===val?(dark?"#1c2e1c":"#f0fdf4"):C.card,color:C.text,fontWeight:dark===val?700:400,fontSize:13,display:"flex",alignItems:"center",justifyContent:"center",gap:8,transition:"all .2s"}}>
+                    {emoji} {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Notifications */}
+            <div style={{background:C.card,borderRadius:15,padding:"1.2rem",marginBottom:10,boxShadow:C.shadow}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div>
+                  <div style={{fontWeight:700,fontSize:14}}>🔔 {t.notifications}</div>
+                  <div style={{fontSize:11,color:C.sub,marginTop:2}}>{notif?t.notifOn:t.notifOff}</div>
+                </div>
+                <button onClick={()=>setNotif(n=>!n)}
+                  style={{width:48,height:26,borderRadius:13,border:"none",background:notif?C.accent:C.border,cursor:"pointer",position:"relative",transition:"background .3s"}}>
+                  <div style={{width:20,height:20,borderRadius:"50%",background:"#fff",position:"absolute",top:3,transition:"left .3s",left:notif?(rtl?4:24):(rtl?24:4)}}/>
+                </button>
+              </div>
+            </div>
+
+            {/* API Keys & About */}
+            <div style={{background:C.card,borderRadius:15,padding:"1.2rem",boxShadow:C.shadow}}>
+              <div style={{fontWeight:700,fontSize:13,marginBottom:10,color:C.sub}}>🔑 {lang==="ar"?"مفاتيح الوصول":lang==="fr"?"Clés d'accès":"Access Keys"}</div>
+              <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                {[
+                  ["Firebase","aqarati-dz.firebaseapp.com","🔥"],
+                  ["Google Maps API","AIzaSy••••••••••••••••","🗺️"],
+                  ["Cloudinary CDN","cloud_name: aqarati_dz","🖼️"],
+                  ["OneSignal Push","App ID: 4f8b••••••••","🔔"],
+                  ["Stripe / CIB Pay","pk_live_••••••••••••","💳"],
+                ].map(([name,val,em])=>(
+                  <div key={name} style={{background:dark?"#21262d":"#f6f8fa",borderRadius:9,padding:"9px 12px",display:"flex",alignItems:"center",gap:10}}>
+                    <span style={{fontSize:15}}>{em}</span>
+                    <div style={{flex:1}}>
+                      <div style={{fontSize:11,fontWeight:700,color:C.text}}>{name}</div>
+                      <div style={{fontSize:10,color:C.sub,fontFamily:"monospace"}}>{val}</div>
+                    </div>
+                    <span style={{fontSize:10,background:dark?"#1c2e1c":"#dcfce7",color:C.accent,borderRadius:6,padding:"2px 7px",fontWeight:600}}>
+                      {lang==="ar"?"متصل":lang==="fr"?"Connecté":"Connected"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div style={{marginTop:12,paddingTop:10,borderTop:`1px solid ${C.border}`,fontSize:11,color:C.sub,lineHeight:1.9}}>
+                <div>🏘️ {t.appName} · {t.tagline}</div>
+                <div>📦 {t.version} · 58 {lang==="ar"?"ولاية":lang==="fr"?"wilayas":"Wilayas"}</div>
+                <div>⚖️ {lang==="ar"?"جميع الحقوق محفوظة 2026":lang==="fr"?"Tous droits réservés 2026":"All rights reserved 2026"}</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+      <Nav/>
+    </div>
+  );
+}
+
+  const rootElement = document.getElementById('root');
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<App />);
+  </script>
+
+  <script>
+    if('serviceWorker' in navigator){
+      window.addEventListener('load',()=>{
+        navigator.serviceWorker.register('/sw.js').catch(()=>{});
+      });
+    }
+    window.addEventListener('load',()=>{
+      setTimeout(()=>{
+        const splash=document.getElementById('splash');
+        if(splash){splash.classList.add('hidden');setTimeout(()=>splash.remove(),500);}
+      },1800);
+    });
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt',(e)=>{
+      e.preventDefault();
+      deferredPrompt=e;
+      setTimeout(()=>{
+        if(confirm('ثبّت تطبيق عقاراتي على شاشتك الرئيسية؟')){
+          deferredPrompt.prompt();
+        }
+      },3000);
+    });
+  </script>
+</body>
+</html>
