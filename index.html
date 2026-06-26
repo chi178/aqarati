@@ -181,27 +181,27 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <button class="tb" onclick="setFType('sale')" id="ft-sale">بيع</button>
     </div>
     <select id="f-wilaya" onchange="filterProps()">
-      <option value="all">كل الولايات</option>
+      <option value="all" id="opt-all-wil">كل الولايات</option>
     </select>
     <select id="f-cat" onchange="filterProps()">
-      <option value="all">كل الأنواع</option>
-      <option value="apartment">شقة</option>
-      <option value="villa">فيلا</option>
-      <option value="commercial">محل</option>
-      <option value="land">أرض</option>
-      <option value="office">مكتب</option>
-      <option value="studio">ستوديو</option>
+      <option value="all" id="opt-all-cat">كل الأنواع</option>
+      <option value="apartment" id="opt-ap">شقة</option>
+      <option value="villa" id="opt-vi">فيلا</option>
+      <option value="commercial" id="opt-co">محل</option>
+      <option value="land" id="opt-la">أرض</option>
+      <option value="office" id="opt-of">مكتب</option>
+      <option value="studio" id="opt-st">ستوديو</option>
     </select>
     <div id="res-count" style="font-size:11px;color:#6e7781"></div>
   </div>
   <div class="cats">
     <button class="cat on" onclick="setCat('all')" id="cat-all">الكل</button>
-    <button class="cat" onclick="setCat('apartment')" id="cat-ap">🏢 شقة</button>
-    <button class="cat" onclick="setCat('villa')" id="cat-vi">🏡 فيلا</button>
-    <button class="cat" onclick="setCat('commercial')" id="cat-co">🏪 محل</button>
-    <button class="cat" onclick="setCat('land')" id="cat-la">🌿 أرض</button>
-    <button class="cat" onclick="setCat('office')" id="cat-of">🏗️ مكتب</button>
-    <button class="cat" onclick="setCat('studio')" id="cat-st">🛋️ ستوديو</button>
+    <button class="cat" onclick="setCat('apartment')" id="cat-ap">🏢 <span id="lbl-ap">شقة</span></button>
+    <button class="cat" onclick="setCat('villa')" id="cat-vi">🏡 <span id="lbl-vi">فيلا</span></button>
+    <button class="cat" onclick="setCat('commercial')" id="cat-co">🏪 <span id="lbl-co">محل</span></button>
+    <button class="cat" onclick="setCat('land')" id="cat-la">🌿 <span id="lbl-la">أرض</span></button>
+    <button class="cat" onclick="setCat('office')" id="cat-of">🏗️ <span id="lbl-of">مكتب</span></button>
+    <button class="cat" onclick="setCat('studio')" id="cat-st">🛋️ <span id="lbl-st">ستوديو</span></button>
   </div>
   <div style="padding:0 12px;margin-bottom:8px">
     <p style="font-size:13px;font-weight:700;color:#6e7781;margin-bottom:8px" id="lbl-featured">⭐ مميزة</p>
@@ -210,7 +210,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
   <p style="font-size:13px;font-weight:700;color:#6e7781;padding:0 12px;margin-bottom:4px" id="lbl-listings">🏘️ الإعلانات</p>
   <div id="loading-browse" class="loading"><div class="ld" style="margin:0 auto;border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p style="margin-top:1rem">جاري التحميل...</p></div>
   <div class="grid" id="props-grid" style="display:none"></div>
-  <div id="empty-browse" class="empty" style="display:none"><div style="font-size:48px">🏚️</div><p>لا توجد نتائج</p></div>
+  <div id="empty-browse" class="empty" style="display:none"><div style="font-size:48px">🏚️</div><p id="lbl-nores">لا توجد نتائج</p></div>
 </div>
 
 <!-- DETAIL PAGE -->
@@ -231,10 +231,10 @@ input:focus,textarea:focus{border-color:#1a7f37}
       </div>
     </div>
     <div class="specs" id="d-specs"></div>
-    <a id="d-call" href="#" class="callbtn">📞 اتصل الآن</a>
+    <a id="d-call" href="#" class="callbtn"><span id="d-call-lbl">📞 اتصل الآن</span></a>
     <div style="background:#f6f8fa;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:12px">
       <div style="width:42px;height:42px;background:#116329;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px">👤</div>
-      <div><div style="font-weight:700;font-size:14px" id="d-owner"></div><div style="font-size:11px;color:#6e7781">صاحب الإعلان</div></div>
+      <div><div style="font-weight:700;font-size:14px" id="d-owner"></div><div style="font-size:11px;color:#6e7781" id="d-own-lbl">صاحب الإعلان</div></div>
     </div>
     <div id="msg-area">
       <div class="msgbox">
@@ -505,7 +505,8 @@ const LANGS={
     regTitle:"سجّل للوصول للإعلانات",regName:"الاسم الكامل",
     regNamePh:"مثال: محمد بن علي",regPhone:"رقم الهاتف",
     regCode:"رمز التحقق",regConfirm:"تأكيد ✓",regAgree:"بالتسجيل توافق على شروط الاستخدام",
-    titlePh:"مثال: شقة 3 غرف في حيدرة",descPh:"صف حالة العقار والمميزات...",phonePh:"0555 123 456"
+    titlePh:"مثال: شقة 3 غرف في حيدرة",descPh:"صف حالة العقار والمميزات...",phonePh:"0555 123 456",
+    all:"الكل",allWil:"كل الولايات",allCat:"كل الأنواع",searchPh:"ابحث بالمدينة أو العنوان...",res:"نتيجة"
   },
   fr:{
     browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",tag:"La 1ère plateforme immobilière algérienne",
@@ -527,7 +528,8 @@ const LANGS={
     regTitle:"Inscrivez-vous pour accéder",regName:"Nom complet",
     regNamePh:"Ex: Mohamed Ben Ali",regPhone:"Téléphone",
     regCode:"Code de vérification",regConfirm:"Confirmer ✓",regAgree:"En vous inscrivant vous acceptez nos CGU",
-    titlePh:"Ex: Appartement F3 à Hydra",descPh:"Décrivez le bien et ses équipements...",phonePh:"0555 123 456"
+    titlePh:"Ex: Appartement F3 à Hydra",descPh:"Décrivez le bien et ses équipements...",phonePh:"0555 123 456",
+    all:"Tout",allWil:"Toutes les wilayas",allCat:"Tous les types",searchPh:"Rechercher par ville ou titre...",res:"résultat(s)"
   },
   en:{
     browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",tag:"Algeria's #1 Real Estate Platform",
@@ -549,7 +551,8 @@ const LANGS={
     regTitle:"Register to access listings",regName:"Full Name",
     regNamePh:"E.g. Mohamed Ben Ali",regPhone:"Phone Number",
     regCode:"Verification Code",regConfirm:"Confirm ✓",regAgree:"By registering you agree to our Terms",
-    titlePh:"E.g. 3-room apartment in Hydra",descPh:"Describe the property and features...",phonePh:"0555 123 456"
+    titlePh:"E.g. 3-room apartment in Hydra",descPh:"Describe the property and features...",phonePh:"0555 123 456",
+    all:"All",allWil:"All Wilayas",allCat:"All Types",searchPh:"Search by city or title...",res:"result(s)"
   }
 };
 
@@ -616,6 +619,33 @@ function setLang(l){
   // Cfg
   const cl=document.getElementById("cfg-lng-lbl"); if(cl)cl.textContent=L.language;
   const cn=document.getElementById("cfg-ntf-lbl"); if(cn)cn.textContent=L.notifications;
+  // Filter buttons
+  const fall=document.getElementById("ft-all"); if(fall)fall.textContent=L.all||"الكل";
+  const frent=document.getElementById("ft-rent"); if(frent)frent.textContent=L.rent;
+  const fsale=document.getElementById("ft-sale"); if(fsale)fsale.textContent=L.sale;
+  // Cat pills in browse
+  const ca=document.getElementById("cat-all"); if(ca)ca.textContent=L.all||"الكل";
+  const apEl=document.getElementById("lbl-ap"); if(apEl)apEl.textContent=L.apartment;
+  const viEl=document.getElementById("lbl-vi"); if(viEl)viEl.textContent=L.villa;
+  const coEl=document.getElementById("lbl-co"); if(coEl)coEl.textContent=L.commercial;
+  const laEl=document.getElementById("lbl-la"); if(laEl)laEl.textContent=L.land;
+  const ofEl=document.getElementById("lbl-of"); if(ofEl)ofEl.textContent=L.office;
+  const stEl=document.getElementById("lbl-st"); if(stEl)stEl.textContent=L.studio;
+  // Select options
+  const oaw=document.getElementById("opt-all-wil"); if(oaw)oaw.textContent=L.allWil||"كل الولايات";
+  const oac=document.getElementById("opt-all-cat"); if(oac)oac.textContent=L.allCat||"كل الأنواع";
+  const oap=document.getElementById("opt-ap"); if(oap)oap.textContent=L.apartment;
+  const ovi=document.getElementById("opt-vi"); if(ovi)ovi.textContent=L.villa;
+  const oco=document.getElementById("opt-co"); if(oco)oco.textContent=L.commercial;
+  const ola=document.getElementById("opt-la"); if(ola)ola.textContent=L.land;
+  const oof=document.getElementById("opt-of"); if(oof)oof.textContent=L.office;
+  const ost=document.getElementById("opt-st"); if(ost)ost.textContent=L.studio;
+  // No results & search placeholder
+  const nr=document.getElementById("lbl-nores"); if(nr)nr.textContent=L.noResults;
+  const si=document.getElementById("search-inp"); if(si)si.placeholder=L.searchPh||"ابحث...";
+  // Detail page
+  const dc=document.getElementById("d-call-lbl"); if(dc)dc.textContent="📞 "+L.call;
+  const do2=document.getElementById("d-own-lbl"); if(do2)do2.textContent=L.owner;
   renderProps();
 }
 
@@ -659,7 +689,7 @@ function renderProps(){
     return true;
   });
 
-  document.getElementById("res-count").textContent=list.length+" نتيجة";
+  document.getElementById("res-count").textContent=list.length+" "+(LANGS[curLang].res||"نتيجة");
 
   if(list.length===0){grid.style.display="none";empty.style.display="block";}
   else{
