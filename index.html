@@ -166,10 +166,10 @@ input:focus,textarea:focus{border-color:#1a7f37}
 
 <!-- NAV -->
 <div id="nav">
-  <button class="nb on" onclick="showPage('browse')"><span style="font-size:20px">🏠</span><span id="nav-browse">تصفح</span></button>
-  <button class="nb" onclick="showPage('post')"><span style="font-size:20px">➕</span><span id="nav-post">أضف</span></button>
-  <button class="nb" onclick="showPage('favs')"><span style="font-size:20px">❤️</span><span id="nav-favs">المفضلة</span></button>
-  <button class="nb" onclick="showPage('cfg')"><span style="font-size:20px">⚙️</span><span id="nav-cfg">إعدادات</span></button>
+  <button class="nb on" onclick="navGo('browse')"><span style="font-size:20px">🏠</span><span id="nav-browse">تصفح</span></button>
+  <button class="nb" onclick="navGo('post')"><span style="font-size:20px">➕</span><span id="nav-post">أضف</span></button>
+  <button class="nb" onclick="navGo('favs')"><span style="font-size:20px">❤️</span><span id="nav-favs">المفضلة</span></button>
+  <button class="nb" onclick="navGo('cfg')"><span style="font-size:20px">⚙️</span><span id="nav-cfg">إعدادات</span></button>
 </div>
 
 <!-- BROWSE PAGE -->
@@ -435,7 +435,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <button class="btn-p" style="margin-bottom:10px" onclick="loginConfirm()">تأكيد</button>
       <button class="btn-s" onclick="document.getElementById('login-s1').style.display='block';document.getElementById('login-s2').style.display='none'">← رجوع</button>
     </div>
-    <button style="width:100%;margin-top:10px;background:transparent;border:none;cursor:pointer;color:#6e7781;font-size:13px;font-family:inherit" onclick="showPage('browse')">رجوع</button>
+    <button style="width:100%;margin-top:10px;background:transparent;border:none;cursor:pointer;color:#6e7781;font-size:13px;font-family:inherit" onclick="showPage('register')">رجوع</button>
   </div>
   </div>
 </div>
@@ -512,10 +512,16 @@ function showPage(id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id+"-page").classList.add("active");
   document.querySelectorAll(".nb").forEach(b=>b.classList.remove("on"));
-  const nb=document.querySelector(`[onclick="showPage('${id}')"]`);
+  const nb=document.querySelector(`[onclick="navGo('${id}')"]`);
   if(nb)nb.classList.add("on");
   const sh=document.getElementById("search-bar");
   if(sh)sh.style.display=id==="browse"?"flex":"none";
+  // Hide nav and header on register/login pages
+  const nav=document.getElementById("nav");
+  const hdr=document.getElementById("main-header");
+  const isAuth=id==="register"||id==="login";
+  if(nav)nav.style.display=isAuth?"none":"flex";
+  if(hdr)hdr.style.display=isAuth?"none":"block";
   if(id==="favs")renderFavs();
 }
 
@@ -720,6 +726,16 @@ function resetPost(){
   document.getElementById("p-ar").value="";
   document.getElementById("p-dsc").value="";
   document.getElementById("p-ph").value="";
+}
+
+// GUARD: block nav if not logged in
+function navGo(page){
+  if(!curUser){
+    toast("سجّل دخولك أولاً!");
+    showPage("register");
+    return;
+  }
+  showPage(page);
 }
 
 // REGISTER
