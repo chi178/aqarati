@@ -7,460 +7,739 @@
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-title" content="عقاراتي"/>
-<title>عقاراتي | منصة العقارات الجزائرية</title>
+<title>عقاراتي</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f6f8fa;color:#1f2328}
 #splash{position:fixed;inset:0;background:linear-gradient(135deg,#116329,#1a7f37);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
-.sp-logo{font-size:72px;margin-bottom:16px;animation:bo 1s infinite alternate}
-.sp-h1{color:#fff;font-size:32px;font-weight:900;margin-bottom:6px}
-.sp-p{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:40px}
-.loader{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+.spe{font-size:72px;margin-bottom:16px;animation:bo 1s infinite alternate}
+.sph{color:#fff;font-size:32px;font-weight:900;margin-bottom:6px}
+.spp{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:40px}
+.ld{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 @keyframes bo{from{transform:translateY(0)}to{transform:translateY(-10px)}}
-.hd{opacity:0;pointer-events:none}
-header{background:linear-gradient(135deg,#116329,#1a7f37);color:#fff;position:sticky;top:0;z-index:100}
-.hi{max-width:640px;margin:0 auto;padding:0 14px}
+/* PAGES */
+.page{display:none;min-height:100vh;padding-bottom:80px}
+.page.active{display:block}
+/* HEADER */
+header{background:linear-gradient(135deg,#116329,#1a7f37);color:#fff;position:sticky;top:0;z-index:100;padding:0 14px}
 .ht{display:flex;align-items:center;justify-content:space-between;padding:11px 0}
-.ln{display:flex;align-items:center;gap:10px}
 .hb{background:rgba(255,255,255,.1);border:none;border-radius:7px;padding:4px 8px;color:#fff;cursor:pointer;font-size:11px}
 .hb.on{background:rgba(255,255,255,.3);font-weight:700}
 .hbi{background:rgba(255,255,255,.15);border:none;border-radius:7px;padding:5px 7px;color:#fff;cursor:pointer;font-size:15px}
 .sb{background:rgba(255,255,255,.18);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:9px;margin-bottom:12px}
 .sb input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;text-align:right}
 .sb input::placeholder{color:rgba(255,255,255,.7)}
+/* NAV */
 #nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid #d0d7de;display:flex;padding:6px 8px 10px;gap:4px}
-.nb{flex:1;background:transparent;color:#6e7781;border:none;border-radius:10px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:400}
+.nb{flex:1;background:transparent;color:#6e7781;border:none;border-radius:10px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px}
 .nb.on{background:#116329;color:#fff;font-weight:700}
-.ne{font-size:20px}
-main{max-width:640px;margin:0 auto;padding:1rem;padding-bottom:90px}
-.fb{background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.fr{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;padding:1rem}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer}
+.cimg{height:120px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.badge{position:absolute;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700;color:#fff;top:8px;right:8px}
+.cbody{padding:10px 12px}
+.cloc{font-size:10px;color:#6e7781;margin-bottom:2px}
+.ctit{font-size:13px;font-weight:700;color:#1f2328;margin:0 0 5px;line-height:1.4}
+.cmeta{display:flex;gap:8px;font-size:11px;color:#6e7781;margin-bottom:7px}
+.cprice{font-size:14px;font-weight:900;color:#1a7f37}
+.favbtn{position:absolute;bottom:8px;left:8px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px}
+/* FILTER */
+.fbox{background:#fff;border-radius:14px;padding:10px 12px;margin:12px 12px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tbrow{display:flex;gap:4px;margin-bottom:8px}
 .tb{border:none;border-radius:20px;padding:5px 12px;cursor:pointer;font-size:11px;background:#eaeef2;color:#6e7781}
 .tb.on{background:#116329;color:#fff;font-weight:700}
-.fs{border:1px solid #d0d7de;border-radius:9px;padding:5px 9px;background:#fff;color:#1f2328;font-size:11px;cursor:pointer;flex:1;min-width:0}
-.pr{display:flex;gap:8px;margin-top:8px}
-.pi{border:1.5px solid #d0d7de;border-radius:10px;padding:6px 10px;font-size:11px;background:#fff;color:#1f2328;text-align:right;flex:1;outline:none;font-family:inherit}
-.rb{background:#eaeef2;border:none;border-radius:9px;padding:6px 10px;cursor:pointer;font-size:11px;color:#6e7781}
-.rc{font-size:11px;color:#6e7781;margin-top:6px}
-.cs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;scrollbar-width:none}
-.cb{flex-shrink:0;border:none;border-radius:20px;padding:6px 13px;cursor:pointer;background:#eaeef2;color:#6e7781;font-size:12px;display:flex;align-items:center;gap:5px}
-.cb.on{background:#116329;color:#fff;font-weight:700}
-.fsc{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
-.fc{min-width:170px;background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.fi{height:80px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:34px}
-.fb2{padding:8px 10px}
-.ft{font-size:11px;font-weight:700;color:#1f2328;margin-bottom:2px;line-height:1.3}
-.fp{font-size:12px;font-weight:900;color:#1a7f37}
-.gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
-.cd{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;transition:transform .18s}
-.cd:hover{transform:translateY(-3px)}
-.ci{height:120px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
-.bd{position:absolute;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700;color:#fff}
-.bt{top:8px;right:8px}
-.bf{top:8px;left:8px;background:#bf8700}
-.fvb{position:absolute;bottom:8px;left:8px;background:rgba(255,255,255,.85);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
-.fvb.on{background:#ef4444}
-.cb2{padding:10px 12px}
-.cl{font-size:10px;color:#6e7781;margin-bottom:2px}
-.ct{margin:0 0 5px;font-size:13px;font-weight:700;color:#1f2328;line-height:1.4}
-.cm{display:flex;gap:8px;font-size:11px;color:#6e7781;margin-bottom:7px;flex-wrap:wrap}
-.cf{display:flex;justify-content:space-between;align-items:center}
-.cp{font-size:14px;font-weight:900;color:#1a7f37}
-.br2{display:flex;gap:4px}
-.bs{font-size:9px;border-radius:10px;padding:2px 7px;font-weight:600}
-.bn{background:#dcfce7;color:#1a7f37}
-.bo2{background:#fff8c5;color:#9a6700}
-.em{text-align:center;padding:3rem;color:#6e7781}
-.ee{font-size:48px}
-.st{margin:0 0 10px;font-size:13px;font-weight:700;color:#6e7781}
-.di{height:200px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative}
-.db{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:10px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:12px;color:#116329}
-.df{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
-.df.on{background:#ef4444}
-.dd{padding:1.2rem}
-.dh{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px}
-.dlc{font-size:11px;color:#6e7781;margin-bottom:3px}
-.dt{margin:0 0 6px;font-size:19px;font-weight:900;color:#1f2328}
-.dc{color:#6e7781;font-size:13px;line-height:1.7;margin:0}
-.dpw{text-align:center}
-.dtb{border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;color:#fff;margin-bottom:6px;display:inline-block}
-.dpr{font-size:18px;font-weight:900;color:#1a7f37}
-.dn{font-size:10px;color:#1a7f37;margin-top:2px}
-.sp2{display:flex;gap:10px;margin:1rem 0;flex-wrap:wrap}
-.sc{background:#f6f8fa;border-radius:10px;padding:9px 14px;text-align:center}
-.se{font-size:17px}
-.sl{font-size:11px;color:#6e7781;margin-top:2px}
-.ar{display:flex;gap:8px;margin-bottom:1rem}
-.ca{flex:2;background:#1a7f37;color:#fff;padding:12px;border-radius:12px;text-decoration:none;font-size:14px;font-weight:700;text-align:center;display:block}
-.ib{background:#eaeef2;border:none;border-radius:12px;padding:12px 14px;cursor:pointer;font-size:14px;color:#1f2328}
-.ob{background:#f6f8fa;border-radius:14px;padding:12px;margin-bottom:1rem;display:flex;align-items:center;gap:12px}
-.oa{width:42px;height:42px;background:#116329;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex-shrink:0}
-.on2{font-weight:700;font-size:14px;color:#1f2328}
-.os{font-size:11px;color:#6e7781}
-.op{margin-right:auto;font-size:12px;color:#6e7781}
-.mb{background:#f6f8fa;border-radius:14px;padding:1rem}
-.mt{margin:0 0 10px;color:#1a7f37;font-size:14px}
-.mta{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;resize:none;box-sizing:border-box;font-family:inherit;outline:none}
-.ms{margin-top:10px;background:#1a7f37;color:#fff;border:none;border-radius:10px;padding:10px 22px;font-weight:700;cursor:pointer;font-size:14px}
-.mo{background:#d1fae5;border-radius:14px;padding:1rem;text-align:center;color:#065f46;font-weight:700}
-.pb{background:#fff;border-radius:20px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:500px;margin:0 auto}
-.ph2{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.ph3{color:#1f2328;margin:0;font-size:18px}
-.ps}
-.pg{display:flex;gap:5px;margin-bottom:1.4rem}
-.pgb{flex:1;height:5px;border-radius:3px;background:#d0d7de}
-.pgb.on{background:#1a7f37}
-.fc2{display:flex;flex-direction:column;gap:13px}
-label{font-size:12px;color:#6e7781;display:block;margin-bottom:5px;font-weight:600;text-align:right}
-.inp{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;box-sizing:border-box;font-family:inherit;outline:none}
-.sel{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;box-sizing:border-box;font-family:inherit;outline:none}
-.ta{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;resize:none;box-sizing:border-box;font-family:inherit;outline:none}
-.tr{display:flex;gap:8px}
-.tbt{flex:1;border-radius:11px;padding:11px;cursor:pointer;font-size:13px;color:#1f2328;background:#fff;border:2px solid #d0d7de}
-.tbt.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.cg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.cp2{border-radius:11px;padding:9px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid #d0d7de}
-.cp2.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.cpe{font-size:19px}
-.rr{display:flex;gap:5px}
-.rbt{flex:1;border-radius:8px;padding:7px 2px;cursor:pointer;background:#fff;color:#6e7781;font-size:11px;border:1.5px solid #d0d7de}
-.rbt.on{border-color:#1a7f37;background:#f0fdf4;color:#1a7f37;font-weight:700}
-.2r{display:flex;gap:10px}
-.2r>div{flex:1}
-.br3{display:flex;gap:8px}
-.bp{background:#1a7f37;color:#fff;border:none;border-radius:11px;padding:12px;font-weight:700;cursor:pointer;font-size:14px;flex:2;font-family:inherit}
-.bsc{border:1.5px solid #1a7f37;background:#fff;color:#1a7f37;border-radius:11px;padding:12px;font-weight:700;cursor:pointer;font-size:13px;flex:1;font-family:inherit}
-.sb2{background:#f6f8fa;border-radius:11px;padding:12px;font-size:12px;color:#6e7781;line-height:2;border-right:4px solid #1a7f37}
-.db2{text-align:center;padding:2rem 0}
-.de{font-size:60px}
-.cfg{max-width:480px;margin:0 auto}
-.pc{background:linear-gradient(135deg,#116329,#1a7f37);border-radius:16px;padding:1.2rem;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px}
-.pa{width:52px;height:52px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.pn{font-weight:900;font-size:16px}
-.pp{opacity:.8;font-size:12px}
-.pbt{background:rgba(255,255,255,.2);border:none;border-radius:9px;padding:7px 12px;color:#fff;cursor:pointer;font-size:12px;font-weight:700;margin-right:auto}
-.cs2{background:#fff;border-radius:15px;padding:1.2rem;margin-bottom:10px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.cl2{font-weight:700;margin-bottom:11px;font-size:13px;color:#6e7781}
-.lr{display:flex;gap:8px}
-.lb{flex:1;border-radius:13px;padding:11px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;border:2px solid #d0d7de}
-.lb.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.lf{font-size:22px}
-.tkr{display:flex;gap:8px}
-.tkb{flex:1;border-radius:13px;padding:11px;cursor:pointer;background:#fff;color:#1f2328;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid #d0d7de}
-.tkb.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.nr{display:flex;justify-content:space-between;align-items:center}
-.nl{font-weight:700;font-size:14px;color:#1f2328}
-.ns{font-size:11px;color:#6e7781;margin-top:2px}
+select{border:1px solid #d0d7de;border-radius:9px;padding:5px 9px;background:#fff;color:#1f2328;font-size:11px;cursor:pointer;margin-bottom:6px;width:100%}
+/* CATS */
+.cats{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}
+.cat{flex-shrink:0;border:none;border-radius:20px;padding:6px 13px;cursor:pointer;background:#eaeef2;color:#6e7781;font-size:12px}
+.cat.on{background:#116329;color:#fff;font-weight:700}
+/* DETAIL */
+#detail-page{background:#f6f8fa}
+.dimg{height:200px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative}
+.dback{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:10px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:12px;color:#116329}
+.dbody{padding:1.2rem}
+.dtit{font-size:19px;font-weight:900;color:#1f2328;margin:4px 0 8px}
+.ddesc{color:#6e7781;font-size:13px;line-height:1.7}
+.dprice{font-size:20px;font-weight:900;color:#1a7f37;margin:8px 0}
+.specs{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.spec{background:#f0fdf4;border-radius:10px;padding:8px 14px;text-align:center;font-size:12px;color:#1f2328}
+.callbtn{display:block;background:#1a7f37;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-size:15px;font-weight:700;text-align:center;margin:12px 0}
+/* POST FORM - هذا هو المهم: الحقول ثابتة لا تُعاد رسمها */
+#post-page{padding:1rem}
+.pbox{background:#fff;border-radius:16px;padding:1.5rem;max-width:500px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.prow{display:flex;gap:8px;margin-bottom:14px}
+.ptbtn{flex:1;border-radius:11px;padding:11px;cursor:pointer;font-size:13px;color:#1f2328;background:#fff;border:2px solid #d0d7de;font-family:inherit}
+.ptbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
+.catgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
+.catbtn{border-radius:11px;padding:9px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid #d0d7de;font-family:inherit}
+.catbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
+label{font-size:12px;color:#6e7781;display:block;margin-bottom:5px;font-weight:600}
+input[type=text],input[type=tel],input[type=number],textarea,select.full{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px}
+textarea{resize:none}
+input:focus,textarea:focus{border-color:#1a7f37}
+.row2{display:flex;gap:10px}
+.row2>div{flex:1}
+.rmbtn{display:flex;gap:5px;margin-bottom:14px}
+.rmbtn button{flex:1;border-radius:8px;padding:7px 2px;cursor:pointer;background:#fff;color:#6e7781;font-size:11px;border:1.5px solid #d0d7de;font-family:inherit}
+.rmbtn button.on{border-color:#1a7f37;background:#f0fdf4;color:#1a7f37;font-weight:700}
+.btnrow{display:flex;gap:8px;margin-top:8px}
+.btn-p{background:#1a7f37;color:#fff;border:none;border-radius:11px;padding:13px;font-weight:700;cursor:pointer;font-size:14px;flex:2;font-family:inherit}
+.btn-s{border:1.5px solid #1a7f37;background:#fff;color:#1a7f37;border-radius:11px;padding:12px;font-weight:700;cursor:pointer;font-size:13px;flex:1;font-family:inherit}
+.steps{display:flex;gap:5px;margin-bottom:1.2rem}
+.step{flex:1;height:5px;border-radius:3px;background:#d0d7de}
+.step.on{background:#1a7f37}
+.step-lbl{font-size:12px;color:#6e7781;margin-bottom:8px}
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#116329;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+/* MSG */
+.msgbox{background:#f6f8fa;border-radius:14px;padding:1rem;margin-top:12px}
+.msgok{background:#d1fae5;border-radius:14px;padding:1rem;text-align:center;color:#065f46;font-weight:700;margin-top:12px}
+/* EMPTY */
+.empty{text-align:center;padding:3rem;color:#6e7781}
+/* FAV PAGE */
+#favs-page{padding:1rem}
+/* CFG PAGE */
+#cfg-page{padding:1rem}
+.cbox{background:#fff;border-radius:14px;padding:1.2rem;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.clbl{font-weight:700;font-size:13px;color:#6e7781;margin-bottom:10px}
+.lrow{display:flex;gap:8px}
+.lbtn{flex:1;border-radius:13px;padding:10px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;border:2px solid #d0d7de;font-family:inherit}
+.lbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
+.tgrow{display:flex;justify-content:space-between;align-items:center}
 .tg{width:48px;height:26px;border-radius:13px;border:none;background:#d0d7de;cursor:pointer;position:relative;transition:background .3s}
 .tg.on{background:#1a7f37}
 .tgd{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;right:4px;transition:right .3s}
 .tg.on .tgd{right:24px}
-.api{background:#f6f8fa;border-radius:9px;padding:9px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.apie{font-size:15px}
-.apin{font-size:11px;font-weight:700;color:#1f2328}
-.apiv{font-size:10px;color:#6e7781;font-family:monospace}
-.apib{font-size:10px;background:#dcfce7;color:#1a7f37;border-radius:6px;padding:2px 7px;font-weight:600;margin-right:auto}
-.af{margin-top:10px;font-size:11px;color:#6e7781;line-height:1.9;border-top:1px solid #d0d7de;padding-top:10px}
-.lw{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;background:#f6f8fa}
-.lb2{background:#fff;border-radius:20px;padding:2rem;width:100%;max-width:360px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.lc{text-align:center;margin-bottom:1.5rem}
-.le{font-size:48px}
-.lh{color:#1a7f37;margin:8px 0 4px;font-size:20px}
-.lp{color:#6e7781;font-size:13px}
-.oh{background:#dcfce7;border-radius:12px;padding:10px;text-align:center;margin-bottom:14px;font-size:13px;color:#1a7f37}
-.bl{width:100%;margin-top:10px;background:transparent;border:none;cursor:pointer;color:#6e7781;font-size:13px;font-family:inherit}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#116329;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
-.toast.show{opacity:1}
-.loading-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:999}
-.loading-box{background:#fff;border-radius:16px;padding:1.5rem 2rem;text-align:center}
-.loading-box p{margin-top:10px;color:#116329;font-weight:700}
+.apirow{background:#f6f8fa;border-radius:9px;padding:8px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.apibadge{font-size:10px;background:#dcfce7;color:#1a7f37;border-radius:6px;padding:2px 7px;font-weight:600;margin-right:auto}
+/* PROFILE */
+.pcard{background:linear-gradient(135deg,#116329,#1a7f37);border-radius:16px;padding:1.2rem;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px}
+.pav{width:52px;height:52px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.pbtn{background:rgba(255,255,255,.2);border:none;border-radius:9px;padding:7px 12px;color:#fff;cursor:pointer;font-size:12px;font-weight:700;margin-right:auto;font-family:inherit}
+/* LOADING */
+.loading{text-align:center;padding:3rem;color:#6e7781}
+/* FEAT SCROLL */
+.featscroll{display:flex;gap:10px;overflow-x:auto;padding:0 12px 8px;scrollbar-width:none}
+.featcard{min-width:160px;background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.feimg{height:75px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:30px}
+.febdy{padding:7px 10px}
+.fetit{font-size:11px;font-weight:700;color:#1f2328;margin-bottom:2px}
+.fepr{font-size:12px;font-weight:900;color:#1a7f37}
 </style>
 </head>
 <body>
-<div id="splash">
-  <div class="sp-logo">🏘️</div>
-  <h1 class="sp-h1">عقاراتي</h1>
-  <p class="sp-p">منصة العقارات الجزائرية الأولى</p>
-  <div class="loader"></div>
-</div>
-<div id="toast" class="toast"></div>
-<div id="app"></div>
 
+<div id="splash">
+  <div class="spe">🏘️</div>
+  <h1 class="sph">عقاراتي</h1>
+  <p class="spp">منصة العقارات الجزائرية الأولى</p>
+  <div class="ld"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- HEADER -->
+<header id="main-header">
+  <div class="ht">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:24px">🏘️</span>
+      <div>
+        <div style="font-size:17px;font-weight:900" id="app-name">عقاراتي</div>
+        <div style="font-size:10px;opacity:.8" id="app-tag">منصة العقارات الجزائرية الأولى</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:5px;align-items:center">
+      <button class="hb on" id="btn-ar" onclick="setLang('ar')">ع</button>
+      <button class="hb" id="btn-fr" onclick="setLang('fr')">FR</button>
+      <button class="hb" id="btn-en" onclick="setLang('en')">EN</button>
+      <button class="hbi" onclick="showPage('login')">🔑</button>
+    </div>
+  </div>
+  <div class="sb" id="search-bar">
+    <span>🔍</span>
+    <input type="text" id="search-inp" placeholder="ابحث..." oninput="filterProps()"/>
+  </div>
+</header>
+
+<!-- NAV -->
+<div id="nav">
+  <button class="nb on" onclick="showPage('browse')"><span style="font-size:20px">🏠</span><span id="nav-browse">تصفح</span></button>
+  <button class="nb" onclick="showPage('post')"><span style="font-size:20px">➕</span><span id="nav-post">أضف</span></button>
+  <button class="nb" onclick="showPage('favs')"><span style="font-size:20px">❤️</span><span id="nav-favs">المفضلة</span></button>
+  <button class="nb" onclick="showPage('cfg')"><span style="font-size:20px">⚙️</span><span id="nav-cfg">إعدادات</span></button>
+</div>
+
+<!-- BROWSE PAGE -->
+<div id="browse-page" class="page active">
+  <div class="fbox">
+    <div class="tbrow">
+      <button class="tb on" onclick="setFType('all')" id="ft-all">الكل</button>
+      <button class="tb" onclick="setFType('rent')" id="ft-rent">إيجار</button>
+      <button class="tb" onclick="setFType('sale')" id="ft-sale">بيع</button>
+    </div>
+    <select id="f-wilaya" onchange="filterProps()">
+      <option value="all">كل الولايات</option>
+    </select>
+    <select id="f-cat" onchange="filterProps()">
+      <option value="all">كل الأنواع</option>
+      <option value="apartment">شقة</option>
+      <option value="villa">فيلا</option>
+      <option value="commercial">محل</option>
+      <option value="land">أرض</option>
+      <option value="office">مكتب</option>
+      <option value="studio">ستوديو</option>
+    </select>
+    <div id="res-count" style="font-size:11px;color:#6e7781"></div>
+  </div>
+  <div class="cats">
+    <button class="cat on" onclick="setCat('all')" id="cat-all">الكل</button>
+    <button class="cat" onclick="setCat('apartment')" id="cat-ap">🏢 شقة</button>
+    <button class="cat" onclick="setCat('villa')" id="cat-vi">🏡 فيلا</button>
+    <button class="cat" onclick="setCat('commercial')" id="cat-co">🏪 محل</button>
+    <button class="cat" onclick="setCat('land')" id="cat-la">🌿 أرض</button>
+    <button class="cat" onclick="setCat('office')" id="cat-of">🏗️ مكتب</button>
+    <button class="cat" onclick="setCat('studio')" id="cat-st">🛋️ ستوديو</button>
+  </div>
+  <div style="padding:0 12px;margin-bottom:8px">
+    <p style="font-size:13px;font-weight:700;color:#6e7781;margin-bottom:8px">⭐ مميزة</p>
+    <div class="featscroll" id="feat-list"></div>
+  </div>
+  <p style="font-size:13px;font-weight:700;color:#6e7781;padding:0 12px;margin-bottom:4px">🏘️ الإعلانات</p>
+  <div id="loading-browse" class="loading"><div class="ld" style="margin:0 auto;border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p style="margin-top:1rem">جاري التحميل...</p></div>
+  <div class="grid" id="props-grid" style="display:none"></div>
+  <div id="empty-browse" class="empty" style="display:none"><div style="font-size:48px">🏚️</div><p>لا توجد نتائج</p></div>
+</div>
+
+<!-- DETAIL PAGE -->
+<div id="detail-page" class="page">
+  <div class="dimg" id="d-img"><span id="d-em" style="font-size:80px"></span>
+    <button class="dback" onclick="showPage('browse')">← رجوع</button>
+  </div>
+  <div class="dbody">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+      <div style="flex:1">
+        <div style="font-size:11px;color:#6e7781" id="d-loc"></div>
+        <h2 class="dtit" id="d-tit"></h2>
+        <p class="ddesc" id="d-desc"></p>
+      </div>
+      <div style="text-align:center">
+        <span id="d-type-badge" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;color:#fff;display:inline-block;margin-bottom:6px"></span>
+        <div class="dprice" id="d-price"></div>
+      </div>
+    </div>
+    <div class="specs" id="d-specs"></div>
+    <a id="d-call" href="#" class="callbtn">📞 اتصل الآن</a>
+    <div style="background:#f6f8fa;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div style="width:42px;height:42px;background:#116329;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px">👤</div>
+      <div><div style="font-weight:700;font-size:14px" id="d-owner"></div><div style="font-size:11px;color:#6e7781">صاحب الإعلان</div></div>
+    </div>
+    <div id="msg-area">
+      <div class="msgbox">
+        <h4 style="color:#1a7f37;font-size:14px;margin-bottom:10px">💬 راسل المالك</h4>
+        <textarea id="msg-ta" rows="3" placeholder="مرحباً، أنا مهتم بعقارك..." style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;resize:none;box-sizing:border-box;font-family:inherit;outline:none"></textarea>
+        <button onclick="sendMsg()" style="margin-top:10px;background:#1a7f37;color:#fff;border:none;border-radius:10px;padding:10px 22px;font-weight:700;cursor:pointer;font-size:14px;font-family:inherit">إرسال</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POST PAGE - حقول ثابتة لا تُعاد رسمها أبداً -->
+<div id="post-page" class="page">
+  <div style="padding:1rem;padding-bottom:90px">
+  <div class="pbox">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <h2 style="font-size:18px;color:#1f2328">أضف إعلانك</h2>
+      <span style="font-size:12px;color:#6e7781" id="step-lbl">الخطوة 1 من 3</span>
+    </div>
+    <div class="steps">
+      <div class="step on" id="s1"></div>
+      <div class="step" id="s2"></div>
+      <div class="step" id="s3"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div id="post-s1">
+      <label>نوع الإعلان</label>
+      <div class="prow">
+        <button class="ptbtn on" id="pt-rent" onclick="setPostType('rent')">🔑 إيجار</button>
+        <button class="ptbtn" id="pt-sale" onclick="setPostType('sale')">🏷️ بيع</button>
+      </div>
+      <label>نوع العقار</label>
+      <div class="catgrid">
+        <button class="catbtn on" id="pc-apartment" onclick="setPostCat('apartment')"><span style="font-size:19px">🏢</span>شقة</button>
+        <button class="catbtn" id="pc-villa" onclick="setPostCat('villa')"><span style="font-size:19px">🏡</span>فيلا</button>
+        <button class="catbtn" id="pc-commercial" onclick="setPostCat('commercial')"><span style="font-size:19px">🏪</span>محل</button>
+        <button class="catbtn" id="pc-land" onclick="setPostCat('land')"><span style="font-size:19px">🌿</span>أرض</button>
+        <button class="catbtn" id="pc-office" onclick="setPostCat('office')"><span style="font-size:19px">🏗️</span>مكتب</button>
+        <button class="catbtn" id="pc-studio" onclick="setPostCat('studio')"><span style="font-size:19px">🛋️</span>ستوديو</button>
+      </div>
+      <button class="btn-p" onclick="goStep(2)">التالي →</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="post-s2" style="display:none">
+      <label>الولاية</label>
+      <select class="full" id="p-wil"></select>
+      <label>البلدية / الحي</label>
+      <input type="text" id="p-com" placeholder="مثال: حيدرة"/>
+      <label>عنوان الإعلان</label>
+      <input type="text" id="p-ttl" placeholder="مثال: شقة 3 غرف في حيدرة"/>
+      <div class="row2">
+        <div><label>السعر (دج)</label><input type="number" id="p-pr" placeholder="35000"/></div>
+        <div><label>المساحة (م²)</label><input type="number" id="p-ar" placeholder="90"/></div>
+      </div>
+      <label>عدد الغرف</label>
+      <div class="rmbtn" id="rm-btns">
+        <button class="on" onclick="setRm(0)" id="rm-0">—</button>
+        <button onclick="setRm(1)" id="rm-1">1</button>
+        <button onclick="setRm(2)" id="rm-2">2</button>
+        <button onclick="setRm(3)" id="rm-3">3</button>
+        <button onclick="setRm(4)" id="rm-4">4</button>
+        <button onclick="setRm(5)" id="rm-5">5</button>
+        <button onclick="setRm(6)" id="rm-6">6</button>
+        <button onclick="setRm(7)" id="rm-7">7+</button>
+      </div>
+      <div class="btnrow">
+        <button class="btn-s" onclick="goStep(1)">← رجوع</button>
+        <button class="btn-p" onclick="goStep(3)">التالي →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="post-s3" style="display:none">
+      <label>وصف العقار</label>
+      <textarea id="p-dsc" rows="4" placeholder="صف حالة العقار، المميزات..."></textarea>
+      <label>رقم الهاتف</label>
+      <input type="tel" id="p-ph" placeholder="0555 123 456"/>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <label style="margin:0">قابل للتفاوض</label>
+        <button class="tg" id="neg-tg" onclick="toggleNeg()"><div class="tgd"></div></button>
+      </div>
+      <div class="btnrow">
+        <button class="btn-s" onclick="goStep(2)">← رجوع</button>
+        <button class="btn-p" id="pub-btn" onclick="publishAd()">🚀 نشر</button>
+      </div>
+    </div>
+
+    <!-- DONE -->
+    <div id="post-done" style="display:none;text-align:center;padding:2rem 0">
+      <div style="font-size:60px">🎉</div>
+      <h2 style="color:#1a7f37;margin:10px 0 6px">تم النشر!</h2>
+      <p style="color:#6e7781;font-size:13px">إعلانك محفوظ وسيظهر للجميع</p>
+      <button class="btn-p" style="margin-top:14px" onclick="resetPost();showPage('browse')">تصفح الإعلانات</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- FAVS PAGE -->
+<div id="favs-page" class="page">
+  <div style="padding:1rem">
+    <h2 style="margin-bottom:1rem">❤️ المفضلة</h2>
+    <div class="grid" id="favs-grid"></div>
+    <div id="favs-empty" class="empty" style="display:none"><div style="font-size:48px">🤍</div><p>لا توجد مفضلة</p></div>
+  </div>
+</div>
+
+<!-- CFG PAGE -->
+<div id="cfg-page" class="page">
+  <div style="padding:1rem;padding-bottom:90px">
+  <div class="pcard">
+    <div class="pav" id="user-av">🔑</div>
+    <div style="flex:1"><div style="font-weight:900;font-size:16px" id="user-name">زائر</div><div style="opacity:.8;font-size:12px" id="user-ph"></div></div>
+    <button class="pbtn" id="login-btn" onclick="showPage('login')">دخول</button>
+  </div>
+  <div class="cbox">
+    <div class="clbl">🌍 اللغة</div>
+    <div class="lrow">
+      <button class="lbtn on" id="l-ar" onclick="setLang('ar')"><span style="font-size:20px">🇩🇿</span>العربية</button>
+      <button class="lbtn" id="l-fr" onclick="setLang('fr')"><span style="font-size:20px">🇫🇷</span>Français</button>
+      <button class="lbtn" id="l-en" onclick="setLang('en')"><span style="font-size:20px">🇬🇧</span>English</button>
+    </div>
+  </div>
+  <div class="cbox">
+    <div class="tgrow">
+      <div><div style="font-weight:700;font-size:14px">🔔 الإشعارات</div><div style="font-size:11px;color:#6e7781" id="notif-lbl">مُفعَّلة</div></div>
+      <button class="tg on" id="notif-tg" onclick="toggleNotif()"><div class="tgd"></div></button>
+    </div>
+  </div>
+  <div class="cbox">
+    <div class="clbl">🔥 Firebase — متصل</div>
+    <div class="apirow"><span>🔥</span><div><div style="font-size:11px;font-weight:700">Firestore DB</div><div style="font-size:10px;color:#6e7781;font-family:monospace">aqarati-ca546</div></div><span class="apibadge">✅ متصل</span></div>
+    <div class="apirow"><span>🌐</span><div><div style="font-size:11px;font-weight:700">Project ID</div><div style="font-size:10px;color:#6e7781;font-family:monospace">aqarati-ca546</div></div><span class="apibadge">✅</span></div>
+    <div style="margin-top:10px;font-size:11px;color:#6e7781;line-height:1.9;border-top:1px solid #d0d7de;padding-top:10px">
+      <div>🏘️ عقاراتي · الإصدار 2.0</div>
+      <div>🗺️ 58 ولاية جزائرية</div>
+      <div>⚖️ جميع الحقوق محفوظة 2026</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="page">
+  <div style="padding:2rem 1rem;max-width:360px;margin:0 auto">
+  <div class="pbox">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:48px">🏘️</div>
+      <h2 style="color:#1a7f37;margin:8px 0 4px">عقاراتي</h2>
+      <p style="color:#6e7781;font-size:13px" id="login-sub">أدخل رقم هاتفك</p>
+    </div>
+    <div id="login-s1">
+      <label>رقم الهاتف</label>
+      <input type="tel" id="login-ph" placeholder="0555 000 000" style="text-align:center;font-size:16px;letter-spacing:2px"/>
+      <button class="btn-p" onclick="loginNext()">التالي →</button>
+    </div>
+    <div id="login-s2" style="display:none">
+      <div style="background:#dcfce7;border-radius:12px;padding:10px;text-align:center;margin-bottom:14px;font-size:13px;color:#1a7f37">رمز التجربة: <b>1234</b></div>
+      <label>رمز التحقق</label>
+      <input type="number" id="login-otp" placeholder="0 0 0 0" maxlength="4" style="text-align:center;font-size:24px;letter-spacing:8px"/>
+      <button class="btn-p" style="margin-bottom:10px" onclick="loginConfirm()">تأكيد</button>
+      <button class="btn-s" onclick="document.getElementById('login-s1').style.display='block';document.getElementById('login-s2').style.display='none'">← رجوع</button>
+    </div>
+    <button style="width:100%;margin-top:10px;background:transparent;border:none;cursor:pointer;color:#6e7781;font-size:13px;font-family:inherit" onclick="showPage('browse')">رجوع</button>
+  </div>
+  </div>
+</div>
+
+<!-- Firebase -->
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig={
-  apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",
-  authDomain:"aqarati-ca546.firebaseapp.com",
-  projectId:"aqarati-ca546",
-  storageBucket:"aqarati-ca546.firebasestorage.app",
-  messagingSenderId:"658752167015",
-  appId:"1:658752167015:web:4e364c56ae0ebab40848c2"
-};
-
-const app=initializeApp(firebaseConfig);
+const cfg={apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",authDomain:"aqarati-ca546.firebaseapp.com",projectId:"aqarati-ca546",storageBucket:"aqarati-ca546.firebasestorage.app",messagingSenderId:"658752167015",appId:"1:658752167015:web:4e364c56ae0ebab40848c2"};
+const app=initializeApp(cfg);
 const db=getFirestore(app);
-window._db=db;
-window._col=collection;
-window._add=addDoc;
-window._get=getDocs;
-window._q=query;
-window._ord=orderBy;
-window._ts=serverTimestamp;
-window._dbReady=true;
+window.DB=db;
+window.DBcol=collection;
+window.DBadd=addDoc;
+window.DBget=getDocs;
+window.DBq=query;
+window.DBord=orderBy;
+window.DBts=serverTimestamp;
 window.dispatchEvent(new Event("dbready"));
 </script>
 
 <script>
 const W=["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","07-بسكرة","08-بشار","09-البليدة","10-البويرة","11-تمنراست","12-تبسة","13-تلمسان","14-تيارت","15-تيزي وزو","16-الجزائر","17-الجلفة","18-جيجل","19-سطيف","20-سعيدة","21-سكيكدة","22-سيدي بلعباس","23-عنابة","24-قالمة","25-قسنطينة","26-المدية","27-مستغانم","28-المسيلة","29-معسكر","30-ورقلة","31-وهران","32-البيض","33-إليزي","34-برج بوعريريج","35-بومرداس","36-الطارف","37-تندوف","38-تيسمسيلت","39-الوادي","40-خنشلة","41-سوق أهراس","42-تيبازة","43-ميلة","44-عين الدفلى","45-النعامة","46-عين تموشنت","47-غرداية","48-غليزان","49-تيميمون","50-برج باجي مختار","51-أولاد جلال","52-بني عباس","53-عين صالح","54-عين قزام","55-توقرت","56-جانت","57-المغير","58-المنيعة"];
 const CE={apartment:"🏢",villa:"🏡",commercial:"🏪",land:"🌿",office:"🏗️",studio:"🛋️"};
-const CATS=["all","apartment","villa","commercial","land","office","studio"];
-const TL={ar:{dir:"rtl",app:"عقاراتي",tag:"منصة العقارات الجزائرية الأولى",srch:"ابحث...",browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",rent:"إيجار",sale:"بيع",all:"الكل",allW:"كل الولايات",apartment:"شقة",villa:"فيلا",commercial:"محل",land:"أرض",office:"مكتب",studio:"ستوديو",res:"نتيجة",rooms:"غرف",area:"م²",floor:"طابق",ok:"موثق",snd:"إرسال",sent:"✅ تم الإرسال!",back:"رجوع",add:"أضف إعلانك",of:"من",atype:"نوع الإعلان",ptype:"نوع العقار",wil:"الولاية",com:"البلدية",ttl:"عنوان الإعلان",pr:"السعر (دج)",ar2:"المساحة (م²)",rm:"غرف",dsc:"الوصف",ph:"الهاتف",nxt:"التالي",prv:"رجوع",pub:"🚀 نشر",ptit:"تم النشر!",psub:"إعلانك محفوظ وسيظهر للجميع!",br:"تصفح",nores:"لا نتائج",pm:"/شهر",pu:"دج",lng:"اللغة",thm:"المظهر",drk:"داكن",lgt:"فاتح",ntf:"الإشعارات",fave:"لا توجد مفضلة",selW:"اختر الولاية",own:"المالك",call:"اتصل",neg:"قابل للتفاوض",feat:"مميزة",lat:"إعلانات المستخدمين",lgn:"دخول",logt:"خروج",gst:"زائر",non:"مُفعَّلة",nof:"معطَّلة",minp:"السعر الأدنى",maxp:"السعر الأقصى",rst:"إعادة تعيين",step:"الخطوة",loading:"جاري التحميل...",saving:"جاري الحفظ..."},
-fr:{dir:"ltr",app:"Aqarati",tag:"La 1ère plateforme immobilière algérienne",srch:"Rechercher...",browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",rent:"Location",sale:"Vente",all:"Tout",allW:"Toutes wilayas",apartment:"Appartement",villa:"Villa",commercial:"Local",land:"Terrain",office:"Bureau",studio:"Studio",res:"résultat(s)",rooms:"pièces",area:"m²",floor:"étage",ok:"Vérifié",snd:"Envoyer",sent:"✅ Envoyé!",back:"Retour",add:"Publier annonce",of:"sur",atype:"Type",ptype:"Bien",wil:"Wilaya",com:"Commune",ttl:"Titre",pr:"Prix (DA)",ar2:"Superficie",rm:"Pièces",dsc:"Description",ph:"Téléphone",nxt:"Suivant",prv:"Retour",pub:"🚀 Publier",ptit:"Publié!",psub:"Votre annonce est visible par tous!",br:"Annonces",nores:"Aucun résultat",pm:"/mois",pu:"DA",lng:"Langue",thm:"Thème",drk:"Sombre",lgt:"Clair",ntf:"Notifications",fave:"Aucun favori",selW:"Choisir wilaya",own:"Propriétaire",call:"Appeler",neg:"Négociable",feat:"À la une",lat:"Annonces utilisateurs",lgn:"Connexion",logt:"Déconnexion",gst:"Visiteur",non:"Activées",nof:"Désactivées",minp:"Prix min",maxp:"Max Price",rst:"Réinitialiser",step:"Étape",loading:"Chargement...",saving:"Enregistrement..."},
-en:{dir:"ltr",app:"Aqarati",tag:"Algeria's #1 Real Estate Platform",srch:"Search...",browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",rent:"Rent",sale:"Sale",all:"All",allW:"All Wilayas",apartment:"Apartment",villa:"Villa",commercial:"Shop",land:"Land",office:"Office",studio:"Studio",res:"result(s)",rooms:"rooms",area:"m²",floor:"floor",ok:"Verified",snd:"Send",sent:"✅ Sent!",back:"Back",add:"Post Property",of:"of",atype:"Ad Type",ptype:"Property",wil:"Wilaya",com:"District",ttl:"Title",pr:"Price (DZD)",ar2:"Area (m²)",rm:"Rooms",dsc:"Description",ph:"Phone",nxt:"Next",prv:"Back",pub:"🚀 Publish",ptit:"Published!",psub:"Your ad is live for everyone!",br:"Browse",nores:"No results",pm:"/month",pu:"DZD",lng:"Language",thm:"Theme",drk:"Dark",lgt:"Light",ntf:"Notifications",fave:"No favorites",selW:"Select Wilaya",own:"Owner",call:"Call",neg:"Negotiable",feat:"Featured",lat:"User Listings",lgn:"Login",logt:"Logout",gst:"Guest",non:"Enabled",nof:"Disabled",minp:"Min Price",maxp:"Max Price",rst:"Reset",step:"Step",loading:"Loading...",saving:"Saving..."}};
 
-let S={lang:"ar",tab:"browse",q:"",fT:"all",fW:"all",fC:"all",minP:"",maxP:"",sel:null,favs:[],stp:1,done:false,msg:"",msgOk:false,notif:true,user:null,showL:false,lstp:1,lph:"",lotp:"",form:{type:"rent",cat:"apartment",wil:"",com:"",ttl:"",pr:"",ar:"",rm:0,dsc:"",ph:"",neg:false},props:[],loading:true,saving:false};
+// Fill wilayas
+const pwil=document.getElementById("p-wil");
+const fwil=document.getElementById("f-wilaya");
+W.forEach(w=>{
+  pwil.innerHTML+=`<option value="${w}">${w}</option>`;
+  fwil.innerHTML+=`<option value="${w}">${w}</option>`;
+});
 
-function t(){return TL[S.lang]}
-function fmt(p,type){return p.toLocaleString("fr-DZ")+" "+t().pu+(type==="rent"?t().pm:"")}
-function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),3000)}
+// STATE
+let props=[];
+let favs=[];
+let fType="all";
+let fCat="all";
+let postType="rent";
+let postCat="apartment";
+let postRm=0;
+let postNeg=false;
+let curLang="ar";
+let notifOn=true;
+let curUser=null;
+let curProp=null;
 
-async function loadProps(){
-  if(!window._dbReady)return;
-  try{
-    const snap=await window._get(window._q(window._col(window._db,"properties"),window._ord("createdAt","desc")));
-    S.props=snap.docs.map(d=>({id:d.id,...d.data()}));
-    S.loading=false;
-    re();
-  }catch(e){S.loading=false;re();}
+// LANG
+const LANGS={
+  ar:{browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",tag:"منصة العقارات الجزائرية الأولى"},
+  fr:{browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",tag:"La 1ère plateforme immobilière algérienne"},
+  en:{browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",tag:"Algeria's #1 Real Estate Platform"}
+};
+
+function setLang(l){
+  curLang=l;
+  ["ar","fr","en"].forEach(x=>{
+    document.getElementById("btn-"+x).classList.toggle("on",x===l);
+    document.getElementById("l-"+x).classList.toggle("on",x===l);
+  });
+  const L=LANGS[l];
+  document.getElementById("nav-browse").textContent=L.browse;
+  document.getElementById("nav-post").textContent=L.post;
+  document.getElementById("nav-favs").textContent=L.favs;
+  document.getElementById("nav-cfg").textContent=L.cfg;
+  document.getElementById("app-tag").textContent=L.tag;
+  document.documentElement.dir=l==="ar"?"rtl":"ltr";
+  document.documentElement.lang=l;
+  renderProps();
 }
 
-async function saveAd(){
-  if(!window._dbReady){toast("قاعدة البيانات غير جاهزة");return;}
-  S.saving=true;re();
-  try{
-    const f=S.form;
-    await window._add(window._col(window._db,"properties"),{
-      type:f.type,cat:f.cat,wil:f.wil,city:f.com,rooms:Number(f.rm),area:Number(f.ar),floor:0,
-      price:Number(f.pr),em:CE[f.cat],
-      title:{ar:f.ttl,fr:f.ttl,en:f.ttl},
-      desc:{ar:f.dsc,fr:f.dsc,en:f.dsc},
-      phone:f.ph,owner:S.user?S.user.name:"مستخدم",
-      feat:false,ok:false,neg:f.neg,
-      createdAt:window._ts()
-    });
-    S.saving=false;S.done=true;
-    await loadProps();
-    re();
-    toast("✅ تم نشر إعلانك!");
-  }catch(e){S.saving=false;toast("حدث خطأ، حاول مرة أخرى");re();}
+// PAGES
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id+"-page").classList.add("active");
+  document.querySelectorAll(".nb").forEach(b=>b.classList.remove("on"));
+  const nb=document.querySelector(`[onclick="showPage('${id}')"]`);
+  if(nb)nb.classList.add("on");
+  const sh=document.getElementById("search-bar");
+  if(sh)sh.style.display=id==="browse"?"flex":"none";
+  if(id==="favs")renderFavs();
 }
 
-function re(){
-  const app=document.getElementById("app");
-  if(!app)return;
-  app.innerHTML=render();
-}
+// TOAST
+function toast(m){const el=document.getElementById("toast");el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),3000);}
 
-function render(){
-  const tk=t();
-  if(S.showL)return renderLogin();
-  if(S.sel&&S.tab==="browse")return renderDetail();
-  return`<div dir="${tk.dir}">
-    ${renderHeader()}
-    <main>${renderTab()}</main>
-    ${renderNav()}
-    ${S.saving?`<div class="loading-overlay"><div class="loading-box"><div class="loader" style="border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p>${tk.saving}</p></div></div>`:""}
-  </div>`;
-}
+// FORMAT PRICE
+function fmt(p,type){return p.toLocaleString("fr-DZ")+" دج"+(type==="rent"?"/شهر":"");}
 
-function renderHeader(){
-  const tk=t();
-  return`<header><div class="hi">
-    <div class="ht">
-      <div class="ln"><span style="font-size:26px">🏘️</span><div><div style="font-size:19px;font-weight:900">${tk.app}</div><div style="font-size:10px;opacity:.8">${tk.tag}</div></div></div>
-      <div style="display:flex;gap:5px;align-items:center">
-        <button class="hb${S.lang==="ar"?" on":""}" onclick="setLang('ar')">ع</button>
-        <button class="hb${S.lang==="fr"?" on":""}" onclick="setLang('fr')">FR</button>
-        <button class="hb${S.lang==="en"?" on":""}" onclick="setLang('en')">EN</button>
-        <button class="hbi" onclick="setState({showL:true})">👤</button>
-      </div>
-    </div>
-    ${S.tab==="browse"?`<div class="sb"><span>🔍</span><input placeholder="${tk.srch}" value="${S.q}" oninput="updateQ(this.value)">${S.q?`<button onclick="setState({q:''})" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer">✕</button>`:""}</div>`:""}
-  </div></header>`;
-}
+// RENDER PROPS
+function renderProps(){
+  const grid=document.getElementById("props-grid");
+  const empty=document.getElementById("empty-browse");
+  const feat=document.getElementById("feat-list");
+  const q=document.getElementById("search-inp").value.toLowerCase();
+  const fw=document.getElementById("f-wilaya").value;
 
-function renderNav(){
-  const tk=t();
-  return`<div id="nav">${[["browse","🏠",tk.browse],["post","➕",tk.post],["favs","❤️",tk.favs],["cfg","⚙️",tk.cfg]].map(([id,em,lb])=>`<button class="nb${S.tab===id?" on":""}" onclick="setTab('${id}')"><span class="ne">${em}</span>${lb}</button>`).join("")}</div>`;
-}
-
-function renderTab(){
-  if(S.tab==="browse")return renderBrowse();
-  if(S.tab==="post")return renderPost();
-  if(S.tab==="favs")return renderFavs();
-  if(S.tab==="cfg")return renderCfg();
-  return"";
-}
-
-function getList(){
-  return S.props.filter(p=>{
-    if(S.fT!=="all"&&p.type!==S.fT)return false;
-    if(S.fW!=="all"&&p.wil!==S.fW)return false;
-    if(S.fC!=="all"&&p.cat!==S.fC)return false;
-    if(S.minP&&p.price<Number(S.minP))return false;
-    if(S.maxP&&p.price>Number(S.maxP))return false;
-    if(S.q&&!p.title[S.lang].toLowerCase().includes(S.q.toLowerCase())&&!p.wil.includes(S.q)&&!p.city.includes(S.q))return false;
+  const list=props.filter(p=>{
+    if(fType!=="all"&&p.type!==fType)return false;
+    if(fw!=="all"&&p.wil!==fw)return false;
+    if(fCat!=="all"&&p.cat!==fCat)return false;
+    if(q&&!((p.title&&p.title[curLang]||"").toLowerCase().includes(q))&&!(p.wil||"").includes(q)&&!(p.city||"").includes(q))return false;
     return true;
   });
+
+  document.getElementById("res-count").textContent=list.length+" نتيجة";
+
+  if(list.length===0){grid.style.display="none";empty.style.display="block";}
+  else{
+    grid.style.display="grid";empty.style.display="none";
+    grid.innerHTML=list.map(p=>cardHTML(p)).join("");
+  }
+
+  // featured
+  const feats=props.filter(p=>p.feat);
+  feat.innerHTML=feats.map(p=>`<div class="featcard" onclick="openDetail('${p.id}')">
+    <div class="feimg">${p.em||"🏠"}</div>
+    <div class="febdy"><div class="fetit">${p.title?p.title[curLang]||"":""}</div><div class="fepr">${fmt(p.price,p.type)}</div></div>
+  </div>`).join("");
 }
 
-function renderCard(p){
-  const tk=t();
-  const fav=S.favs.includes(p.id);
-  return`<div class="cd" onclick="selProp('${p.id}')">
-    <div class="ci">${p.em}
-      <span class="bd bt" style="background:${p.type==="rent"?"#1a7f37":"#cf222e"}">${p.type==="rent"?tk.rent:tk.sale}</span>
-      ${p.feat?`<span class="bd bf">⭐</span>`:""}
-      <button class="fvb${fav?" on":""}" onclick="event.stopPropagation();togFav('${p.id}')">${fav?"❤️":"🤍"}</button>
+function cardHTML(p){
+  const fav=favs.includes(p.id);
+  return`<div class="card" onclick="openDetail('${p.id}')">
+    <div class="cimg">${p.em||"🏠"}
+      <span class="badge" style="background:${p.type==="rent"?"#1a7f37":"#cf222e"}">${p.type==="rent"?"إيجار":"بيع"}</span>
+      <button class="favbtn" onclick="event.stopPropagation();togFav('${p.id}')">${fav?"❤️":"🤍"}</button>
     </div>
-    <div class="cb2">
-      <div class="cl">📍 ${p.city||""} · ${(p.wil||"").split("-")[1]||p.wil||""}</div>
-      <h3 class="ct">${p.title?p.title[S.lang]||"":""}</h3>
-      <div class="cm">
-        ${p.rooms>0?`<span>🛏 ${p.rooms} ${tk.rooms}</span>`:""}
-        <span>📐 ${p.area} ${tk.area}</span>
-        ${p.floor>0?`<span>🏢 ${tk.floor} ${p.floor}</span>`:""}
-      </div>
-      <div class="cf">
-        <span class="cp">${fmt(p.price,p.type)}</span>
-        <div class="br2">
-          ${p.neg?`<span class="bs bn">${tk.neg}</span>`:""}
-          ${p.ok?`<span class="bs bo2">✓</span>`:""}
-        </div>
-      </div>
+    <div class="cbody">
+      <div class="cloc">📍 ${p.city||""} · ${(p.wil||"").split("-")[1]||""}</div>
+      <h3 class="ctit">${p.title?p.title[curLang]||"":""}</h3>
+      <div class="cmeta">${p.rooms>0?`<span>🛏 ${p.rooms}</span>`:""}<span>📐 ${p.area||0} م²</span></div>
+      <div class="cprice">${fmt(p.price,p.type)}</div>
     </div>
   </div>`;
 }
 
-function renderBrowse(){
-  const tk=t();
-  const list=getList();
-  if(S.loading)return`<div style="text-align:center;padding:3rem"><div class="loader" style="margin:0 auto;border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p style="margin-top:1rem;color:#6e7781">${tk.loading}</p></div>`;
-  return`<div>
-    <div class="fb">
-      <div class="fr">
-        <div style="display:flex;gap:4px">${["all","rent","sale"].map(tp=>`<button class="tb${S.fT===tp?" on":""}" onclick="setState({fT:'${tp}'})">${tp==="all"?tk.all:tp==="rent"?tk.rent:tp==="sale}</button>`).join("")}</div>
-        <select class="fs" onchange="setState({fW:this.value})"><option value="all">${tk.allW}</option>${W.map(w=>`<option value="${w}"${S.fW===w?" selected":""}>${w}</option>`).join("")}</select>
-        <select class="fs" style="flex:0" onchange="setState({fC:this.value})">${CATS.map(c=>`<option value="${c}"${S.fC===c?" selected":""}>${c==="all"?tk.all:tk[c]}</option>`).join("")}</select>
-      </div>
-      <div class="pr">
-        <input class="pi" type="number" placeholder="${tk.minp}" value="${S.minP}" onblur="setState({minP:this.value})"/>
-        <input class="pi" type="number" placeholder="${tk.maxp}" value="${S.maxP}" onblur="setState({maxP:this.value})"/>
-        <button class="rb" onclick="setState({minP:'',maxP:''})">${tk.rst}</button>
-      </div>
-      <div class="rc">${list.length} ${tk.res}</div>
-    </div>
-    <div class="cs">${CATS.map(c=>`<button class="cb${S.fC===c?" on":""}" onclick="setState({fC:'${c}'})"><span>${c!=="all"?CE[c]:""}</span>${c==="all"?tk.all:tk[c]}</button>`).join("")}</div>
-    <p class="st">🏘️ ${tk.lat}</p>
-    ${list.length===0?`<div class="em"><div class="ee">🏚️</div><p>${tk.nores}</p></div>`:`<div class="gr">${list.map(p=>renderCard(p)).join("")}</div>`}
-  </div>`;
+function filterProps(){renderProps();}
+
+function setFType(t){
+  fType=t;
+  ["all","rent","sale"].forEach(x=>document.getElementById("ft-"+x).classList.toggle("on",x===t));
+  renderProps();
 }
 
-function renderDetail(){
-  const tk=t();
-  const p=S.sel;
-  const fav=S.favs.includes(p.id);
-  return`<div dir="${tk.dir}"><div style="max-width:640px;margin:0 auto">
-    <div class="di">${p.em}
-      <button class="db" onclick="setState({sel:null})">← ${tk.back}</button>
-      <button class="df${fav?" on":""}" onclick="togFav('${p.id}')">${fav?"❤️":"🤍"}</button>
-    </div>
-    <div class="dd">
-      <div class="dh">
-        <div style="flex:1">
-          <div class="dlc">📍 ${p.city||""} · ${p.wil||""}</div>
-          <h2 class="dt">${p.title?p.title[S.lang]||"":""}</h2>
-          <p class="dc">${p.desc?p.desc[S.lang]||"":""}</p>
-        </div>
-        <div class="dpw">
-          <span class="dtb" style="background:${p.type==="rent"?"#1a7f37":"#cf222e"}">${p.type==="rent"?tk.rent:tk.sale}</span>
-          <div class="dpr">${fmt(p.price,p.type)}</div>
-          ${p.neg?`<div class="dn">${tk.neg}</div>`:""}
-        </div>
-      </div>
-      <div class="sp2">
-        ${p.rooms>0?`<div class="sc"><div class="se">🛏</div><div class="sl">${p.rooms} ${tk.rooms}</div></div>`:""}
-        <div class="sc"><div class="se">📐</div><div class="sl">${p.area} ${tk.area}</div></div>
-        ${p.ok?`<div class="sc"><div class="se">✅</div><div class="sl">${tk.ok}</div></div>`:""}
-      </div>
-      <div class="ar">
-        <a href="tel:${p.phone}" class="ca">📞 ${tk.call}</a>
-        <button class="ib" onclick="navigator.share&&navigator.share({title:'عقاراتي',text:'${p.title?p.title.ar:""}',url:window.location.href})">📤</button>
-      </div>
-      <div class="ob">
-        <div class="oa">👤</div>
-        <div><div class="on2">${p.owner||""}</div><div class="os">${tk.own}</div></div>
-        <div class="op">${p.phone||""}</div>
-      </div>
-      ${S.msgOk?`<div class="mo">${tk.sent}</div>`:`<div class="mb">
-        <h4 class="mt">💬 راسل المالك</h4>
-        <textarea class="mta" id="msg-ta" rows="3" placeholder="مرحباً...">${S.msg}</textarea>
-        <button class="ms" onclick="sendMsg()">${tk.snd}</button>
-      </div>`}
-    </div>
-    <div style="height:80px"></div>
-  </div>${renderNav()}</div>`;
+function setCat(c){
+  fCat=c;
+  ["all","ap","vi","co","la","of","st"].forEach((x,i)=>{
+    const id="cat-"+(i===0?"all":x);
+    const el=document.getElementById(id);
+    if(el)el.classList.toggle("on",i===0?c==="all":["apartment","villa","commercial","land","office","studio"][i-1]===c);
+  });
+  document.getElementById("f-cat").value=c;
+  renderProps();
 }
 
-function renderPost(){
-  const tk=t();
-  const f=S.form;
-  if(S.done)return`<div style="max-width:500px;margin:0 auto;padding:1rem;padding-bottom:90px"><div class="pb"><div class="db2"><div class="de">🎉</div><h2 style="color:#1a7f37">${tk.ptit}</h2><p style="color:#6e7781;font-size:13px">${tk.psub}</p><button class="bp" style="margin-top:10px" onclick="setState({tab:'browse',done:false,stp:1,form:{type:'rent',cat:'apartment',wil:'',com:'',ttl:'',pr:'',ar:'',rm:0,dsc:'',ph:'',neg:false}})">${tk.br}</button></div></div></div>`;
-  return`<div style="max-width:500px;margin:0 auto;padding:1rem;padding-bottom:90px"><div class="pb">
-    <div class="ph2"><h2 class="ph3">${tk.add}</h2><span class="ps">${tk.step} ${S.stp} ${tk.of} 3</span></div>
-    <div class="pg">${[1,2,3].map(s=>`<div class="pgb${s<=S.stp?" on":""}"></div>`).join("")}</div>
-    ${S.stp===1?`<div class="fc2">
-      <div><label>${tk.atype}</label><div class="tr">
-        <button class="tbt${f.type==="rent"?" on":""}" onclick="setForm('type','rent')">🔑 ${tk.rent}</button>
-        <button class="tbt${f.type==="sale"?" on":""}" onclick="setForm('type','sale')">🏷️ ${tk.sale}</button>
-      </div></div>
-      <div><label>${tk.ptype}</label><div class="cg">
-        ${["apartment","villa","commercial","land","office","studio"].map(c=>`<button class="cp2${f.cat===c?" on":""}" onclick="setForm('cat','${c}')"><span class="cpe">${CE[c]}</span>${tk[c]}</button>`).join("")}
-      </div></div>
-      <button class="bp" onclick="setState({stp:2})">${tk.nxt} →</button>
-    </div>`:""}
-    ${S.stp===2?`<div class="fc2">
-      <div><label>${tk.wil}</label><select class="sel" onchange="setForm('wil',this.value)"><option value="">${tk.selW}</option>${W.map(w=>`<option value="${w}"${f.wil===w?" selected":""}>${w}</option>`).join("")}</select></div>
-      <div><label>${tk.com}</label><input class="inp" value="${f.com}" onblur="setForm('com',this.value)" placeholder="الحي أو البلدية"/></div>
-      <div><label>${tk.ttl}</label><input class="inp" value="${f.ttl}" onblur="setForm('ttl',this.value)"/></div>
-      <div style="display:flex;gap:10px">
-        <div style="flex:1"><label>${tk.pr}</label><input class="inp" type="number" value="${f.pr}" onblur="setForm('pr',this.value)"/></div>
-        <div style="flex:1"><label>${tk.ar2}</label><input class="inp" type="number" value="${f.ar}" onblur="setForm('ar',this.value)"/></div>
-      </div>
-      <div><label>${tk.rm}</label><div class="rr">${[0,1,2,3,4,5,6,7].map(n=>`<button class="rbt${f.rm===n?" on":""}" onclick="setForm('rm',${n})">${n===0?"—":n===7?"7+":n}</button>`).join("")}</div></div>
-      <div class="br3"><button class="bsc" onclick="setState({stp:1})">← ${tk.prv}</button><button class="bp" onclick="if(S.form.wil&&S.form.ttl)setState({stp:3})">${tk.nxt} →</button></div>
-    </div>`:""}
-    ${S.stp===3?`<div class="fc2">
-      <div><label>${tk.dsc}</label><textarea class="ta" rows="4" onblur="setForm('dsc',this.value)">${f.dsc}</textarea></div>
-      <div><label>${tk.ph}</label><input class="inp" value="${f.ph}" onblur="setForm('ph',this.value)" placeholder="0555 123 456"/></div>
-      <div style="display:flex;align-items:center;gap:10px;justify-content:space-between">
-        <label style="margin:0">${tk.neg}</label>
-        <button class="tg${f.neg?" on":""}" onclick="setForm('neg',!S.form.neg)"><div class="tgd"></div></button>
-      </div>
-      <div class="sb2">
-        <div style="color:#1f2328;font-weight:700">${CE[f.cat]} ${f.ttl||"—"}</div>
-        <div>📍 ${f.wil||"—"}${f.com?" · "+f.com:""}</div>
-        <div>💰 ${f.pr?Number(f.pr).toLocaleString("fr-DZ")+" "+tk.pu+(f.type==="rent"?tk.pm:""):"—"}</div>
-      </div>
-      <div class="br3"><button class="bsc" onclick="setState({stp:2})">← ${tk.prv}</button><button class="bp" onclick="if(S.form.ph)saveAd()">${tk.pub}</button></div>
-    </div>`:""}
-  </div></div>`;
+// DETAIL
+function openDetail(id){
+  curProp=props.find(p=>p.id===id);
+  if(!curProp)return;
+  const p=curProp;
+  document.getElementById("d-em").textContent=p.em||"🏠";
+  document.getElementById("d-loc").textContent="📍 "+(p.city||"")+" · "+(p.wil||"");
+  document.getElementById("d-tit").textContent=p.title?p.title[curLang]||"":"";
+  document.getElementById("d-desc").textContent=p.desc?p.desc[curLang]||"":"";
+  document.getElementById("d-price").textContent=fmt(p.price,p.type);
+  const tb=document.getElementById("d-type-badge");
+  tb.textContent=p.type==="rent"?"إيجار":"بيع";
+  tb.style.background=p.type==="rent"?"#1a7f37":"#cf222e";
+  document.getElementById("d-call").href="tel:"+(p.phone||"");
+  document.getElementById("d-call").textContent="📞 "+(p.phone||"اتصل");
+  document.getElementById("d-owner").textContent=p.owner||"";
+  let specs="";
+  if(p.rooms>0)specs+=`<div class="spec">🛏 ${p.rooms} غرف</div>`;
+  specs+=`<div class="spec">📐 ${p.area||0} م²</div>`;
+  if(p.ok)specs+=`<div class="spec">✅ موثق</div>`;
+  document.getElementById("d-specs").innerHTML=specs;
+  document.getElementById("msg-area").innerHTML=`<div class="msgbox"><h4 style="color:#1a7f37;font-size:14px;margin-bottom:10px">💬 راسل المالك</h4><textarea id="msg-ta" rows="3" placeholder="مرحباً..." style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:10px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;resize:none;box-sizing:border-box;font-family:inherit;outline:none"></textarea><button onclick="sendMsg()" style="margin-top:10px;background:#1a7f37;color:#fff;border:none;border-radius:10px;padding:10px 22px;font-weight:700;cursor:pointer;font-size:14px;font-family:inherit">إرسال</button></div>`;
+  showPage("detail");
+}
+
+function sendMsg(){
+  const ta=document.getElementById("msg-ta");
+  if(ta&&ta.value.trim()){
+    document.getElementById("msg-area").innerHTML=`<div class="msgok">✅ تم الإرسال! سيتصل بك المالك قريباً.</div>`;
+    toast("تم إرسال رسالتك!");
+  }
+}
+
+// FAVS
+function togFav(id){
+  if(favs.includes(id))favs=favs.filter(x=>x!==id);
+  else favs.push(id);
+  renderProps();
 }
 
 function renderFavs(){
-  const tk=t();
-  const list=S.props.filter(p=>S.favs.includes(p.id));
-  return`<div style="padding:1rem;padding-bottom:90px"><h2 style="margin:0 0 1rem;
+  const grid=document.getElementById("favs-grid");
+  const empty=document.getElementById("favs-empty");
+  const list=props.filter(p=>favs.includes(p.id));
+  if(list.length===0){grid.innerHTML="";empty.style.display="block";}
+  else{grid.innerHTML=list.map(p=>cardHTML(p)).join("");empty.style.display="none";}
+}
+
+// POST
+function setPostType(t){
+  postType=t;
+  document.getElementById("pt-rent").classList.toggle("on",t==="rent");
+  document.getElementById("pt-sale").classList.toggle("on",t==="sale");
+}
+
+function setPostCat(c){
+  postCat=c;
+  ["apartment","villa","commercial","land","office","studio"].forEach(x=>{
+    document.getElementById("pc-"+x).classList.toggle("on",x===c);
+  });
+}
+
+function setRm(n){
+  postRm=n;
+  for(let i=0;i<=7;i++){const el=document.getElementById("rm-"+i);if(el)el.classList.toggle("on",i===n);}
+}
+
+function toggleNeg(){
+  postNeg=!postNeg;
+  const tg=document.getElementById("neg-tg");
+  tg.classList.toggle("on",postNeg);
+}
+
+function goStep(n){
+  if(n===3){
+    const ttl=document.getElementById("p-ttl").value;
+    const wil=document.getElementById("p-wil").value;
+    if(!ttl||!wil){toast("أدخل الولاية والعنوان");return;}
+  }
+  [1,2,3].forEach(i=>{
+    document.getElementById("post-s"+i).style.display=i===n?"block":"none";
+    document.getElementById("s"+i).classList.toggle("on",i<=n);
+  });
+  document.getElementById("step-lbl").textContent="الخطوة "+n+" من 3";
+}
+
+async function publishAd(){
+  const ph=document.getElementById("p-ph").value;
+  if(!ph){toast("أدخل رقم الهاتف");return;}
+  const btn=document.getElementById("pub-btn");
+  btn.textContent="جاري الحفظ...";
+  btn.disabled=true;
+  try{
+    const data={
+      type:postType,cat:postCat,
+      wil:document.getElementById("p-wil").value,
+      city:document.getElementById("p-com").value,
+      ttl:document.getElementById("p-ttl").value,
+      price:Number(document.getElementById("p-pr").value)||0,
+      area:Number(document.getElementById("p-ar").value)||0,
+      rooms:postRm,floor:0,
+      em:CE[postCat],
+      title:{ar:document.getElementById("p-ttl").value,fr:document.getElementById("p-ttl").value,en:document.getElementById("p-ttl").value},
+      desc:{ar:document.getElementById("p-dsc").value,fr:document.getElementById("p-dsc").value,en:document.getElementById("p-dsc").value},
+      phone:ph,
+      owner:curUser?curUser.name:"مستخدم",
+      feat:false,ok:false,neg:postNeg,
+      createdAt:window.DBts?window.DBts():new Date()
+    };
+    if(window.DB){
+      const ref=await window.DBadd(window.DBcol(window.DB,"properties"),data);
+      props.unshift({id:ref.id,...data});
+    }
+    [1,2,3].forEach(i=>{document.getElementById("post-s"+i).style.display="none";});
+    document.getElementById("post-done").style.display="block";
+    toast("✅ تم نشر إعلانك!");
+  }catch(e){toast("حدث خطأ، تأكد من Firestore");btn.textContent="🚀 نشر";btn.disabled=false;}
+}
+
+function resetPost(){
+  document.getElementById("post-done").style.display="none";
+  goStep(1);
+  document.getElementById("p-ttl").value="";
+  document.getElementById("p-com").value="";
+  document.getElementById("p-pr").value="";
+  document.getElementById("p-ar").value="";
+  document.getElementById("p-dsc").value="";
+  document.getElementById("p-ph").value="";
+}
+
+// LOGIN
+function loginNext(){
+  const ph=document.getElementById("login-ph").value;
+  if(ph.length<9){toast("أدخل رقم صحيح");return;}
+  document.getElementById("login-s1").style.display="none";
+  document.getElementById("login-s2").style.display="block";
+  document.getElementById("login-sub").textContent="أدخل رمز التحقق";
+}
+
+function loginConfirm(){
+  const otp=document.getElementById("login-otp").value;
+  if(otp==="1234"){
+    const ph=document.getElementById("login-ph").value;
+    curUser={name:"سيدي شهاب",ph};
+    document.getElementById("user-name").textContent="سيدي شهاب";
+    document.getElementById("user-ph").textContent=ph;
+    document.getElementById("user-av").textContent="👤";
+    document.getElementById("login-btn").textContent="خروج";
+    document.getElementById("login-btn").onclick=()=>{curUser=null;document.getElementById("user-name").textContent="زائر";document.getElementById("user-av").textContent="🔑";document.getElementById("login-btn").textContent="دخول";document.getElementById("login-btn").onclick=()=>showPage("login");};
+    toast("✅ مرحباً سيدي شهاب!");
+    showPage("browse");
+  }else{toast("رمز خاطئ! الرمز هو 1234");}
+}
+
+// NOTIF
+function toggleNotif(){
+  notifOn=!notifOn;
+  document.getElementById("notif-tg").classList.toggle("on",notifOn);
+  document.getElementById("notif-lbl").textContent=notifOn?"مُفعَّلة":"معطَّلة";
+}
+
+// LOAD from Firebase
+async function loadProps(){
+  try{
+    const snap=await window.DBget(window.DBq(window.DBcol(window.DB,"properties"),window.DBord("createdAt","desc")));
+    props=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){props=[];}
+  document.getElementById("loading-browse").style.display="none";
+  document.getElementById("props-grid").style.display="grid";
+  renderProps();
+}
+
+// INIT
+window.addEventListener("load",()=>{
+  setTimeout(()=>{const s=document.getElementById("splash");if(s){s.style.opacity="0";setTimeout(()=>s.remove(),500);}},1800);
+});
+
+window.addEventListener("dbready",()=>loadProps());
+
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}
+
+let dp;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;setTimeout(()=>{if(confirm("ثبّت تطبيق عقاراتي؟")){dp.prompt();}},5000);});
+</script>
+</body>
+</html>
