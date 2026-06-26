@@ -1,280 +1,103 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#15803d"/>
-<title>عقاراتي | Aqarati</title>
-<style>
-/* --- التصميم العصري والمتغيرات (Light & Dark Mode) --- */
-:root {
-  --bg-main: #f3f4f6;
-  --bg-card: #ffffff;
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --primary: #15803d;
-  --primary-hover: #166534;
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --border: #e5e7eb;
-  --radius: 16px;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="dark"] {
-  --bg-main: #121212;
-  --bg-card: #1e1e1e;
-  --text-main: #f9fafb;
-  --text-muted: #9ca3af;
-  --primary: #22c55e;
-  --primary-hover: #16a34a;
-  --nav-bg: rgba(30, 30, 30, 0.85);
-  --border: #374151;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
-body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
-
-/* شاشة التحميل */
-#splash { position: fixed; inset: 0; background: linear-gradient(135deg, #0f5132, #15803d); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s; }
-.splash-logo { font-size: 40px; color: #fff; font-weight: 900; margin-bottom: 20px; letter-spacing: 2px; }
-.loader { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: sp 1s linear infinite; }
-@keyframes sp { to { transform: rotate(360deg); } }
-
-/* هيكل الصفحات */
-.page { display: none; min-height: 100vh; padding-bottom: 90px; }
-.page.active { display: block; }
-.container { padding: 16px; max-width: 600px; margin: 0 auto; }
-
-/* الهيدر العلوي */
-header { background: var(--bg-card); padding: 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.brand { font-size: 22px; font-weight: 800; color: var(--primary); }
-.lang-box { display: flex; background: var(--bg-main); border-radius: 8px; padding: 4px; gap: 4px; }
-.lang-btn { background: transparent; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer; }
-.lang-btn.on { background: var(--primary); color: #fff; }
-.search-bar { background: var(--bg-main); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); }
-.search-bar input { flex: 1; background: transparent; border: none; outline: none; color: var(--text-main); font-size: 14px; }
-
-/* الشريط السفلي (Navigation) المزود بـ SVGs */
-#nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--nav-bg); backdrop-filter: blur(10px); border-top: 1px solid var(--border); display: flex; padding: 10px 8px 16px; }
-.nav-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; cursor: pointer; }
-.nav-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
-.nav-btn.on { color: var(--primary); }
-
-/* البطاقات (Cards) */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
-.card { background: var(--bg-card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; }
-.card-img { height: 160px; background-size: cover; background-position: center; background-color: var(--border); position: relative; }
-.card-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: #fff; padding: 4px 10px; font-size: 11px; font-weight: bold; border-radius: 8px; }
-.card-body { padding: 16px; }
-.card-loc { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-.card-tit { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; line-height: 1.4; }
-.card-price { font-size: 18px; font-weight: 900; color: var(--primary); }
-
-/* الحقول والأزرار */
-.input-box { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-size: 14px; background: var(--bg-main); color: var(--text-main); margin-bottom: 16px; outline: none; }
-.input-box:focus { border-color: var(--primary); }
-.btn { width: 100%; background: var(--primary); color: #fff; border: none; border-radius: 12px; padding: 16px; font-size: 15px; font-weight: bold; cursor: pointer; }
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-
-/* أدوات التصفية */
-.filter-tabs { display: flex; background: var(--bg-card); border-radius: 12px; padding: 6px; margin-bottom: 12px; border: 1px solid var(--border); }
-.filter-tab { flex: 1; text-align: center; padding: 8px; font-size: 13px; font-weight: 600; color: var(--text-muted); border-radius: 8px; cursor: pointer; }
-.filter-tab.on { background: var(--bg-main); color: var(--primary); }
-
-/* صفحة الإعدادات والملف الشخصي */
-.profile-card { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); border-radius: var(--radius); padding: 24px; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 16px; }
-.profile-av { width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.cfg-box { background: var(--bg-card); border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); margin-bottom: 16px; }
-
-/* رفع الصور */
-.img-upload { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; margin-bottom: 16px; background: var(--bg-main); }
-.img-upload img { max-width: 100%; border-radius: 8px; margin-top: 12px; display: none; }
-
-/* التنبيهات */
-.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: var(--bg-card); padding: 12px 24px; border-radius: 30px; font-size: 13px; font-weight: bold; z-index: 9999; opacity: 0; pointer-events: none; }
-.toast.show { opacity: 1; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عقاراتي</title>
+    <style>
+        :root {
+            --bg-body: #f3f4f6; --bg-card: #ffffff; --text-main: #111827; 
+            --primary: #15803d; --border: #e5e7eb;
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212; --bg-card: #1e1e1e; --text-main: #f9fafb; 
+            --primary: #22c55e; --border: #374151;
+        }
+        body { background: var(--bg-body); color: var(--text-main); font-family: sans-serif; transition: 0.3s; }
+        
+        /* إخفاء المحتوى قبل الدخول */
+        #main-app { display: none; }
+        
+        /* صفحة التسجيل */
+        #auth-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; }
+        .card { background: var(--bg-card); padding: 25px; border-radius: 15px; width: 100%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-body); color: var(--text-main); }
+        .btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        /* الأيقونات (تم حل مشكلة المربعات) */
+        .icon { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+        
+        #nav-bar { position: fixed; bottom: 0; width: 100%; background: var(--bg-card); display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--border); }
+    </style>
 </head>
 <body>
 
-<div id="splash">
-  <div class="splash-logo">AQARATI</div>
-  <div class="loader"></div>
-</div>
-
-<div id="toast" class="toast"></div>
-
-<header id="main-header">
-  <div class="header-top">
-    <div class="brand">عقاراتي</div>
-    <div class="lang-box">
-      <button class="lang-btn on" id="btn-ar" onclick="setLang('ar')">ع</button>
-      <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
-  <div class="search-bar" id="search-bar">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    <input type="text" id="search-inp" placeholder="ابحث بالمدينة أو الولاية..." oninput="filterProps()"/>
-  </div>
-</header>
-
-<div id="nav">
-  <button class="nav-btn on" onclick="navGo('browse')">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-    <span id="nav-browse">الرئيسية</span>
-  </button>
-  <button class="nav-btn" onclick="navGo('post')">
-    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-    <span id="nav-post">إضافة</span>
-  </button>
-  <button class="nav-btn" onclick="navGo('favs')">
-    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-    <span id="nav-favs">المفضلة</span>
-  </button>
-  <button class="nav-btn" onclick="navGo('cfg')">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-    <span id="nav-cfg">الإعدادات</span>
-  </button>
-</div>
-
-<div id="browse-page" class="page active">
-  <div class="container">
-    <div class="filter-tabs">
-      <div class="filter-tab on" id="ft-all" onclick="setFType('all')">الكل</div>
-      <div class="filter-tab" id="ft-rent" onclick="setFType('rent')">إيجار</div>
-      <div class="filter-tab" id="ft-sale" onclick="setFType('sale')">بيع</div>
-    </div>
-    <select id="f-wilaya" class="input-box" onchange="filterProps()" style="margin-bottom:8px; padding:10px;">
-      <option value="all" id="opt-all-wil">كل الولايات</option>
-    </select>
-    
-    <div style="margin-top:20px; margin-bottom:10px; font-weight:bold; color:var(--text-muted)" id="lbl-listings">آخر العقارات</div>
-    <div id="props-grid" class="grid"></div>
-    <div id="empty-browse" style="display:none; text-align:center; padding:40px; color:var(--text-muted);" id="lbl-nores">لا توجد إعلانات مطابقة</div>
-  </div>
-</div>
-
-<div id="post-page" class="page">
-  <div class="container">
-    <div class="cfg-box">
-      <h3 style="margin-bottom:20px; color:var(--primary)" id="post-h2">إضافة إعلان جديد</h3>
-      
-      <label style="font-size:12px; font-weight:bold; color:var(--text-muted); display:block; margin-bottom:8px" id="p-atype">نوع المعاملة</label>
-      <select id="post-type" class="input-box">
-        <option value="rent">إيجار</option>
-        <option value="sale">بيع</option>
-      </select>
-
-      <input type="text" id="p-ttl" class="input-box" placeholder="عنوان الإعلان (مثال: شقة للبيع)"/>
-      <select id="p-wil" class="input-box"></select>
-      <input type="text" id="p-com" class="input-box" placeholder="البلدية / الحي"/>
-      <input type="number" id="p-pr" class="input-box" placeholder="السعر (بالدينار)"/>
-      
-      <div class="img-upload" onclick="document.getElementById('file-inp').click()">
-        <span id="upload-txt" style="font-size:13px; color:var(--text-muted)">📷 اضغط هنا لرفع صورة العقار</span>
-        <input type="file" id="file-inp" accept="image/*" style="display:none" onchange="handleImageUpload(event)"/>
-        <img id="img-preview" src=""/>
-      </div>
-
-      <textarea id="p-dsc" class="input-box" rows="4" placeholder="وصف العقار بالتفصيل..."></textarea>
-      
-      <button class="btn" id="pub-btn" onclick="publishAd()">نشر الإعلان</button>
-    </div>
-  </div>
-</div>
-
-<div id="cfg-page" class="page">
-  <div class="container">
-    <div class="profile-card">
-      <div class="profile-av">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-      </div>
-      <div>
-        <h2 id="user-name" style="font-size:20px; margin-bottom:4px">زائر</h2>
-        <p id="user-ph" style="font-size:13px; opacity:0.8">سجل دخولك للإدارة</p>
-      </div>
+    <div id="auth-page">
+        <div class="card">
+            <h2>تسجيل الدخول</h2>
+            <input type="text" id="user-name" class="input" placeholder="الاسم الكامل">
+            <input type="text" id="user-phone" class="input" placeholder="رقم الهاتف">
+            <button class="btn" onclick="handleLogin()">دخول للمحتوى</button>
+        </div>
     </div>
 
-    <div class="cfg-box">
-      <h3 style="font-size:14px; margin-bottom:16px; color:var(--text-muted)" id="cfg-theme">مظهر التطبيق</h3>
-      <button class="btn btn-outline" onclick="toggleTheme()" id="btn-theme">🌙 تفعيل الوضع الليلي</button>
+    <div id="main-app">
+        <header style="padding: 20px; font-weight: bold; font-size: 20px;">مرحباً <span id="display-name"></span></header>
+        
+        <div style="padding: 20px;">
+            <button class="btn" onclick="toggleDarkMode()">تغيير الوضع (ليلي/نهاري)</button>
+            <div id="admin-panel" style="margin-top: 20px; padding: 15px; border: 2px solid var(--primary); border-radius: 10px; display: none;">
+                <h3 style="color: var(--primary);">👑 لوحة المشرف (CHIHEB)</h3>
+                <p>صلاحيات التحكم مفعلة لهذا الحساب.</p>
+            </div>
+        </div>
+
+        <nav id="nav-bar">
+            <svg class="icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            <svg class="icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path></svg>
+            <svg class="icon"><circle cx="12" cy="12" r="3"></circle></svg>
+        </nav>
     </div>
 
-    <div id="admin-section" class="cfg-box" style="display:none; border-color:var(--primary)">
-      <h3 style="font-size:14px; margin-bottom:16px; color:var(--primary)">👑 لوحة تحكم الإدارة (CHIHEB)</h3>
-      <div id="admin-list"></div>
-    </div>
+    <script>
+        // التحقق عند التحميل
+        window.onload = () => {
+            const user = localStorage.getItem('user_data');
+            if (user) {
+                showApp(JSON.parse(user));
+            }
+        };
 
-    <button class="btn" id="login-btn" onclick="showPage('register')">تسجيل الدخول / إنشاء حساب</button>
-  </div>
-</div>
+        function handleLogin() {
+            const name = document.getElementById('user-name').value;
+            const phone = document.getElementById('user-phone').value;
+            
+            if(!name || !phone) return alert("يرجى ملء البيانات");
 
-<div id="register-page" class="page">
-  <div class="container" style="display:flex; flex-direction:column; justify-content:center; min-height:80vh">
-    <div class="cfg-box" style="text-align:center">
-      <div class="brand" style="font-size:28px; margin-bottom:8px">عقاراتي</div>
-      <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px" id="reg-title">تسجيل الدخول للمنصة</p>
-      
-      <input type="text" id="reg-name" class="input-box" placeholder="الاسم الكامل (أو CHIHEB للإدارة)"/>
-      <input type="tel" id="reg-ph" class="input-box" placeholder="رقم الهاتف (مثال: 0562109877)"/>
-      
-      <button class="btn" onclick="regConfirm()" id="reg-confirm">تسجيل الدخول</button>
-    </div>
-  </div>
-</div>
+            const userData = { name, phone };
+            localStorage.setItem('user_data', JSON.stringify(userData));
+            showApp(userData);
+        }
 
-<div id="favs-page" class="page">
-  <div class="container">
-    <h3 style="margin-bottom:16px; color:var(--text-main)" id="favs-title">قائمة المفضلة</h3>
-    <div id="favs-grid" class="grid"></div>
-    <div id="favs-empty" style="text-align:center; padding:40px; color:var(--text-muted); display:none">لا توجد عقارات في المفضلة</div>
-  </div>
-</div>
+        function showApp(user) {
+            document.getElementById('auth-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('display-name').innerText = user.name;
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getFirestore,collection,addDoc,getDocs,query,orderBy,updateDoc,doc,deleteDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+            // التحقق من صلاحيات المشرف
+            if (user.name === 'CHIHEB' && user.phone === '0562109877') {
+                document.getElementById('admin-panel').style.display = 'block';
+            }
+        }
 
-const cfg={apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",authDomain:"aqarati-ca546.firebaseapp.com",projectId:"aqarati-ca546"};
-const app=initializeApp(cfg);
-const db=getFirestore(app);
-
-window.DB=db;
-window.DBcol=collection;
-window.DBadd=addDoc;
-window.DBget=getDocs;
-window.DBq=query;
-window.DBord=orderBy;
-window.DBupd=updateDoc;
-window.DBdel=deleteDoc;
-window.DBdoc=doc;
-window.dispatchEvent(new Event("dbready"));
-</script>
-
-<script>
-/* البيانات الأساسية */
-const W=["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","16-الجزائر","31-وهران","39-الوادي","58-المنيعة"]; // تم الاختصار كمثال، يمكنك إضافة الـ 58
-const pwil=document.getElementById("p-wil");
-const fwil=document.getElementById("f-wilaya");
-W.forEach(w=>{
-  pwil.innerHTML+=`<option value="${w}">${w}</option>`;
-  fwil.innerHTML+=`<option value="${w}">${w}</option>`;
-});
-
-/* إدارة الحالة (State) */
-let props=[];
-let favs=[];
-let fType="all";
-let curLang="ar";
-let curUser=null;
-let base64Img="";
-let isDark = localStorage.getItem("theme") === "dark";
-
-/* الترجمة المحدثة */
-const LANGS={
-  ar:{ browse:"الرئيسية",post:"إضافة",favs:"المفضلة",cfg:"الإعدادات", rent:"إيجار",sale:"بيع", all:"الكل", search:"ابحث بالمدينة أو الولاية...", loginBtn:"تسجيل الدخول / إنشاء حساب", logoutBtn:"تسجيل الخروج", themeBtnL:"🌙 تفعيل الوضع الليلي", themeBtnD:"☀️ تفعيل الوضع الفاتح" },
-  fr:{ browse:"Accueil",post:"Publier",favs:"Favoris",cfg:"Paramètres", rent:"Location",sale:"Vente", all:"Tout", search:"Rechercher une ville...", loginBtn:"Se
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.getAttribute('data-theme') === 'light') {
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+            }
+        }
+    </script>
+</body>
+</html>
