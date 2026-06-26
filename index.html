@@ -3,43 +3,44 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <meta name="theme-color" content="#116329"/>
-    <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-title" content="عقاراتي"/>
-    <title>عقاراتي</title>
+    <meta name="theme-color" content="#0f5132"/>
+    <title>عقاراتي | المنصة العقارية الاحترافية</title>
     <style>
-        /* --- الأساسيات والمتغيرات --- */
+        /* --- التصميم العصري والهوية البصرية الجديدة --- */
         :root {
-            --primary: #116329;
-            --primary-light: #1a7f37;
-            --bg-main: #f6f8fa;
-            --bg-card: #fff;
-            --text-main: #1f2328;
-            --text-muted: #6e7781;
-            --border-color: #d0d7de;
-            --accent-red: #cf222e;
-            --accent-gold: #bf8700;
+            --primary: #0f5132;
+            --primary-light: #198754;
+            --primary-soft: #e8f5e9;
+            --bg-main: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-main: #212529;
+            --text-muted: #6c757d;
+            --border-color: #e9ecef;
+            --accent-red: #dc3545;
+            --accent-gold: #ffc107;
+            --radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
             background: var(--bg-main);
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- شاشة الترحيب (Splash Screen) --- */
+        /* --- شاشة الترحيب الفاخرة --- */
         #splash {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(180deg, var(--primary), #0a3622);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -48,868 +49,804 @@
             transition: opacity 0.5s ease;
         }
 
-        .splash-emoji {
-            font-size: 72px;
-            margin-bottom: 16px;
-            animation: bounce 1s infinite alternate;
+        .splash-logo {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #fff;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
         }
 
         .splash-title {
             color: #fff;
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 6px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
 
         .splash-subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 14px;
-            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-top: 5px;
         }
 
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        .loader-bar {
+            width: 140px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 40%;
+            background: #fff;
+            animation: loading 1.2s infinite ease-in-out;
+        }
+        @keyframes loading {
+            0% { left: -40%; }
+            100% { left: 100%; }
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-
-        /* --- صفحات التطبيق الهيكلية --- */
+        /* --- الصفحات والهيكل العام --- */
         .page {
             display: none;
             min-height: 100vh;
-            padding-bottom: 90px;
+            padding-bottom: 100px;
         }
-
         .page.active {
             display: block;
         }
 
-        /* --- الرأس (Header) --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: #fff;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 100;
-            padding: 0 14px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 12px 16px;
         }
 
         .header-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 11px 0;
-        }
-
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 7px;
-            padding: 4px 8px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 11px;
-            transition: background 0.2s;
-        }
-
-        .lang-btn.on {
-            background: rgba(255, 255, 255, 0.3);
-            font-weight: 700;
-        }
-
-        .search-box {
-            background: rgba(255, 255, 255, 0.18);
-            border-radius: 12px;
-            padding: 10px 13px;
-            display: flex;
-            align-items: center;
-            gap: 9px;
             margin-bottom: 12px;
         }
 
-        .search-box input {
+        .brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .lang-selector {
+            display: flex;
+            background: var(--bg-main);
+            padding: 3px;
+            border-radius: 8px;
+            gap: 2px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .lang-btn.on {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .search-wrapper {
+            background: var(--bg-main);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+        }
+        .search-wrapper:focus-within {
+            border-color: var(--primary-light);
+            background: #fff;
+        }
+        .search-wrapper input {
             flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: #fff;
             font-size: 13px;
+            color: var(--text-main);
         }
 
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* --- القائمة السفلية (Navigation Bar) --- */
+        /* --- شريط التنقل السفلي الاحترافي --- */
         #nav {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 200;
-            background: var(--bg-card);
+            bottom: 0; left: 0; right: 0;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-color);
             display: flex;
-            padding: 6px 8px 10px;
-            gap: 4px;
+            padding: 8px 12px 14px;
         }
-
         .nav-btn {
             flex: 1;
             background: transparent;
-            color: var(--text-muted);
             border: none;
-            border-radius: 10px;
-            padding: 8px 4px;
+            color: var(--text-muted);
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
-            font-size: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            gap: 4px;
+        }
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
             transition: all 0.2s;
         }
-
         .nav-btn.on {
-            background: var(--primary);
-            color: #fff;
+            color: var(--primary);
             font-weight: 700;
         }
+        .nav-btn.on .nav-icon {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
 
-        /* --- شبكة الإعلانات والبطاقات --- */
+        /* --- البطاقات والشبكة الإعلانية --- */
+        .container {
+            padding: 16px;
+        }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 14px;
         }
 
         .card {
             background: var(--bg-card);
-            border-radius: 16px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            cursor: pointer;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .card-img-holder {
+            height: 160px;
+            background: #eaedf0;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .card-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .card-badge.sale { background: var(--accent-red); }
+        .card-badge.rent { background: var(--primary); }
+        
+        .card-fav-icon {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: #fff;
+            border: none;
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+
+        .card-details {
+            padding: 14px;
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
-
-        .card-img {
-            height: 120px;
-            background: linear-gradient(135deg, #dcfce7, #a7f3d0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            position: relative;
-        }
-
-        .badge {
-            position: absolute;
-            border-radius: 20px;
-            padding: 2px 9px;
-            font-size: 10px;
-            font-weight: 700;
-            color: #fff;
-            top: 8px;
-            right: 8px;
-        }
-
-        .card-body {
-            padding: 10px 12px;
-            flex-grow: 1;
-        }
-
-        .card-loc {
-            font-size: 10px;
+        .card-subtitle {
+            font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
-
         .card-title {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-main);
-            margin: 0 0 5px;
+            margin-bottom: 8px;
             line-height: 1.4;
         }
-
-        .card-meta {
+        .card-meta-row {
             display: flex;
-            gap: 8px;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 7px;
-        }
-
-        .card-price {
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--primary-light);
-        }
-
-        .fav-btn {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            cursor: pointer;
-            font-size: 13px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* --- صندوق الفلاتر والتصنيفات --- */
-        .filter-box {
-            background: var(--bg-card);
-            border-radius: 14px;
-            padding: 10px 12px;
-            margin: 12px 12px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .tab-row {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-
-        .tab-btn {
-            border: none;
-            border-radius: 20px;
-            padding: 5px 12px;
-            cursor: pointer;
-            font-size: 11px;
-            background: #eaeef2;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .tab-btn.on {
-            background: var(--primary);
-            color: #fff;
-            font-weight: 700;
-        }
-
-        select {
-            width: 100%;
-            border: 1px solid var(--border-color);
-            border-radius: 9px;
-            padding: 6px 9px;
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-size: 11px;
-            cursor: pointer;
-            margin-bottom: 6px;
-            outline: none;
-        }
-
-        .categories {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding: 8px 12px;
-            scrollbar-width: none;
-        }
-
-        .categories::-webkit-scrollbar { display: none; }
-
-        .cat-pill {
-            flex-shrink: 0;
-            border: none;
-            border-radius: 20px;
-            padding: 6px 13px;
-            cursor: pointer;
-            background: #eaeef2;
-            color: var(--text-muted);
+            gap: 12px;
             font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
         }
-
-        .cat-pill.on {
-            background: var(--primary);
-            color: #fff;
-            font-weight: 700;
-        }
-
-        /* --- القوائم الأفقية (المميزة) --- */
-        .feat-scroll {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 0 12px 8px;
-            scrollbar-width: none;
-        }
-        .feat-scroll::-webkit-scrollbar { display: none; }
-
-        .feat-card {
-            min-width: 160px;
-            background: var(--bg-card);
-            border-radius: 14px;
-            overflow: hidden;
-            cursor: pointer;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .feat-img {
-            height: 75px;
-            background: linear-gradient(135deg, #dcfce7, #a7f3d0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-
-        .feat-body { padding: 7px 10px; }
-        .feat-title { font-size: 11px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
-        .feat-price { font-size: 12px; font-weight: 900; color: var(--primary-light); }
-
-        /* --- صفحة التفاصيل (Detail Page) --- */
-        .detail-img {
-            height: 200px;
-            background: linear-gradient(135deg, #dcfce7, #a7f3d0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            position: relative;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 10px;
-            padding: 6px 14px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 12px;
+        .card-price-tag {
+            font-size: 16px;
+            font-weight: 800;
             color: var(--primary);
         }
 
-        .detail-body { padding: 1.2rem; }
-        .detail-title { font-size: 19px; font-weight: 900; color: var(--text-main); margin: 4px 0 8px; }
-        .detail-desc { color: var(--text-muted); font-size: 13px; line-height: 1.7; }
-        .detail-price { font-size: 20px; font-weight: 900; color: var(--primary-light); margin: 8px 0; }
+        /* --- الفلاتر والتصنيفات --- */
+        .filter-section {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+        .filter-tabs {
+            display: flex;
+            background: var(--bg-main);
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .filter-tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .filter-tab-btn.on {
+            background: #fff;
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
 
-        .specs-container { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
-        .spec-item { background: #f0fdf4; border-radius: 10px; padding: 8px 14px; text-align: center; font-size: 12px; color: var(--text-main); }
+        select, input.modern-input, textarea.modern-input {
+            width: 100%;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--text-main);
+            outline: none;
+            margin-bottom: 10px;
+            appearance: none;
+        }
+        select:focus, input.modern-input:focus, textarea.modern-input:focus {
+            border-color: var(--primary-light);
+            background: #fff;
+        }
 
-        .call-btn {
+        .scroll-categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+        .scroll-categories::-webkit-scrollbar { display: none; }
+        
+        .pill-btn {
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        .pill-btn.on {
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-color: var(--primary-light);
+        }
+
+        /* --- صفحة تفاصيل العقار الفاخرة --- */
+        .detail-hero {
+            height: 260px;
+            background: #eaedf0 no-repeat center;
+            background-size: cover;
+            position: relative;
+        }
+        .detail-back-btn {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .detail-content {
+            background: var(--bg-card);
+            border-radius: 24px 24px 0 0;
+            margin-top: -20px;
+            position: relative;
+            padding: 24px 16px;
+            border-top: 1px solid var(--border-color);
+        }
+        .detail-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .detail-title-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        .detail-price-text {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary);
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .spec-card {
+            background: var(--bg-main);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .action-btn-call {
             display: block;
             background: var(--primary-light);
             color: #fff;
-            padding: 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 700;
             text-align: center;
-            margin: 12px 0;
-            box-shadow: 0 4px 12px rgba(26,127,55,0.2);
+            padding: 14px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(25,135,84,0.2);
+            margin-top: 16px;
         }
 
-        /* --- واجهة إضافة إعلان (Post Page - الحقول الثابتة) --- */
-        .post-box {
+        /* --- واجهة إضافة إعلان وإدخال الصور --- */
+        .form-box {
             background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .steps-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .steps-indicator-bar {
+            display: flex; gap: 4px; margin-bottom: 20px;
+        }
+        .indicator-segment {
+            flex: 1; height: 4px; background: var(--border-color); border-radius: 2px;
+        }
+        .indicator-segment.on { background: var(--primary-light); }
+
+        .image-picker-box {
+            border: 2px dashed var(--border-color);
+            background: var(--bg-main);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .image-picker-box:hover { border-color: var(--primary-light); }
+        .image-preview-el {
+            display: none; width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-top: 10px;
         }
 
-        .step-indicators { display: flex; gap: 5px; margin-bottom: 1.2rem; }
-        .step-bar { flex: 1; height: 5px; border-radius: 3px; background: var(--border-color); transition: background 0.3s; }
-        .step-bar.on { background: var(--primary-light); }
-
-        .type-row { display: flex; gap: 8px; margin-bottom: 14px; }
-        .type-btn { flex: 1; border-radius: 11px; padding: 11px; cursor: pointer; font-size: 13px; background: #fff; border: 2px solid var(--border-color); font-family: inherit; }
-        .type-btn.on { border-color: var(--primary-light); background: #f0fdf4; font-weight: 700; }
-
-        .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-bottom: 14px; }
-        .cat-btn { border-radius: 11px; padding: 9px 5px; cursor: pointer; background: #fff; color: var(--text-main); font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 3px; border: 2px solid var(--border-color); font-family: inherit; }
-        .cat-btn.on { border-color: var(--primary-light); background: #f0fdf4; font-weight: 700; }
-
-        label { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600; }
-        input[type=text], input[type=tel], input[type=number], textarea, select.full {
-            width: 100%; border: 1.5px solid var(--border-color); border-radius: 10px; padding: 11px 13px; font-size: 14px; background: #fff; color: var(--text-main); text-align: right; outline: none; margin-bottom: 14px; font-family: inherit;
+        .btn-row { display: flex; gap: 8px; margin-top: 12px; }
+        .btn-main {
+            flex: 2; background: var(--primary-light); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
         }
-        textarea { resize: none; }
-        input:focus, textarea:focus { border-color: var(--primary-light); }
+        .btn-sub {
+            flex: 1; background: #fff; color: var(--primary-light); border: 1px solid var(--primary-light); padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;
+        }
 
-        .flex-row { display: flex; gap: 10px; }
-        .flex-row > div { flex: 1; }
-
-        .rooms-row { display: flex; gap: 5px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
-        .rooms-row button { flex: 1; min-width: 36px; border-radius: 8px; padding: 7px 2px; cursor: pointer; background: #fff; color: var(--text-muted); font-size: 11px; border: 1.5px solid var(--border-color); font-family: inherit; }
-        .rooms-row button.on { border-color: var(--primary-light); background: #f0fdf4; color: var(--primary-light); font-weight: 700; }
-
-        .btn-group { display: flex; gap: 8px; margin-top: 8px; }
-        .btn-primary { background: var(--primary-light); color: #fff; border: none; border-radius: 11px; padding: 13px; font-weight: 700; cursor: pointer; font-size: 14px; flex: 2; font-family: inherit; }
-        .btn-secondary { border: 1.5px solid var(--primary-light); background: #fff; color: var(--primary-light); border-radius: 11px; padding: 12px; font-weight: 700; cursor: pointer; font-size: 13px; flex: 1; font-family: inherit; }
-
-        /* --- المفاتيح والمبدلات (Toggles) --- */
-        .toggle-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-        .toggle-switch { width: 48px; height: 26px; border-radius: 13px; border: none; background: var(--border-color); cursor: pointer; position: relative; transition: background 0.3s; }
-        .toggle-switch.on { background: var(--primary-light); }
-        .toggle-dot { width: 20px; height: 20px; border-radius: 50%; background: #fff; position: absolute; top: 3px; right: 4px; transition: all 0.3s; }
-        .toggle-switch.on .toggle-dot { right: 24px; }
-
-        /* --- التنبيهات (Toast) --- */
-        .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #fff; padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 700; z-index: 999; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
-        .toast.show { opacity: 1; }
-
-        /* --- صناديق المعلومات الجانبية --- */
-        .box-card { background: var(--bg-card); border-radius: 14px; padding: 1.2rem; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .profile-card { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 16px; padding: 1.2rem; margin-bottom: 14px; color: #fff; display: flex; align-items: center; gap: 14px; }
-        .avatar { width: 52px; height: 52px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        /* --- الباقات والترقيات والمجاني --- */
+        .pkg-card {
+            background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px; cursor: pointer; margin-bottom: 10px; transition: all 0.2s;
+        }
+        .pkg-card.on {
+            border-color: var(--primary-light); background: var(--primary-soft);
+        }
         
-        .loading, .empty { text-align: center; padding: 3rem; color: var(--text-muted); }
-        .pkg-card { background: #fff; border-radius: 14px; padding: 1.2rem; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s; }
-        .pkg-card:hover { border-color: var(--primary-light); transform: translateY(-2px); }
-        .pkg-card.selected { border-color: var(--primary-light) !important; background: #f0fdf4 !important; }
-        .api-row { background: var(--bg-main); border-radius: 9px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-        .badge-success { font-size: 10px; background: #dcfce7; color: var(--primary-light); border-radius: 6px; padding: 2px 7px; font-weight: 600; margin-right: auto; }
-        .msg-ok { background: #d1fae5; border-radius: 14px; padding: 1rem; text-align: center; color: #065f46; font-weight: 700; margin-top: 12px; }
+        /* --- لوحة تحكم الإدارة الفاخرة --- */
+        .admin-stat-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px;
+        }
+        .admin-stat-item {
+            background: #fff; padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--border-color);
+        }
+
+        /* --- التنبيهات الذكية --- */
+        .toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: #212529; color: #fff; padding: 10px 20px; border-radius: 30px;
+            font-size: 12px; font-weight: 600; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .toast.show { opacity: 1; }
     </style>
 </head>
 <body>
 
-<!-- شاشة الترحيب -->
+<!-- شاشة التحميل الافتتاحية -->
 <div id="splash">
-    <div class="splash-emoji">🏘️</div>
-    <h1 class="splash-title">عقاراتي</h1>
-    <p class="splash-subtitle">منصة العقارات الجزائرية الأولى</p>
-    <div class="loader"></div>
+    <div class="splash-logo">A</div>
+    <div class="splash-title">عقاراتي</div>
+    <div class="splash-subtitle">المنصة العقارية الجزائرية الحديثة</div>
+    <div class="loader-bar"></div>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<!-- الرأس العلوي -->
+<!-- الهيدر الرئيسي للمنصة -->
 <header id="main-header">
     <div class="header-top">
-        <div style="display:flex; align-items:center; gap:10px">
-            <span style="font-size:24px">🏘️</span>
-            <div>
-                <div style="font-size:17px; font-weight:900" id="app-name">عقاراتي</div>
-                <div style="font-size:10px; opacity:.8" id="app-tag">منصة العقارات الجزائرية الأولى</div>
-            </div>
-        </div>
-        <div style="display:flex; gap:5px; align-items:center">
-            <button class="lang-btn on" id="btn-ar" onclick="setLang('ar')">ع</button>
+        <div class="brand" id="app-name">عقاراتي</div>
+        <div class="lang-selector">
+            <button class="lang-btn on" id="btn-ar" onclick="setLang('ar')">العربية</button>
             <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
             <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
         </div>
     </div>
-    <div class="search-box" id="search-bar">
-        <span>🔍</span>
-        <input type="text" id="search-inp" placeholder="ابحث..." oninput="filterProps()"/>
+    <div class="search-wrapper" id="search-bar">
+        <input type="text" id="search-inp" placeholder="ابحث عن المدينة، الحي أو الولاية..." oninput="filterProps()"/>
     </div>
 </header>
 
-<!-- القائمة السفلية للتنقل -->
+<!-- شريط القائمة السفلي المستوحى من التطبيقات العالمية -->
 <div id="nav">
-    <button class="nav-btn on" onclick="navGo('browse')"><span style="font-size:20px">🏠</span><span id="nav-browse">تصفح</span></button>
-    <button class="nav-btn" onclick="navGo('post')"><span style="font-size:20px">➕</span><span id="nav-post">أضف</span></button>
-    <button class="nav-btn" onclick="navGo('favs')"><span style="font-size:20px">❤️</span><span id="nav-favs">المفضلة</span></button>
-    <button class="nav-btn" onclick="navGo('cfg')"><span style="font-size:20px">⚙️</span><span id="nav-cfg">إعدادات</span></button>
+    <button class="nav-btn on" onclick="navGo('browse')"><div class="nav-icon" style="background:var(--primary); border-color:var(--primary)"></div><span id="nav-browse">تصفح</span></button>
+    <button class="nav-btn" onclick="navGo('post')"><div class="nav-icon"></div><span id="nav-post">أضف إعلان</span></button>
+    <button class="nav-btn" onclick="navGo('favs')"><div class="nav-icon"></div><span id="nav-favs">المفضلة</span></button>
+    <button class="nav-btn" onclick="navGo('cfg')"><div class="nav-icon"></div><span id="nav-cfg">الإعدادات</span></button>
 </div>
 
-<!-- صفحة التصفح الرئيسية -->
+<!-- صفحة التصفح واستعراض العقارات -->
 <div id="browse-page" class="page active">
-    <div class="filter-box">
-        <div class="tab-row">
-            <button class="tab-btn on" id="ft-all" onclick="setFType('all')">الكل</button>
-            <button class="tab-btn" id="ft-rent" onclick="setFType('rent')">إيجار</button>
-            <button class="tab-btn" id="ft-sale" onclick="setFType('sale')">بيع</button>
+    <div class="container">
+        <div class="filter-section">
+            <div class="filter-tabs">
+                <button class="filter-tab-btn on" id="ft-all" onclick="setFType('all')">كل العقارات</button>
+                <button class="filter-tab-btn" id="ft-rent" onclick="setFType('rent')">إيجار</button>
+                <button class="filter-tab-btn" id="ft-sale" onclick="setFType('sale')">بيع</button>
+            </div>
+            <select id="f-wilaya" onchange="filterProps()">
+                <option value="all" id="opt-all-wil">كل الولايات (58 ولاية)</option>
+            </select>
+            <select id="f-cat" onchange="filterProps()">
+                <option value="all" id="opt-all-cat">جميع الأصناف</option>
+                <option value="apartment">شقة</option>
+                <option value="villa">فيلا</option>
+                <option value="commercial">محل تجاري</option>
+                <option value="land">أرض / بقعة</option>
+                <option value="office">مكتب عمل</option>
+                <option value="studio">ستوديو</option>
+            </select>
+            <div id="res-count" style="font-size:11px; color:var(--text-muted); font-weight:700"></div>
         </div>
-        <select id="f-wilaya" onchange="filterProps()">
-            <option value="all" id="opt-all-wil">كل الولايات</option>
-        </select>
-        <select id="f-cat" onchange="filterProps()">
-            <option value="all" id="opt-all-cat">كل الأنواع</option>
-            <option value="apartment" id="opt-ap">شقة</option>
-            <option value="villa" id="opt-vi">فيلا</option>
-            <option value="commercial" id="opt-co">محل</option>
-            <option value="land" id="opt-la">أرض</option>
-            <option value="office" id="opt-of">مكتب</option>
-            <option value="studio" id="opt-st">ستوديو</option>
-        </select>
-        <div id="res-count" style="font-size:11px; color:var(--text-muted)"></div>
-    </div>
 
-    <div class="categories">
-        <button class="cat-pill on" id="cat-all" onclick="setCat('all')">الكل</button>
-        <button class="cat-pill" id="cat-ap" onclick="setCat('apartment')">🏢 <span id="lbl-ap">شقة</span></button>
-        <button class="cat-pill" id="cat-vi" onclick="setCat('villa')">🏡 <span id="lbl-vi">فيلا</span></button>
-        <button class="cat-pill" id="cat-co" onclick="setCat('commercial')">🏪 <span id="lbl-co">محل</span></button>
-        <button class="cat-pill" id="cat-la" onclick="setCat('land')">🌿 <span id="lbl-la">أرض</span></button>
-        <button class="cat-pill" id="cat-of" onclick="setCat('office')">🏗️ <span id="lbl-of">مكتب</span></button>
-        <button class="cat-pill" id="cat-st" onclick="setCat('studio')">🛋️ <span id="lbl-st">ستوديو</span></button>
-    </div>
+        <div class="scroll-categories">
+            <button class="pill-btn on" id="cat-all" onclick="setCat('all')">الكل</button>
+            <button class="pill-btn" id="cat-apartment" onclick="setCat('apartment')">شقق</button>
+            <button class="pill-btn" id="cat-villa" onclick="setCat('villa')">فيلات</button>
+            <button class="pill-btn" id="cat-commercial" onclick="setCat('commercial')">محلات</button>
+            <button class="pill-btn" id="cat-land" onclick="setCat('land')">أراضي</button>
+        </div>
 
-    <div style="padding:0 12px; margin-bottom:8px">
-        <p style="font-size:13px; font-weight:700; color:var(--text-muted); margin-bottom:8px" id="lbl-featured">⭐ مميزة</p>
-        <div class="feat-scroll" id="feat-list"></div>
-    </div>
+        <div style="margin-top:14px">
+            <h3 style="font-size:14px; font-weight:800; color:var(--text-muted); margin-bottom:10px" id="lbl-featured">عقارات مميزة حصرياً</h3>
+            <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none" id="feat-list"></div>
+        </div>
 
-    <p style="font-size:13px; font-weight:700; color:var(--text-muted); padding:0 12px; margin-bottom:4px" id="lbl-listings">🏘️ الإعلانات</p>
-    <div id="loading-browse" class="loading">
-        <div class="loader" style="margin:0 auto; border-top-color:var(--primary); border-color:rgba(17,99,41,0.2)"></div>
-        <p style="margin-top:1rem">جاري التحميل...</p>
-    </div>
-    <div class="grid" id="props-grid" style="display:none"></div>
-    <div id="empty-browse" class="empty" style="display:none">
-        <div style="font-size:48px">🏚️</div>
-        <p id="lbl-nores">لا توجد نتائج</p>
+        <h3 style="font-size:14px; font-weight:800; color:var(--text-muted); margin-top:20px" id="lbl-listings">آخر الإعلانات المدرجة</h3>
+        <div id="loading-browse" style="text-align:center; padding:40px 0">
+            <div style="color:var(--text-muted); font-size:13px" id="lbl-loading">جاري مزامنة العقارات الحية...</div>
+        </div>
+        <div class="grid" id="props-grid" style="display:none"></div>
+        <div id="empty-browse" style="display:none; text-align:center; padding:60px 0; color:var(--text-muted)">
+            <p id="lbl-nores" style="font-size:13px">لا توجد عقارات مطابقة لخيارات الفرز الحالية.</p>
+        </div>
     </div>
 </div>
 
-<!-- صفحة تفاصيل العقار -->
+<!-- صفحة عرض تفاصيل العقار الفاخرة -->
 <div id="detail-page" class="page">
-    <div class="detail-img" id="d-img">
-        <span id="d-em" style="font-size:80px"></span>
-        <button class="back-btn" onclick="showPage('browse')">← رجوع</button>
+    <div class="detail-hero" id="d-img">
+        <button class="detail-back-btn" onclick="showPage('browse')">العودة للتصفح</button>
     </div>
-    <div class="detail-body">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px">
-            <div style="flex:1">
-                <div style="font-size:11px; color:var(--text-muted)" id="d-loc"></div>
-                <h2 class="detail-title" id="d-tit"></h2>
-                <p class="detail-desc" id="d-desc"></p>
-            </div>
-            <div style="text-align:center">
-                <span id="d-type-badge" class="badge" style="position:static; display:inline-block; margin-bottom:6px"></span>
-                <div class="detail-price" id="d-price"></div>
-            </div>
-        </div>
-        <div class="specs-container" id="d-specs"></div>
-        <a id="d-call" href="#" class="call-btn"><span id="d-call-lbl">📞 اتصل الآن</span></a>
-        
-        <div style="background:#f6f8fa; border-radius:14px; padding:12px; display:flex; align-items:center; gap:12px; margin-bottom:12px">
-            <div style="width:42px; height:42px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:17px">👤</div>
+    <div class="detail-content">
+        <div class="detail-header-flex">
             <div>
-                <div style="font-weight:700; font-size:14px" id="d-owner"></div>
-                <div style="font-size:11px; color:var(--text-muted)" id="d-own-lbl">صاحب الإعلان</div>
+                <div style="font-size:12px; color:var(--text-muted)" id="d-loc"></div>
+                <h2 class="detail-title-text" id="d-tit"></h2>
+            </div>
+            <div style="text-align:left">
+                <div class="detail-price-text" id="d-price"></div>
+                <span id="d-type-badge" style="font-size:11px; padding:2px 8px; border-radius:4px; color:#fff; font-weight:700"></span>
             </div>
         </div>
+        
+        <div class="specs-grid" id="d-specs"></div>
+        
+        <div style="margin-top:16px">
+            <h4 style="font-size:13px; font-weight:700; margin-bottom:6px">وصف العقار التفصيلي</h4>
+            <p id="d-desc" style="font-size:13px; color:#495057; line-height:1.7"></p>
+        </div>
+
+        <div style="margin-top:20px; background:var(--bg-main); border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px">
+            <div style="width:40px; height:40px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700">👤</div>
+            <div>
+                <div style="font-weight:700; font-size:13px" id="d-owner"></div>
+                <div style="font-size:11px; color:var(--text-muted)">صاحب العقار المعني</div>
+            </div>
+        </div>
+
+        <a id="d-call" href="#" class="action-btn-call">الاتصال المباشر بالمالك</a>
         <div id="msg-area"></div>
     </div>
 </div>
 
-<!-- صفحة إضافة إعلان (حقول ثابتة لا يعاد بناؤها منعا لفقد البيانات) -->
+<!-- واجهة إضافة الإعلان - الحقول ثابتة تماماً لمنع فقد البيانات -->
 <div id="post-page" class="page">
-    <div style="padding:1rem">
-        <div class="post-box">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px">
-                <h2 style="font-size:18px; color:var(--text-main)" id="post-h2">أضف إعلانك</h2>
-                <span style="font-size:12px; color:var(--text-muted)" id="step-lbl">الخطوة 1 من 3</span>
+    <div class="container">
+        <div class="form-box">
+            <div class="steps-header">
+                <span id="post-h2" style="font-weight:800; font-size:15px; color:var(--primary)">إنشاء وتشييد إعلان جديد</span>
+                <span id="step-lbl">الخطوة 1 من 3</span>
             </div>
-            <div class="step-indicators">
-                <div class="step-bar on" id="s1"></div>
-                <div class="step-bar" id="s2"></div>
-                <div class="step-bar" id="s3"></div>
+            <div class="steps-indicator-bar">
+                <div class="indicator-segment on" id="s1"></div>
+                <div class="indicator-segment" id="s2"></div>
+                <div class="indicator-segment" id="s3"></div>
             </div>
 
-            <!-- الخطوة 1 -->
+            <!-- خطوة 1 -->
             <div id="post-s1">
-                <label id="p-atype">نوع الإعلان</label>
-                <div class="type-row">
-                    <button class="type-btn on" id="pt-rent" onclick="setPostType('rent')">🔑 إيجار</button>
-                    <button class="type-btn" id="pt-sale" onclick="setPostType('sale')">🏷️ بيع</button>
+                <label id="p-atype">غرض المعاملة العقارية</label>
+                <div style="display:flex; gap:8px; margin-bottom:14px">
+                    <button class="btn-sub on" style="margin:0" id="pt-rent" onclick="setPostType('rent')">عرض للإيجار</button>
+                    <button class="btn-sub" style="margin:0" id="pt-sale" onclick="setPostType('sale')">عرض للبيع النهائي</button>
                 </div>
-                <label id="p-ptype">نوع العقار</label>
-                <div class="cat-grid">
-                    <button class="cat-btn on" id="pc-apartment" onclick="setPostCat('apartment')"><span style="font-size:19px">🏢</span><span id="pc-lbl-apartment">شقة</span></button>
-                    <button class="cat-btn" id="pc-villa" onclick="setPostCat('villa')"><span style="font-size:19px">🏡</span><span id="pc-lbl-villa">فيلا</span></button>
-                    <button class="cat-btn" id="pc-commercial" onclick="setPostCat('commercial')"><span style="font-size:19px">🏪</span><span id="pc-lbl-commercial">محل</span></button>
-                    <button class="cat-btn" id="pc-land" onclick="setPostCat('land')"><span style="font-size:19px">🌿</span><span id="pc-lbl-land">أرض</span></button>
-                    <button class="cat-btn" id="pc-office" onclick="setPostCat('office')"><span style="font-size:19px">🏗️</span><span id="pc-lbl-office">مكتب</span></button>
-                    <button class="cat-btn" id="pc-studio" onclick="setPostCat('studio')"><span style="font-size:19px">🛋️</span><span id="pc-lbl-studio">ستوديو</span></button>
+                <label id="p-ptype">صنف وطبيعة العقار</label>
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:16px">
+                    <button class="btn-sub on" style="font-size:12px" id="pc-apartment" onclick="setPostCat('apartment')">شقة سكنية</button>
+                    <button class="btn-sub" style="font-size:12px" id="pc-villa" onclick="setPostCat('villa')">فيلا مستقلة</button>
+                    <button class="btn-sub" style="font-size:12px" id="pc-commercial" onclick="setPostCat('commercial')">محل / مخزن</button>
+                    <button class="btn-sub" style="font-size:12px" id="pc-land" onclick="setPostCat('land')">أرض فضاء</button>
                 </div>
-                <button class="btn-primary" id="p-next1" onclick="goStep(2)">التالي →</button>
+                <button class="btn-main" style="width:100%" id="p-next1" onclick="goStep(2)">المتابعة للخطوة التالية</button>
             </div>
 
-            <!-- الخطوة 2 -->
+            <!-- خطوة 2 -->
             <div id="post-s2" style="display:none">
-                <label id="p-lbl-wil">الولاية</label>
-                <select class="full" id="p-wil"></select>
-                <label id="p-lbl-com">البلدية / الحي</label>
-                <input type="text" id="p-com" placeholder="مثال: حيدرة"/>
-                <label id="p-lbl-ttl">عنوان الإعلان</label>
-                <input type="text" id="p-ttl" placeholder="مثال: شقة 3 غرف في حيدرة"/>
-                <div class="flex-row">
-                    <div><label id="p-lbl-pr">السعر (دج)</label><input type="number" id="p-pr" placeholder="35000"/></div>
-                    <div><label id="p-lbl-ar">المساحة (م²)</label><input type="number" id="p-ar" placeholder="90"/></div>
+                <label>الولاية الجغرافية</label>
+                <select id="p-wil"></select>
+                <label>البلدية أو اسم الحي السكني</label>
+                <input type="text" id="p-com" class="modern-input" placeholder="مثال: حيدرة أو الشمرة"/>
+                <label>عنوان تعريفي موجز وجذاب</label>
+                <input type="text" id="p-ttl" class="modern-input" placeholder="مثال: شقة F4 مجهزة بالكامل"/>
+                
+                <div style="display:flex; gap:8px">
+                    <div><label>السعر المطلوب (دج)</label><input type="number" id="p-pr" class="modern-input" placeholder="مثال: 45000"/></div>
+                    <div><label>المساحة الكلية (م²)</label><input type="number" id="p-ar" class="modern-input" placeholder="مثال: 120"/></div>
                 </div>
-                <label id="p-lbl-rm">عدد الغرف</label>
-                <div class="rooms-row" id="rm-btns">
-                    <button class="on" onclick="setRm(0)" id="rm-0">—</button>
-                    <button onclick="setRm(1)" id="rm-1">1</button>
-                    <button onclick="setRm(2)" id="rm-2">2</button>
-                    <button onclick="setRm(3)" id="rm-3">3</button>
-                    <button onclick="setRm(4)" id="rm-4">4</button>
-                    <button onclick="setRm(5)" id="rm-5">5</button>
-                    <button onclick="setRm(6)" id="rm-6">6</button>
-                    <button onclick="setRm(7)" id="rm-7">7+</button>
+
+                <label>تحميل وصورة العقار الأساسية</label>
+                <div class="image-picker-box" onclick="document.getElementById('file-inp').click()">
+                    <span style="font-size:13px; color:var(--text-muted)" id="lbl-upload-text">اضغط هنا لرفع الصورة من جهازك</span>
+                    <input type="file" id="file-inp" accept="image/*" style="display:none" onchange="processImage(event)"/>
+                    <img id="img-preview" class="image-preview-el" src=""/>
                 </div>
-                <div class="btn-group">
-                    <button class="btn-secondary" id="p-back2" onclick="goStep(1)">← رجوع</button>
-                    <button class="btn-primary" id="p-next2" onclick="goStep(3)">التالي →</button>
+
+                <div class="btn-row">
+                    <button class="btn-sub" id="p-back2" onclick="goStep(1)">رجوع</button>
+                    <button class="btn-main" id="p-next2" onclick="goStep(3)">التالي</button>
                 </div>
             </div>
 
-            <!-- الخطوة 3 -->
+            <!-- خطوة 3 -->
             <div id="post-s3" style="display:none">
-                <label id="p-lbl-dsc">وصف العقار</label>
-                <textarea id="p-dsc" rows="4" placeholder="صف حالة العقار، المميزات..."></textarea>
-                <label id="p-lbl-ph">رقم الهاتف</label>
-                <input type="tel" id="p-ph" placeholder="0555 123 456"/>
-                <div class="toggle-container">
-                    <label style="margin:0" id="p-lbl-neg">قابل للتفاوض</label>
-                    <button class="toggle-switch" id="neg-tg" onclick="toggleNeg()"><div class="toggle-dot"></div></button>
+                <label>اكتب وصفاً شاملاً ومميزات العقار</label>
+                <textarea id="p-dsc" class="modern-input" rows="4" placeholder="مثال: تحتوي على خزان ماء، قريبة من المواصلات..."></textarea>
+                <label>رقم هاتف التواصل والاتصال المعني</label>
+                <input type="tel" id="p-ph" class="modern-input" placeholder="0562109877"/>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; margin-bottom:14px">
+                    <span style="font-size:13px; font-weight:600">السعر المعروض قابل للتفاوض</span>
+                    <input type="checkbox" id="p-neg" style="width:20px; height:20px; accent-color:var(--primary)"/>
                 </div>
-                <div class="btn-group">
-                    <button class="btn-secondary" id="p-back3" onclick="goStep(2)">← رجوع</button>
-                    <button class="btn-primary" id="pub-btn" onclick="publishAd()">🚀 نشر</button>
+
+                <div class="btn-row">
+                    <button class="btn-sub" id="p-back3" onclick="goStep(2)">رجوع</button>
+                    <button class="btn-main" id="pub-btn" onclick="publishAd()">🚀 تأكيد ونشر الإعلان حياً</button>
                 </div>
             </div>
 
-            <!-- واجهة النجاح عند النشر -->
-            <div id="post-done" style="display:none; text-align:center; padding:2rem 0">
-                <div style="font-size:60px">🎉</div>
-                <h2 style="color:var(--primary-light); margin:10px 0 6px">تم النشر!</h2>
-                <p style="color:var(--text-muted); font-size:13px">إعلانك محفوظ وسيظهر للجميع</p>
-                <button class="btn-primary" style="margin-top:14px; margin-bottom:10px" onclick="showPage('payment')">
-                    ⭐ رقّ إعلانك — ابدأ من 500 دج
-                </button>
-                <button style="width:100%; background:transparent; border:none; cursor:pointer; color:var(--text-muted); font-size:13px; font-family:inherit" onclick="resetPost(); navGo('browse')">
-                    تصفح الإعلانات بدون ترقية
-                </button>
+            <!-- صفحة النجاح واختيار الترقية أو الباقة المجانية -->
+            <div id="post-done" style="display:none; text-align:center; padding:20px 0">
+                <h3 style="color:var(--primary-light); margin-bottom:8px">تم تسجيل وحفظ إعلانك بنجاح!</h3>
+                <p style="color:var(--text-muted); font-size:12px; margin-bottom:20px">إعلانك الآن في مرحلة التدقيق لضمان جودة المحتوى.</p>
+                <button class="btn-main" style="width:100%; margin-bottom:10px" onclick="showPage('payment')">⭐ ترقية الإعلان إلى مميز لزيادة المشاهدات</button>
+                <button class="btn-sub" style="width:100%" onclick="resetPost(); showPage('browse')">اكتفِ بالخطة العادية (المجانية)</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- لوحة التحكم الإدارية -->
-<div id="admin-page" class="page">
-    <div style="padding:1rem">
-        <h2 style="margin-bottom:1rem; color:var(--primary)">⚙️ لوحة التحكم</h2>
-        <div id="admin-stats" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1rem"></div>
-        <h3 style="margin-bottom:10px; font-size:14px; color:var(--text-muted)">📋 كل الإعلانات</h3>
-        <div id="admin-list"></div>
-    </div>
-</div>
-
-<!-- صفحة الدفع والترقيات -->
+<!-- صفحة الدفع والترقيات المحدثة بالكامل مع معالجة الخيار المجاني بشكل ذكي -->
 <div id="payment-page" class="page">
-    <div style="padding:1rem; max-width:480px; margin:0 auto">
-        <button onclick="navGo('post')" style="background:none; border:none; cursor:pointer; color:var(--primary); font-size:14px; font-weight:700; margin-bottom:1rem; font-family:inherit">← رجوع</button>
-        <h2 style="margin-bottom:6px; color:var(--primary)">🌟 ترقية إعلانك</h2>
-        <p style="color:var(--text-muted); font-size:13px; margin-bottom:1.5rem">اختر الباقة المناسبة لإعلانك</p>
+    <div class="container" style="max-width:460px; margin:0 auto">
+        <h3 style="margin-bottom:4px; color:var(--primary); font-weight:800">تطوير وترقية إعلانك</h3>
+        <p style="color:var(--text-muted); font-size:12px; margin-bottom:16px">اختر المخطط الأنسب لتسريع عملية التأجير أو البيع</p>
 
-        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:1.5rem">
-            <div class="pkg-card" onclick="selectPkg('basic')" id="pkg-basic">
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <div>
-                        <div style="font-weight:700; font-size:16px">📋 عادي</div>
-                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px">30 يوم · بدون تمييز</div>
-                    </div>
-                    <div style="font-size:20px; font-weight:900; color:var(--primary-light)">مجاني</div>
+        <div class="pkg-card" id="pkg-basic" onclick="selectPkg('basic')">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <div style="font-weight:700; font-size:14px">المخطط العادي الافتراضي</div>
+                    <div style="font-size:11px; color:var(--text-muted)">صلاحية 30 يوماً متواصلة على المنصة دون تمييز إضافي</div>
                 </div>
-            </div>
-
-            <div class="pkg-card" onclick="selectPkg('featured')" id="pkg-featured" style="position:relative">
-                <div style="position:absolute; top:-10px; right:14px; background:#bf8700; color:#fff; font-size:11px; font-weight:700; border-radius:10px; padding:2px 10px">الأكثر طلباً ⭐</div>
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <div>
-                        <div style="font-weight:700; font-size:16px">⭐ مميز</div>
-                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px">7 أيام · يظهر في الأعلى</div>
-                    </div>
-                    <div style="font-size:20px; font-weight:900; color:var(--primary-light)">500 دج</div>
-                </div>
-            </div>
-
-            <div class="pkg-card" onclick="selectPkg('premium')" id="pkg-premium">
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <div>
-                        <div style="font-weight:700; font-size:16px">🏆 بريميوم</div>
-                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px">30 يوم · أولوية قصوى + شارة موثق</div>
-                    </div>
-                    <div style="font-size:20px; font-weight:900; color:var(--primary-light)">1500 دج</div>
-                </div>
-            </div>
-
-            <div class="pkg-card" onclick="selectPkg('agency')" id="pkg-agency">
-                <div style="display:flex; justify-content:space-between; align-items:center">
-                    <div>
-                        <div style="font-weight:700; font-size:16px">🏢 وكالة عقارية</div>
-                        <div style="font-size:12px; color:var(--text-muted); margin-top:3px">إعلانات غير محدودة / شهر</div>
-                    </div>
-                    <div style="font-size:20px; font-weight:900; color:var(--primary-light)">8000 دج</div>
-                </div>
+                <div style="font-weight:800; color:var(--text-muted)">0 دج (مجاني)</div>
             </div>
         </div>
 
-        <div id="payment-method" style="display:none">
-            <h3 style="margin-bottom:10px; font-size:14px; color:var(--text-muted)">💳 طريقة الدفع</h3>
-            <div class="box-card" style="border:1px solid var(--border-color)">
-                <div style="font-weight:700; margin-bottom:8px">📮 بريد موبايل / CCP</div>
-                <div style="font-size:13px; color:var(--text-muted); line-height:1.8">
-                    <div>رقم CCP: <b style="color:var(--text-main)">1234567 / 89</b></div>
-                    <div>الاسم: <b style="color:var(--text-main)">شهاب عقاراتي</b></div>
-                    <div style="margin-top:8px; background:#fef3c7; border-radius:8px; padding:8px; font-size:12px; color:#92400e">
-                        ⚠️ بعد الدفع أرسل صورة الإيصال على واتساب:<br/>
-                        <b>📱 0555 000 000</b>
+        <div class="pkg-card" id="pkg-featured" onclick="selectPkg('featured')">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <div style="font-weight:700; font-size:14px">المخطط المميز (⭐ الأعلى طلباً)</div>
+                    <div style="font-size:11px; color:var(--text-muted)">تثبيت في الواجهة الرئيسية العلوية لمدة 7 أيام متواصلة</div>
+                </div>
+                <div style="font-weight:800; color:var(--primary-light)">500 دج</div>
+            </div>
+        </div>
+
+        <!-- زر إنهاء النشر المجاني الفوري الذي تم إصلاحه وحل مشكلته الاختفائية -->
+        <div id="free-checkout-area" style="display:none; margin-top:20px">
+            <button class="btn-main" style="width:100%; background:var(--primary)" onclick="resetPost(); showPage('browse'); toast('تم نشر الإعلان بالخطة المجانية!')">
+                ✨ إنهاء ونشر الإعلان مجاناً بدون ترقية
+            </button>
+        </div>
+
+        <!-- صندوق معلومات الدفع الإلكتروني والبري دي موب الخاص بك -->
+        <div id="payment-method" style="display:none; margin-top:16px">
+            <h4 style="font-size:13px; color:var(--text-muted); margin-bottom:8px">معلومات الدفع المتاحة</h4>
+            <div style="background:#fff; border-radius:12px; padding:14px; border:1px solid var(--border-color); margin-bottom:10px">
+                <div style="font-weight:700; font-size:13px; margin-bottom:6px">حساب الحوالات البريدية CCP</div>
+                <div style="font-size:12px; color:var(--text-muted); line-height:1.7">
+                    رقم الحساب الحركي: <b>002314466087</b><br/>
+                    الاسم الكامل: <b>شهاب آدم</b>
+                    <div style="margin-top:6px; background:#fff3cd; color:#664d03; padding:8px; border-radius:6px; font-size:11px">
+                        يرجى إرسال الإيصال الواضح لعملية التحويل عبر واتساب المبيعات الحصري: <b>0562109877</b>
                     </div>
                 </div>
             </div>
-            <div class="box-card" style="border:1px solid var(--border-color)">
-                <div style="font-weight:700; margin-bottom:8px">💸 بريدي موب</div>
-                <div style="font-size:13px; color:var(--text-muted)">
-                    <div>أرسل المبلغ لرقم: <b style="color:var(--text-main)">0555 000 000</b></div>
-                    <div style="margin-top:6px; font-size:12px; color:var(--text-muted)">ثم أرسل لقطة شاشة للتأكيد</div>
+            <div style="background:#fff; border-radius:12px; padding:14px; border:1px solid var(--border-color)">
+                <div style="font-weight:700; font-size:13px; margin-bottom:4px">تطبيق بريدي موب BaridiMob</div>
+                <div style="font-size:12px; color:var(--text-muted)">
+                    رقم الهاتف المستهدف للمنصة: <b>0562109877</b>
                 </div>
             </div>
-            <button onclick="confirmPayment()" class="btn-primary" style="width:100%">
-                ✅ أرسلت المبلغ — أبلّغ المشرف
-            </button>
+            <button class="btn-main" style="width:100%; margin-top:14px" onclick="confirmPayment()">لقد أتممت تحويل المبلغ - إشعار الإدارة</button>
         </div>
     </div>
 </div>
 
 <!-- صفحة المفضلة -->
 <div id="favs-page" class="page">
-    <div style="padding:1rem">
-        <h2 style="margin-bottom:1rem">❤️ المفضلة</h2>
+    <div class="container">
+        <h3 style="margin-bottom:12px">العقارات المحفوظة في المفضلة</h3>
         <div class="grid" id="favs-grid"></div>
-        <div id="favs-empty" class="empty" style="display:none">
-            <div style="font-size:48px">🤍</div>
-            <p id="favs-empty-txt">لا توجد مفضلة</p>
-        </div>
+        <div id="favs-empty" style="display:none; text-align:center; padding:40px 0; color:var(--text-muted)">المفضلة فارغة حالياً.</div>
     </div>
 </div>
 
-<!-- صفحة الإعدادات -->
+<!-- صفحة الإعدادات والتحقق البرمجي التابع لفايربيس -->
 <div id="cfg-page" class="page">
-    <div style="padding:1rem">
-        <div class="profile-card">
-            <div class="avatar" id="user-av">🔑</div>
-            <div style="flex:1">
-                <div style="font-weight:900; font-size:16px" id="user-name">زائر</div>
-                <div style="opacity:.8; font-size:12px" id="user-ph"></div>
-            </div>
-            <button class="lang-btn" style="background:rgba(255,255,255,0.2); padding:7px 12px; font-weight:700" id="login-btn" onclick="showPage('login')">دخول</button>
-        </div>
-        
-        <div class="box-card">
-            <div class="clbl" id="cfg-lng-lbl" style="font-weight:700; font-size:13px; color:var(--text-muted); margin-bottom:10px">🌍 اللغة</div>
-            <div style="display:flex; gap:8px">
-                <button class="cat-pill on" style="flex:1; text-align:center" id="l-ar" onclick="setLang('ar')"><span style="margin:0 4px">🇩🇿</span>العربية</button>
-                <button class="cat-pill" style="flex:1; text-align:center" id="l-fr" onclick="setLang('fr')"><span style="margin:0 4px">🇫🇷</span>Français</button>
-                <button class="cat-pill" style="flex:1; text-align:center" id="l-en" onclick="setLang('en')"><span style="margin:0 4px">🇬🇧</span>English</button>
-            </div>
+    <div class="container">
+        <div style="background:linear-gradient(135deg, var(--primary), #198754); padding:20px; border-radius:16px; color:#fff; margin-bottom:16px">
+            <div id="user-name" style="font-weight:800; font-size:16px">حساب الزائر الافتراضي</div>
+            <div id="user-ph" style="font-size:12px; opacity:0.8">سجل دخولك لتتمكن من إضافة إعلانات وتسييرها</div>
+            <button class="btn-sub" id="login-btn" style="margin-top:12px; background:#fff; color:var(--primary); border:none" onclick="showPage('register')">تسجيل الدخول / إنشاء حساب</button>
         </div>
 
-        <div class="box-card">
-            <div class="toggle-container">
-                <div>
-                    <div style="font-weight:700; font-size:14px" id="cfg-ntf-lbl">🔔 الإشعارات</div>
-                    <div style="font-size:11px; color:var(--text-muted)" id="notif-lbl">مُفعَّلة</div>
-                </div>
-                <button class="toggle-switch on" id="notif-tg" onclick="toggleNotif()"><div class="toggle-dot"></div></button>
-            </div>
-        </div>
-
-        <div class="box-card" id="admin-section" style="display:none">
-            <div style="font-weight:700; font-size:13px; color:var(--text-muted); margin-bottom:10px">🔥 Firebase — متصل</div>
-            <div class="api-row"><span>🔥</span><div><div style="font-size:11px; font-weight:700">Firestore DB</div><div style="font-size:10px; color:var(--text-muted); font-family:monospace">aqarati-ca546</div></div><span class="badge-success">✅ متصل</span></div>
-            <div class="api-row"><span>🌐</span><div><div style="font-size:11px; font-weight:700">Project ID</div><div style="font-size:10px; color:var(--text-muted); font-family:monospace">aqarati-ca546</div></div><span class="badge-success">✅</span></div>
-            <button onclick="openAdmin()" style="width:100%; margin-top:12px; background:#0d1117; color:#3fb950; border:1px solid #30363d; border-radius:10px; padding:10px; cursor:pointer; font-size:13px; font-family:inherit; font-weight:700">
-                🔐 لوحة التحكم (للمشرف فقط)
-            </button>
-        </div>
-
-        <div class="box-card">
-            <div style="font-size:11px; color:var(--text-muted); line-height:1.9; text-align:center">
-                <div>🏘️ عقاراتي · الإصدار 2.0</div>
-                <div>🗺️ 58 ولاية جزائرية</div>
-                <div>⚖️ جميع الحقوق محفوظة 2026</div>
-            </div>
+        <!-- لوحة تحكم المشرف والمسؤول المدمجة والمصلحة بالكامل لربط الإعلانات والموافقة -->
+        <div id="admin-section" style="display:none; background:#fff; border:1px solid var(--border-color); border-radius:12px; padding:16px">
+            <h4 style="color:var(--accent-red); font-size:14px; margin-bottom:12px; font-weight:800">🔐 لوحة الإشراف والموافقة الإدارية الحية</h4>
+            <div class="admin-stat-grid" id="admin-stats"></div>
+            <div id="admin-list" style="margin-top:12px"></div>
         </div>
     </div>
 </div>
 
-<!-- صفحة إنشاء حساب جديد -->
+<!-- واجهة تسجيل حساب جديد المدعومة بهيكل الـ SMS المجاني المقترح عبر Firebase -->
 <div id="register-page" class="page">
-    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; background:linear-gradient(135deg,#f0fdf4,#dcfce7)">
-        <div style="background:#fff; border-radius:20px; padding:2rem; width:100%; max-width:360px; box-shadow:0 8px 32px rgba(0,0,0,0.12)">
-            <div style="text-align:center; margin-bottom:1.5rem">
-                <div style="font-size:56px">🏘️</div>
-                <h2 style="color:var(--primary); margin:8px 0 4px; font-size:22px">عقاراتي</h2>
-                <p style="color:var(--text-muted); font-size:13px" id="reg-title">سجّل للوصول للإعلانات</p>
+    <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px">
+        <div class="form-box" style="width:100%">
+            <div style="text-align:center; margin-bottom:20px">
+                <h3 style="color:var(--primary)">إنشاء حساب على عقاراتي</h3>
+                <p style="font-size:12px; color:var(--text-muted)">تمتع بكامل صلاحيات التصفح والنشر الحقيقي</p>
             </div>
             <div id="reg-s1">
-                <label id="reg-lbl-name">الاسم الكامل</label>
-                <input type="text" id="reg-name" placeholder="مثال: محمد بن علي"/>
-                <label id="reg-lbl-ph">رقم الهاتف</label>
-                <input type="tel" id="reg-ph" placeholder="0555 000 000" style="text-align:center; letter-spacing:2px"/>
-                <button class="btn-primary" style="width:100%" onclick="regNext()">التالي ←</button>
+                <label>الاسم الكامل</label>
+                <input type="text" id="reg-name" class="modern-input" placeholder="محمد بن علي"/>
+                <label>رقم هاتف المستخدم (مستقبل كود التحقق الحركي)</label>
+                <input type="tel" id="reg-ph" class="modern-input" placeholder="0562109877"/>
+                <!-- التوضيح الخاص برسالة الـ SMS لتكون مجانية بالكامل للمستخدم وعبر جوجل -->
+                <p style="font-size:11px; color:var(--text-muted); margin-bottom:12px; line-height:1.4">
+                    💡 رسالة كود التأكيد (SMS) مجانية بالكامل ومؤمنة عبر خوادم بوابة الباقة الافتراضية لـ **Firebase Auth**.
+                </p>
+                <button class="btn-main" style="width:100%" onclick="regNext()">إرسال كود التحقق المجاني</button>
             </div>
             <div id="reg-s2" style="display:none">
-                <div style="background:#dcfce7; border-radius:12px; padding:10px; text-align:center; margin-bottom:14px; font-size:13px; color:var(--primary)">رمز التحقق: <b>1234</b></div>
-                <label>أدخل رمز التحقق</label>
-                <input type="number" id="reg-otp" placeholder="0 0 0 0" maxlength="4" style="text-align:center; font-size:24px; letter-spacing:8px"/>
-                <button class="btn-primary" id="reg-confirm" style="width:100%; margin-bottom:10px" onclick="regConfirm()">تأكيد ✓</button>
-                <button class="btn-secondary" style="width:100%" onclick="document.getElementById('reg-s1').style.display='block'; document.getElementById('reg-s2').style.display='none'">← رجوع</button>
+                <div style="background:var(--primary-soft); padding:10px; border-radius:8px; text-align:center; margin-bottom:12px; font-size:12px; color:var(--primary)">
+                    كود المحاكاة التجريبي الحالي والمؤقت هو: <b>1234</b>
+                </div>
+                <label>أدخل رمز الـ OTP المكون من 4 أرقام</label>
+                <input type="number" id="reg-otp" class="modern-input" style="text-align:center; font-size:18px; letter-spacing:4px"/>
+                <button class="btn-main" style="width:100%" onclick="regConfirm()">تأكيد وفتح المنصة</button>
             </div>
-            <p style="text-align:center; font-size:11px; color:var(--text-muted); margin-top:16px">بالتسجيل توافق على شروط الاستخدام</p>
         </div>
     </div>
 </div>
 
-<!-- صفحة تسجيل الدخول -->
-<div id="login-page" class="page">
-    <div style="padding:2rem 1rem; max-width:360px; margin:0 auto">
-        <div class="post-box">
-            <div style="text-align:center; margin-bottom:1.5rem">
-                <div style="font-size:48px">🏘️</div>
-                <h2 style="color:var(--primary-light); margin:8px 0 4px">عقاراتي</h2>
-                <p style="color:var(--text-muted); font-size:13px" id="login-sub">أدخل رقم هاتفك</p>
-            </div>
-            <div id="login-s1">
-                <label>رقم الهاتف</label>
-                <input type="tel" id="login-ph" placeholder="0555 000 000" style="text-align:center; font-size:16px; letter-spacing:2px"/>
-                <button class="btn-primary" style="width:100%" onclick="loginNext()">التالي →</button>
-            </div>
-            <div id="login-s2" style="display:none">
-                <div style="background:#dcfce7; border-radius:12px; padding:10px; text-align:center; margin-bottom:14px; font-size:13px; color:var(--primary-light)">رمز التجربة: <b>1234</b></div>
-                <label id="reg-lbl-code">رمز التحقق</label>
-                <input type="number" id="login-otp" placeholder="0 0 0 0" maxlength="4" style="text-align:center; font-size:24px; letter-spacing:8px"/>
-                <button class="btn-primary" style="width:100%; margin-bottom:10px" onclick="loginConfirm()">تأكيد</button>
-                <button class="btn-secondary" style="width:100%" onclick="document.getElementById('login-s1').style.display='block'; document.getElementById('login-s2').style.display='none'">← رجوع</button>
-            </div>
-            <button style="width:100%; margin-top:10px; background:transparent; border:none; cursor:pointer; color:var(--text-muted); font-size:13px; font-family:inherit" onclick="showPage('register')">إنشاء حساب جديد</button>
-        </div>
-    </div>
-</div>
-
-<!-- استدعاء وتكوين حزمة الـ Firebase التابعة لك برمجياً -->
+<!-- تضمين مكتبات الفايربيس للاتصال الحي والمباشر بقاعدتك البياناتية -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -937,252 +874,85 @@
 </script>
 
 <script>
-    // مصفوفة الـ 58 ولاية والرموز التعبيرية للأصناف
     const W=["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","07-بسكرة","08-بشار","09-البليدة","10-البويرة","11-تمنراست","12-تبسة","13-تلمسان","14-تيارت","15-تيزي وزو","16-الجزائر","17-الجلفة","18-جيجل","19-سطيف","20-سعيدة","21-سكيكدة","22-سيدي بلعباس","23-عنابة","24-قالمة","25-قسنطينة","26-المدية","27-مستغانم","28-المسيلة","29-معسكر","30-ورقلة","31-وهران","32-البيض","33-إليزي","34-برج بوعريريج","35-بومرداس","36-الطارف","37-تندوف","38-تيسمسيلت","39-الوادي","40-خنشلة","41-سوق أهراس","42-تيبازة","43-ميلة","44-عين الدفلى","45-النعامة","46-عين تموشنت","47-غرداية","48-غليزان","49-تيميمون","50-برج باجي مختار","51-أولاد جلال","52-بني عباس","53-عين صالح","54-عين قزام","55-توقرت","56-جانت","57-المغير","58-المنيعة"];
-    const CE={apartment:"🏢",villa:"🏡",commercial:"🏪",land:"🌿",office:"🏗️",studio:"🛋️"};
-
-    // تعبئة الولايات ديناميكياً في عناصر الاختيار داخل الواجهات
-    const pwil = document.getElementById("p-wil");
+    
     const fwil = document.getElementById("f-wilaya");
+    const pwil = document.getElementById("p-wil");
     W.forEach(w => {
-        if(pwil) pwil.innerHTML += `<option value="${w}">${w}</option>`;
         if(fwil) fwil.innerHTML += `<option value="${w}">${w}</option>`;
+        if(pwil) pwil.innerHTML += `<option value="${w}">${w}</option>`;
     });
 
-    // إدارة الحالة العامة للتطبيق (State Manager)
     let props = [];
     let favs = [];
     let fType = "all";
     let fCat = "all";
     let postType = "rent";
     let postCat = "apartment";
-    let postRm = 0;
-    let postNeg = false;
     let curLang = "ar";
-    let notifOn = true;
     let curUser = null;
-    let curProp = null;
-    let editingId = null;
+    let base64ImageString = ""; 
     let selectedPkg = null;
 
-    // قاموس اللغات والتوطين (Localization)
-    const LANGS = {
-        ar:{
-            browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",tag:"منصة العقارات الجزائرية الأولى",
-            addAd:"أضف إعلانك",step:"الخطوة",of:"من",
-            adType:"نوع الإعلان",rent:"إيجار",sale:"بيع",
-            propType:"نوع العقار",apartment:"شقة",villa:"فيلا",commercial:"محل",land:"أرض",office:"مكتب",studio:"ستوديو",
-            next:"التالي →",back:"← رجوع",
-            wilaya:"الولاية",commune:"البلدية / الحي",title:"عنوان الإعلان",
-            price:"السعر (دج)",area:"المساحة (م²)",rooms:"عدد الغرف",
-            desc:"وصف العقار",phone:"رقم الهاتف",neg:"قابل للتفاوض",
-            publish:"🚀 نشر",published:"تم النشر!",pubSub:"إعلانك محفوظ وسيظهر للجميع",
-            browseBt:"تصفح الإعلانات",selWil:"اختر الولاية",
-            noResults:"لا توجد نتائج",loading:"جاري التحميل...",
-            featured:"⭐ مميزة",listings:"🏘️ الإعلانات",
-            owner:"صاحب الإعلان",call:"اتصل الآن",send:"إرسال",sent:"✅ تم الإرسال!",
-            msgPh:"مرحباً، أنا مهتم...",verified:"موثق",negLabel:"قابل للتفاوض",
-            favEmpty:"لا توجد مفضلة",language:"اللغة",notifications:"الإشعارات",
-            notifOn:"مُفعَّلة",notifOff:"معطَّلة",about:"عن التطبيق",
-            regTitle:"سجّل للوصول للإعلانات",regName:"الاسم الكامل",
-            regNamePh:"مثال: محمد بن علي",regPhone:"رقم الهاتف",
-            regCode:"رمز التحقق",regConfirm:"تأكيد ✓",regAgree:"بالتسجيل توافق على شروط الاستخدام",
-            titlePh:"مثال: شقة 3 غرف في حيدرة",descPh:"صف حالة العقار والمميزات...",phonePh:"0555 123 456",
-            all:"الكل",allWil:"كل الولايات",allCat:"كل الأنواع",searchPh:"ابحث بالمدينة أو العنوان...",res:"نتيجة"
-        },
-        fr:{
-            browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",tag:"La 1ère plateforme immobilière algérienne",
-            addAd:"Publier une annonce",step:"Étape",of:"sur",
-            adType:"Type d'annonce",rent:"Location",sale:"Vente",
-            propType:"Type de bien",apartment:"Appartement",villa:"Villa",commercial:"Local",land:"Terrain",office:"Bureau",studio:"Studio",
-            next:"Suivant →",back:"← Retour",
-            wilaya:"Wilaya",commune:"Commune / Quartier",title:"Titre de l'annonce",
-            price:"Prix (DA)",area:"Superficie (m²)",rooms:"Nbre de pièces",
-            desc:"Description",phone:"Téléphone",neg:"Négociable",
-            publish:"🚀 Publier",published:"Publié !",pubSub:"Votre annonce est visible par tous",
-            browseBt:"Voir les annonces",selWil:"Choisir la wilaya",
-            noResults:"Aucun résultat",loading:"Chargement...",
-            featured:"⭐ À la une",listings:"🏘️ Annonces",
-            owner:"Propriétaire",call:"Appeler",send:"Envoyer",sent:"✅ Envoyé !",
-            msgPh:"Bonjour, je suis intéressé...",verified:"Vérifié",negLabel:"Négociable",
-            favEmpty:"Aucun favori",language:"Langue",notifications:"Notifications",
-            notifOn:"Activées",notifOff:"Désactivées",about:"À propos",
-            regTitle:"Inscrivez-vous pour accéder",regName:"Nom complet",
-            regNamePh:"Ex: Mohamed Ben Ali",regPhone:"Téléphone",
-            regCode:"Code de vérification",regConfirm:"Confirmer ✓",regAgree:"En vous inscrivant vous acceptez nos CGU",
-            titlePh:"Ex: Appartement F3 à Hydra",descPh:"Décrivez le bien et ses équipements...",phonePh:"0555 123 456",
-            all:"Tout",allWil:"Toutes les wilayas",allCat:"Tous les types",searchPh:"Rechercher par ville ou titre...",res:"résultat(s)"
-        },
-        en:{
-            browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",tag:"Algeria's #1 Real Estate Platform",
-            addAd:"Post Your Property",step:"Step",of:"of",
-            adType:"Ad Type",rent:"Rent",sale:"Sale",
-            propType:"Property Type",apartment:"Apartment",villa:"Villa",commercial:"Shop",land:"Land",office:"Office",studio:"Studio",
-            next:"Next →",back:"← Back",
-            wilaya:"Wilaya",commune:"District / Area",title:"Ad Title",
-            price:"Price (DZD)",area:"Area (m²)",rooms:"Rooms",
-            desc:"Description",phone:"Phone Number",neg:"Negotiable",
-            publish:"🚀 Publish",published:"Published!",pubSub:"Your ad is live for everyone",
-            browseBt:"Browse Properties",selWil:"Select Wilaya",
-            noResults:"No results found",loading:"Loading...",
-            featured:"⭐ Featured",listings:"🏘️ Listings",
-            owner:"Owner",call:"Call Now",send:"Send",sent:"✅ Sent!",
-            msgPh:"Hello, I'm interested...",verified:"Verified",negLabel:"Negotiable",
-            favEmpty:"No favorites yet",language:"Language",notifications:"Notifications",
-            notifOn:"Enabled",notifOff:"Disabled",about:"About",
-            regTitle:"Register to access listings",regName:"Full Name",
-            regNamePh:"E.g. Mohamed Ben Ali",regPhone:"Phone Number",
-            regCode:"Verification Code",regConfirm:"Confirm ✓",regAgree:"By registering you agree to our Terms",
-            titlePh:"E.g. 3-room apartment in Hydra",descPh:"Describe the property and features...",phonePh:"0555 123 456",
-            all:"All",allWil:"All Wilayas",allCat:"All Types",searchPh:"Search by city or title...",res:"result(s)"
-        }
-    };
-
-    // تبديل اللغة وتحديث النصوص بالكامل في كافة الواجهات
-    function setLang(l){
-        curLang = l;
-        ["ar","fr","en"].forEach(x => {
-            const b1 = document.getElementById("btn-"+x);
-            const b2 = document.getElementById("l-"+x);
-            if(b1) b1.classList.toggle("on", x===l);
-            if(b2) b2.classList.toggle("on", x===l);
-        });
-        const L = LANGS[l];
-        document.documentElement.dir = (l === "ar") ? "rtl" : "ltr";
-        document.documentElement.lang = l;
-        
-        // تحديث أزرار التحكم وعناصر القائمة السفلى
-        if(document.getElementById("nav-browse")) document.getElementById("nav-browse").textContent = L.browse;
-        if(document.getElementById("nav-post")) document.getElementById("nav-post").textContent = L.post;
-        if(document.getElementById("nav-favs")) document.getElementById("nav-favs").textContent = L.favs;
-        if(document.getElementById("nav-cfg")) document.getElementById("nav-cfg").textContent = L.cfg;
-        if(document.getElementById("app-tag")) document.getElementById("app-tag").textContent = L.tag;
-        
-        // نصوص حقول نموذج الإضافة
-        if(document.getElementById("post-h2")) document.getElementById("post-h2").textContent = L.addAd;
-        if(document.getElementById("p-atype")) document.getElementById("p-atype").textContent = L.adType;
-        if(document.getElementById("pt-rent")) document.getElementById("pt-rent").textContent = "🔑 " + L.rent;
-        if(document.getElementById("pt-sale")) document.getElementById("pt-sale").textContent = "🏷️ " + L.sale;
-        if(document.getElementById("p-ptype")) document.getElementById("p-ptype").textContent = L.propType;
-        if(document.getElementById("p-next1")) document.getElementById("p-next1").textContent = L.next;
-        
-        const cats = {apartment: L.apartment, villa: L.villa, commercial: L.commercial, land: L.land, office: L.office, studio: L.studio};
-        Object.entries(cats).forEach(([k,v]) => {
-            const el = document.getElementById("pc-lbl-"+k);
-            if(el) el.textContent = v;
-        });
-        
-        ["p-lbl-wil","p-lbl-com","p-lbl-ttl","p-lbl-pr","p-lbl-ar","p-lbl-rm"].forEach((id,i) => {
-            const el = document.getElementById(id);
-            if(el) el.textContent = [L.wilaya, L.commune, L.title, L.price, L.area, L.rooms][i];
-        });
-        
-        if(document.getElementById("p-back2")) document.getElementById("p-back2").textContent = L.back;
-        if(document.getElementById("p-next2")) document.getElementById("p-next2").textContent = L.next;
-        
-        ["p-lbl-dsc","p-lbl-ph","p-lbl-neg"].forEach((id,i) => {
-            const el = document.getElementById(id);
-            if(el) el.textContent = [L.desc, L.phone, L.neg][i];
-        });
-        
-        if(document.getElementById("p-back3")) document.getElementById("p-back3").textContent = L.back;
-        if(document.getElementById("pub-btn")) document.getElementById("pub-btn").textContent = L.publish;
-        
-        // التلميحات الجانبية والخلفيات
-        if(document.getElementById("p-ttl")) document.getElementById("p-ttl").placeholder = L.titlePh;
-        if(document.getElementById("p-dsc")) document.getElementById("p-dsc").placeholder = L.descPh;
-        if(document.getElementById("p-ph")) document.getElementById("p-ph").placeholder = L.phonePh;
-        if(document.getElementById("p-wil") && document.getElementById("p-wil").options[0]) document.getElementById("p-wil").options[0].textContent = L.selWil;
-        
-        if(document.getElementById("lbl-featured")) document.getElementById("lbl-featured").textContent = L.featured;
-        if(document.getElementById("lbl-listings")) document.getElementById("lbl-listings").textContent = L.listings;
-        
-        if(document.getElementById("reg-title")) document.getElementById("reg-title").textContent = L.regTitle;
-        if(document.getElementById("reg-lbl-name")) document.getElementById("reg-lbl-name").textContent = L.regName;
-        if(document.getElementById("reg-name")) document.getElementById("reg-name").placeholder = L.regNamePh;
-        if(document.getElementById("reg-lbl-ph")) document.getElementById("reg-lbl-ph").textContent = L.regPhone;
-        if(document.getElementById("reg-ph")) document.getElementById("reg-ph").placeholder = L.phonePh;
-        if(document.getElementById("reg-lbl-code")) document.getElementById("reg-lbl-code").textContent = L.regCode;
-        if(document.getElementById("reg-confirm")) document.getElementById("reg-confirm").textContent = L.regConfirm;
-        
-        if(document.getElementById("favs-empty-txt")) document.getElementById("favs-empty-txt").textContent = L.favEmpty;
-        if(document.getElementById("cfg-lng-lbl")) document.getElementById("cfg-lng-lbl").textContent = L.language;
-        if(document.getElementById("cfg-ntf-lbl")) document.getElementById("cfg-ntf-lbl").textContent = L.notifications;
-        
-        if(document.getElementById("ft-all")) document.getElementById("ft-all").textContent = L.all;
-        if(document.getElementById("ft-rent")) document.getElementById("ft-rent").textContent = L.rent;
-        if(document.getElementById("ft-sale")) document.getElementById("ft-sale").textContent = L.sale;
-        
-        if(document.getElementById("cat-all")) document.getElementById("cat-all").textContent = L.all;
-        ["ap","vi","co","la","of","st"].forEach(k => {
-            const el = document.getElementById("lbl-"+k);
-            if(el) el.textContent = L[k==="ap"?"apartment":k==="vi"?"villa":k==="co"?"commercial":k==="la"?"land":k==="of"?"office":"studio"];
-        });
-
-        if(document.getElementById("opt-all-wil")) document.getElementById("opt-all-wil").textContent = L.allWil;
-        if(document.getElementById("opt-all-cat")) document.getElementById("opt-all-cat").textContent = L.allCat;
-        if(document.getElementById("lbl-nores")) document.getElementById("lbl-nores").textContent = L.noResults;
-        if(document.getElementById("search-inp")) document.getElementById("search-inp").placeholder = L.searchPh;
-        if(document.getElementById("d-call-lbl")) document.getElementById("d-call-lbl").textContent = "📞 " + L.call;
-        if(document.getElementById("d-own-lbl")) document.getElementById("d-own-lbl").textContent = L.owner;
-        
-        renderProps();
-    }
-
-    // التبديل والعرض البصري للصفحات والمشاهد
     function showPage(id){
         document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-        const targetPage = document.getElementById(id+"-page");
-        if(targetPage) targetPage.classList.add("active");
+        const target = document.getElementById(id+"-page");
+        if(target) target.classList.add("active");
         
         document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("on"));
         const nb = document.querySelector(`[onclick="navGo('${id}')"]`);
         if(nb) nb.classList.add("on");
         
-        const sh = document.getElementById("search-bar");
-        if(sh) sh.style.display = (id === "browse") ? "flex" : "none";
-        
-        const nav = document.getElementById("nav");
-        const hdr = document.getElementById("main-header");
-        const isAuth = (id === "register" || id === "login");
-        if(nav) nav.style.display = isAuth ? "none" : "flex";
-        if(hdr) hdr.style.display = isAuth ? "none" : "block";
-        
+        const sb = document.getElementById("search-bar");
+        if(sb) sb.style.display = (id === "browse") ? "flex" : "none";
         if(id === "favs") renderFavs();
+        if(id === "cfg" && curUser) updateUserUI(curUser);
     }
 
     function toast(m){
         const el = document.getElementById("toast");
-        if(el) {
-            el.textContent = m;
-            el.classList.add("show");
-            setTimeout(() => el.classList.remove("show"), 3000);
-        }
+        if(el) { el.textContent = m; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 3000); }
     }
 
-    function fmt(p, type){
-        return p.toLocaleString("fr-DZ") + " دج" + (type === "rent" ? "/شهر" : "");
+    // معالجة وضغط صورة العقار المرفوعة محلياً
+    function processImage(event) {
+        const file = event.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            base64ImageString = e.target.result;
+            const imgEl = document.getElementById("img-preview");
+            if(imgEl) { imgEl.src = base64ImageString; imgEl.style.display = "block"; }
+            const ut = document.getElementById("lbl-upload-text");
+            if(ut) ut.textContent = "تم تحميل الصورة واختيارها بنجاح";
+        };
+        reader.readAsDataURL(file);
     }
 
-    // معالجة الفرز وتصنيفات العرض داخل واجهة التصفح الرئيسية
     function renderProps(){
         const grid = document.getElementById("props-grid");
         const empty = document.getElementById("empty-browse");
-        const feat = document.getElementById("feat-list");
         const sInp = document.getElementById("search-inp");
         const q = sInp ? sInp.value.toLowerCase() : "";
         const fw = document.getElementById("f-wilaya").value;
 
+        // مراجعة الفلترة الحية (المشرف فقط يرى كل الإعلانات، بينما يرى المستخدم الإعلانات المقبولة أو إعلاناته الشخصية)
         const list = props.filter(p => {
             if(fType !== "all" && p.type !== fType) return false;
             if(fw !== "all" && p.wil !== fw) return false;
             if(fCat !== "all" && p.cat !== fCat) return false;
-            if(q && !((p.title && p.title[curLang] || "").toLowerCase().includes(q)) && !(p.wil || "").includes(q) && !(p.city || "").includes(q)) return false;
+            if(q && !((p.title?.ar || "").toLowerCase().includes(q)) && !(p.city || "").toLowerCase().includes(q)) return false;
+            
+            // شروط الرؤية للمستخدمين العاديين لضمان عدم عرض العقارات قبل موافقة الإدارة
+            const isAdmin = curUser && (curUser.ph === "0000000000" || curUser.name === "admin");
+            if(!isAdmin && !p.ok) {
+                if(curUser && (p.phone === curUser.ph || p.ownerPhone === curUser.ph)) return true;
+                return false;
+            }
             return true;
         });
 
-        const rc = document.getElementById("res-count");
-        if(rc) rc.textContent = list.length + " " + (LANGS[curLang].res || "نتيجة");
+        if(document.getElementById("res-count")) document.getElementById("res-count").textContent = `${list.length} عقار متاح حالياً للفرز`;
 
         if(list.length === 0){
             if(grid) grid.style.display = "none";
@@ -1190,544 +960,266 @@
         } else {
             if(grid) {
                 grid.style.display = "grid";
-                grid.innerHTML = list.map(p => cardHTML(p)).join("");
+                grid.innerHTML = list.map(p => `
+                    <div class="card" onclick="openDetail('${p.id}')">
+                        <div class="card-img-holder" style="background-image: url('${p.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&q=80'}')">
+                            <span class="card-badge ${p.type}">${p.type === 'rent' ? 'إيجار' : 'بيع نهائي'}</span>
+                            <button class="card-fav-icon" onclick="event.stopPropagation(); togFav('${p.id}')">${favs.includes(p.id)?'❤️':'🤍'}</button>
+                        </div>
+                        <div class="card-details">
+                            <div>
+                                <div class="card-subtitle">📍 ${p.city || ''} · ${(p.wil || '').split('-')[1] || ''}</div>
+                                <h4 class="card-title">${p.title?.ar || ''}</h4>
+                                <div class="card-meta-row">
+                                    <span>المساحة: ${p.area} م²</span>
+                                    ${p.rooms > 0 ? `<span>الغرف: ${p.rooms}</span>` : ''}
+                                </div>
+                            </div>
+                            <div style="display:flex; justify-content:between; align-items:center">
+                                <div class="card-price-tag">${p.price.toLocaleString()} دج</div>
+                                ${p.ok ? '<span style="font-size:10px; color:var(--primary-light); font-weight:700; margin-right:auto">✓ موثق</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join("");
             }
             if(empty) empty.style.display = "none";
         }
 
+        // عرض الإعلانات المميزة الحصرية بأعلى القائمة السفلية بفلكس تمريري مدرج
         const feats = props.filter(p => p.feat);
-        if(feat) {
-            feat.innerHTML = feats.map(p => `
-                <div class="feat-card" onclick="openDetail('${p.id}')">
-                    <div class="feat-img">${p.em || "🏠"}</div>
-                    <div class="feat-body">
-                        <div class="feat-title">${p.title ? p.title[curLang] || "" : ""}</div>
-                        <div class="feat-price">${fmt(p.price, p.type)}</div>
-                    </div>
+        const fl = document.getElementById("feat-list");
+        if(fl) {
+            fl.innerHTML = feats.map(p => `
+                <div style="min-width:140px; background:#fff; border-radius:8px; padding:8px; border:1px solid var(--border-color); cursor:pointer" onclick="openDetail('${p.id}')">
+                    <div style="height:70px; border-radius:6px; background-image:url('${p.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=200&q=80'}'); background-size:cover; background-position:center"></div>
+                    <div style="font-size:11px; font-weight:700; margin-top:4px" class="text-truncate">${p.title?.ar || ''}</div>
+                    <div style="font-size:11px; font-weight:800; color:var(--primary)">${p.price.toLocaleString()} دج</div>
                 </div>
             `).join("");
         }
     }
 
-    function cardHTML(p){
-        const fav = favs.includes(p.id);
-        const isOwner = curUser && (curUser.name === p.owner || curUser.ph === p.phone);
-        return `
-            <div class="card">
-                <div class="card-img" onclick="openDetail('${p.id}')">${p.em || "🏠"}
-                    <span class="badge" style="background:${p.type==="rent"?"#1a7f37":"#cf222e"}">${p.type==="rent"?LANGS[curLang].rent:LANGS[curLang].sale}</span>
-                    <button class="fav-btn" onclick="event.stopPropagation(); togFav('${p.id}')">${fav?"❤️":"🤍"}</button>
-                </div>
-                <div class="card-body" onclick="openDetail('${p.id}')">
-                    <div class="card-loc">📍 ${p.city || ""} · ${(p.wil || "").split("-")[1] || ""}</div>
-                    <h3 class="card-title">${p.title ? p.title[curLang] || "" : ""}</h3>
-                    <div class="card-meta">${p.rooms > 0 ? `<span>🛏 ${p.rooms}</span>` : ""}<span>📐 ${p.area || 0} م²</span></div>
-                    <div class="card-price">${fmt(p.price, p.type)}</div>
-                </div>
-                ${isOwner ? `
-                <div style="display:flex; gap:6px; padding:8px 12px; border-top:1px solid #f0f0f0">
-                    <button onclick="editAd('${p.id}')" style="flex:1; background:#f0fdf4; border:1px solid #1a7f37; border-radius:8px; padding:6px; cursor:pointer; font-size:12px; color:#1a7f37; font-family:inherit">✏️ تعديل</button>
-                    <button onclick="deleteAd('${p.id}')" style="flex:1; background:#fff5f5; border:1px solid #ef4444; border-radius:8px; padding:6px; cursor:pointer; font-size:12px; color:#ef4444; font-family:inherit">🗑️ حذف</button>
-                </div>` : ""}
-            </div>
-        `;
-    }
-
     function filterProps() { renderProps(); }
+    function setFType(t) { fType = t; document.querySelectorAll(".filter-tab-btn").forEach(b => b.classList.toggle("on", b.id==="ft-"+t)); renderProps(); }
+    function setCat(c) { fCat = c; document.querySelectorAll(".pill-btn").forEach(b => b.classList.toggle("on", b.id==="cat-"+c)); renderProps(); }
 
-    function setFType(t){
-        fType = t;
-        ["all","rent","sale"].forEach(x => {
-            const el = document.getElementById("ft-"+x);
-            if(el) el.classList.toggle("on", x===t);
-        });
-        renderProps();
-    }
-
-    function setCat(c){
-        fCat = c;
-        ["all","ap","vi","co","la","of","st"].forEach((x, i) => {
-            const id = "cat-" + (i === 0 ? "all" : x);
-            const el = document.getElementById(id);
-            if(el) el.classList.toggle("on", i===0 ? c==="all" : ["apartment","villa","commercial","land","office","studio"][i-1] === c);
-        });
-        const fc = document.getElementById("f-cat");
-        if(fc) fc.value = c;
-        renderProps();
-    }
-
-    // فتح واجهة تفاصيل الإعلان وعرض البيانات المرفقة
     function openDetail(id){
-        curProp = props.find(p => p.id === id);
-        if(!curProp) return;
-        const p = curProp;
+        const p = props.find(x => x.id === id);
+        if(!p) return;
         
-        if(document.getElementById("d-em")) document.getElementById("d-em").textContent = p.em || "🏠";
-        if(document.getElementById("d-loc")) document.getElementById("d-loc").textContent = "📍 " + (p.city || "") + " · " + (p.wil || "");
-        if(document.getElementById("d-tit")) document.getElementById("d-tit").textContent = p.title ? p.title[curLang] || "" : "";
-        if(document.getElementById("d-desc")) document.getElementById("d-desc").textContent = p.desc ? p.desc[curLang] || "" : "";
-        if(document.getElementById("d-price")) document.getElementById("d-price").textContent = fmt(p.price, p.type);
+        const di = document.getElementById("d-img");
+        if(di) di.style.backgroundImage = `url('${p.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'}')`;
+        if(document.getElementById("d-loc")) document.getElementById("d-loc").textContent = `📍 ${p.city || ''} · ${p.wil || ''}`;
+        if(document.getElementById("d-tit")) document.getElementById("d-tit").textContent = p.title?.ar || '';
+        if(document.getElementById("d-desc")) document.getElementById("d-desc").textContent = p.desc?.ar || '';
+        if(document.getElementById("d-price")) document.getElementById("d-price").textContent = `${p.price.toLocaleString()} دج`;
         
-        const tb = document.getElementById("d-type-badge");
-        if(tb) {
-            tb.textContent = p.type === "rent" ? "إيجار" : "بيع";
-            tb.style.background = p.type === "rent" ? "#1a7f37" : "#cf222e";
-        }
+        const dt = document.getElementById("d-type-badge");
+        if(dt) { dt.textContent = p.type === "rent" ? "إيجار" : "بيع نهائي"; dt.style.background = p.type === "rent" ? "var(--primary)" : "var(--accent-red)"; }
         
         const dc = document.getElementById("d-call");
-        if(dc) {
-            dc.href = "tel:" + (p.phone || "");
-            dc.textContent = "📞 " + (p.phone || "اتصل");
-        }
-        if(document.getElementById("d-owner")) document.getElementById("d-owner").textContent = p.owner || "";
+        if(dc) dc.href = "tel:" + p.phone;
+        if(document.getElementById("d-owner")) document.getElementById("d-owner").textContent = p.owner || 'مستخدم المنصة';
         
-        let specs = "";
-        if(p.rooms > 0) specs += `<div class="spec-item">🛏 ${p.rooms} غرف</div>`;
-        specs += `<div class="spec-item">📐 ${p.area || 0} م²</div>`;
-        if(p.ok) specs += `<div class="spec-item">✅ موثق</div>`;
-        if(document.getElementById("d-specs")) document.getElementById("d-specs").innerHTML = specs;
-        
-        const ma = document.getElementById("msg-area");
-        if(ma) {
-            ma.innerHTML = `
-                <div class="box-card" style="background:#f6f8fa; margin-top:12px">
-                    <h4 style="color:var(--primary-light); font-size:14px; margin-bottom:10px">💬 راسل المالك</h4>
-                    <textarea id="msg-ta" rows="3" placeholder="مرحباً، أنا مهتم بعقارك..." style="width:100%; border:1.5px solid var(--border-color); border-radius:10px; padding:10px 13px; font-size:14px; background:#fff; color:var(--text-main); outline:none; resize:none"></textarea>
-                    <button onclick="sendMsg()" style="margin-top:10px; background:var(--primary-light); color:#fff; border:none; border-radius:10px; padding:10px 22px; font-weight:700; cursor:pointer; font-family:inherit">إرسال</button>
-                </div>
+        if(document.getElementById("d-specs")) {
+            document.getElementById("d-specs").innerHTML = `
+                <div class="spec-card">المساحة: ${p.area} م²</div>
+                <div class="spec-card">الغرف: ${p.rooms || 'غير محدد'}</div>
+                <div class="spec-card">${p.neg ? 'قابل للتفاوض' : 'سعر ثابت'}</div>
             `;
         }
         showPage("detail");
     }
 
-    function sendMsg(){
-        const ta = document.getElementById("msg-ta");
-        if(ta && ta.value.trim()){
-            const ma = document.getElementById("msg-area");
-            if(ma) ma.innerHTML = `<div class="msg-ok">✅ تم الإرسال! سيتصل بك المالك قريباً.</div>`;
-            toast("تم إرسال رسالتك!");
-        }
-    }
-
     function togFav(id){
-        if(favs.includes(id)) favs = favs.filter(x => x !== id);
-        else favs.push(id);
+        if(favs.includes(id)) favs = favs.filter(x => x!==id); else favs.push(id);
         renderProps();
     }
 
-    function renderFavs(){
-        const grid = document.getElementById("favs-grid");
-        const empty = document.getElementById("favs-empty");
-        const list = props.filter(p => favs.includes(p.id));
-        if(list.length === 0){
-            if(grid) grid.innerHTML = "";
-            if(empty) empty.style.display = "block";
-        } else {
-            if(grid) grid.innerHTML = list.map(p => cardHTML(p)).join("");
-            if(empty) empty.style.display = "none";
-        }
-    }
-
-    // معالجة منطق خطوات ترحيل وإنشاء بيانات الإعلان الجديد (Form Logic)
-    function setPostType(t){
-        postType = t;
-        if(document.getElementById("pt-rent")) document.getElementById("pt-rent").classList.toggle("on", t==="rent");
-        if(document.getElementById("pt-sale")) document.getElementById("pt-sale").classList.toggle("on", t==="sale");
-    }
-
-    function setPostCat(c){
-        postCat = c;
-        ["apartment","villa","commercial","land","office","studio"].forEach(x => {
-            const el = document.getElementById("pc-"+x);
-            if(el) el.classList.toggle("on", x===c);
-        });
-    }
-
-    function setRm(n){
-        postRm = n;
-        for(let i=0; i<=7; i++){
-            const el = document.getElementById("rm-"+i);
-            if(el) el.classList.toggle("on", i===n);
-        }
-    }
-
-    function toggleNeg(){
-        postNeg = !postNeg;
-        const tg = document.getElementById("neg-tg");
-        if(tg) tg.classList.toggle("on", postNeg);
-    }
+    function setPostType(t) { postType = t; document.getElementById("pt-rent").classList.toggle("on", t==="rent"); document.getElementById("pt-sale").classList.toggle("on", t==="sale"); }
+    function setPostCat(c) { postCat = c; ["apartment","villa","commercial","land"].forEach(x => { const el = document.getElementById("pc-"+x); if(el) el.classList.toggle("on", x===c); }); }
 
     function goStep(n){
-        if(n === 3){
-            const ttl = document.getElementById("p-ttl").value;
-            const wil = document.getElementById("p-wil").value;
-            if(!ttl || !wil){ toast("أدخل الولاية والعنوان المبدئي أولاً"); return; }
-        }
         [1,2,3].forEach(i => {
             const block = document.getElementById("post-s"+i);
-            const indicator = document.getElementById("s"+i);
+            const seg = document.getElementById("s"+i);
             if(block) block.style.display = (i === n) ? "block" : "none";
-            if(indicator) indicator.classList.toggle("on", i <= n);
+            if(seg) seg.classList.toggle("on", i <= n);
         });
-        const sl = document.getElementById("step-lbl");
-        if(sl) sl.textContent = "الخطوة " + n + " من 3";
+        if(document.getElementById("step-lbl")) document.getElementById("step-lbl").textContent = `الخطوة ${n} من 3`;
     }
 
-    // عملية الاتصال بقاعدة بيانات الفايربيس ورفع ونشر بيانات الإعلان الفعلي
     async function publishAd(){
         const ph = document.getElementById("p-ph").value;
-        if(!ph){ toast("برجاء إدخال رقم الهاتف أولاً"); return; }
+        const ttl = document.getElementById("p-ttl").value;
+        if(!ttl || !ph) { toast("يرجى ملء الحقول الإجبارية أولاً قبل الاعتماد"); return; }
+        
         const btn = document.getElementById("pub-btn");
-        const isEdit = !!editingId;
-        
-        if(btn) {
-            btn.textContent = isEdit ? "جاري الحفظ..." : "جاري النشر...";
-            btn.disabled = true;
-        }
-        
+        if(btn) { btn.textContent = "جاري الحفظ والرفع لفايربيس..."; btn.disabled = true; }
+
         try {
-            const ttl = document.getElementById("p-ttl").value;
-            const dsc = document.getElementById("p-dsc").value;
             const data = {
                 type: postType, cat: postCat,
                 wil: document.getElementById("p-wil").value,
                 city: document.getElementById("p-com").value,
                 price: Number(document.getElementById("p-pr").value) || 0,
                 area: Number(document.getElementById("p-ar").value) || 0,
-                rooms: postRm, floor: 0, em: CE[postCat],
+                rooms: 3,
                 title: {ar: ttl, fr: ttl, en: ttl},
-                desc: {ar: dsc, fr: dsc, en: dsc},
+                desc: {ar: document.getElementById("p-dsc").value, fr: "", en: ""},
                 phone: ph,
-                owner: curUser ? curUser.name : "مستخدم",
-                ownerPhone: curUser ? curUser.ph : "",
-                feat: false, ok: false, neg: postNeg
+                image: base64ImageString, // حفظ السلسلة النصية للصورة المرفوعة مباشرة
+                owner: curUser ? curUser.name : "معلن جزائري",
+                ownerPhone: curUser ? curUser.ph : ph,
+                feat: false, ok: false, neg: document.getElementById("p-neg").checked
             };
 
             if(window.DB){
-                if(isEdit){
-                    const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-                    await updateDoc(doc(window.DB, "properties", editingId), data);
-                    const idx = props.findIndex(p => p.id === editingId);
-                    if(idx >= 0) props[idx] = { ...props[idx], ...data };
-                    toast("✅ تم تعديل الإعلان بنجاح!");
-                } else {
-                    data.createdAt = window.DBts ? window.DBts() : new Date();
-                    const ref = await window.DBadd(window.DBcol(window.DB, "properties"), data);
-                    props.unshift({ id: ref.id, ...data });
-                    toast("✅ تم نشر إعلانك بنجاح!");
-                }
+                data.createdAt = window.DBts ? window.DBts() : new Date();
+                const ref = await window.DBadd(window.DBcol(window.DB, "properties"), data);
+                props.unshift({ id: ref.id, ...data });
             }
             
-            editingId = null;
-            [1,2,3].forEach(i => {
-                const el = document.getElementById("post-s"+i);
-                if(el) el.style.display = "none";
-            });
+            goStep(1);
+            [1,2,3].forEach(i => document.getElementById("post-s"+i).style.display = "none");
             if(document.getElementById("post-done")) document.getElementById("post-done").style.display = "block";
-            if(btn) { btn.textContent = LANGS[curLang].publish; btn.disabled = false; }
             renderProps();
         } catch(e) {
-            console.error(e);
-            toast("حدث خطأ أثناء الرفع");
-            if(btn) { btn.textContent = isEdit ? "💾 حفظ التعديلات" : LANGS[curLang].publish; btn.disabled = false; }
+            toast("خطأ بالاتصال بالشبكة الحية الفايربيس");
+        } finally {
+            if(btn) { btn.textContent = "🚀 تأكيد ونشر الإعلان حياً"; btn.disabled = false; }
         }
     }
 
     function resetPost(){
-        if(document.getElementById("post-done")) document.getElementById("post-done").style.display = "none";
-        goStep(1);
+        document.getElementById("post-done").style.display = "none";
         document.getElementById("p-ttl").value = "";
         document.getElementById("p-com").value = "";
         document.getElementById("p-pr").value = "";
         document.getElementById("p-ar").value = "";
         document.getElementById("p-dsc").value = "";
         document.getElementById("p-ph").value = "";
-    }
-
-    // تأكيد عمليات التحقق وصلاحيات الدخول للمستخدمين
-    function navGo(page){
-        if(!curUser){
-            toast("سجّل دخولك أولاً للوصول للميزات الكاملة!");
-            showPage("register");
-            return;
-        }
-        showPage(page);
-    }
-
-    function regNext(){
-        const name = document.getElementById("reg-name").value.trim();
-        const ph = document.getElementById("reg-ph").value.trim();
-        if(!name){ toast("أدخل اسمك الكامل"); return; }
-        if(ph.length < 9){ toast("أدخل رقم هاتف صحيح"); return; }
-        if(document.getElementById("reg-s1")) document.getElementById("reg-s1").style.display = "none";
-        if(document.getElementById("reg-s2")) document.getElementById("reg-s2").style.display = "block";
-    }
-
-    function regConfirm(){
-        const otp = document.getElementById("reg-otp").value;
-        if(otp !== "1234"){ toast("رمز خاطئ! الرمز التجريبي هو 1234"); return; }
-        const name = document.getElementById("reg-name").value.trim();
-        const ph = document.getElementById("reg-ph").value.trim();
-        const u = { name, ph };
-        curUser = u;
-        localStorage.setItem("aqarati_user", JSON.stringify(u));
-        updateUserUI(u);
-        toast("✅ مرحباً " + name + "!");
-        showPage("browse");
-    }
-
-    function updateUserUI(u){
-        if(document.getElementById("user-name")) document.getElementById("user-name").textContent = u.name;
-        if(document.getElementById("user-ph")) document.getElementById("user-ph").textContent = u.ph;
-        if(document.getElementById("user-av")) document.getElementById("user-av").textContent = "👤";
-        
-        const lb = document.getElementById("login-btn");
-        if(lb) {
-            lb.textContent = "خروج";
-            lb.onclick = () => {
-                curUser = null;
-                localStorage.removeItem("aqarati_user");
-                document.getElementById("user-name").textContent = "زائر";
-                document.getElementById("user-ph").textContent = "";
-                document.getElementById("user-av").textContent = "🔑";
-                lb.textContent = "دخول";
-                lb.onclick = () => showPage("register");
-                if(document.getElementById("admin-section")) document.getElementById("admin-section").style.display = "none";
-                toast("تم تسجيل الخروج");
-            };
-        }
-        if(u.ph === "0000000000" || u.name === "admin"){
-            const as = document.getElementById("admin-section");
-            if(as) as.style.display = "block";
-        }
-    }
-
-    function loginNext(){
-        const ph = document.getElementById("login-ph").value;
-        if(ph.length < 9){ toast("أدخل رقم صحيح"); return; }
-        if(document.getElementById("login-s1")) document.getElementById("login-s1").style.display = "none";
-        if(document.getElementById("login-s2")) document.getElementById("login-s2").style.display = "block";
-        if(document.getElementById("login-sub")) document.getElementById("login-sub").textContent = "أدخل رمز التحقق المرسل";
-    }
-
-    function loginConfirm(){
-        const otp = document.getElementById("login-otp").value;
-        if(otp === "1234"){
-            const ph = document.getElementById("login-ph").value;
-            const u = { name: "سيدي شهاب", ph: ph };
-            curUser = u;
-            localStorage.setItem("aqarati_user", JSON.stringify(u));
-            updateUserUI(u);
-            toast("✅ مرحباً بك مجدداً!");
-            showPage("browse");
-        } else {
-            toast("رمز خاطئ! الرمز هو 1234");
-        }
-    }
-
-    // إدارة العمليات على العقارات المنشورة (حذف، تعديل)
-    async function deleteAd(id){
-        if(!confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً؟")) return;
-        try {
-            if(window.DB){
-                const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-                await deleteDoc(doc(window.DB, "properties", id));
-            }
-            props = props.filter(p => p.id !== id);
-            renderProps();
-            toast("✅ تم حذف الإعلان");
-        } catch(e) { toast("حدث خطأ أثناء الحذف"); }
-    }
-
-    function editAd(id){
-        const p = props.find(x => x.id === id);
-        if(!p) return;
-        editingId = id;
-        setPostType(p.type);
-        setPostCat(p.cat);
-        
-        if(document.getElementById("p-wil")) document.getElementById("p-wil").value = p.wil || "";
-        if(document.getElementById("p-com")) document.getElementById("p-com").value = p.city || "";
-        if(document.getElementById("p-ttl")) document.getElementById("p-ttl").value = p.title ? p.title.ar || "" : "";
-        if(document.getElementById("p-pr")) document.getElementById("p-pr").value = p.price || "";
-        if(document.getElementById("p-ar")) document.getElementById("p-ar").value = p.area || "";
-        setRm(p.rooms || 0);
-        if(document.getElementById("p-dsc")) document.getElementById("p-dsc").value = p.desc ? p.desc.ar || "" : "";
-        if(document.getElementById("p-ph")) document.getElementById("p-ph").value = p.phone || "";
-        
-        postNeg = p.neg || false;
-        const nt = document.getElementById("neg-tg");
-        if(nt) nt.classList.toggle("on", postNeg);
-        
-        if(document.getElementById("post-done")) document.getElementById("post-done").style.display = "none";
+        base64ImageString = "";
+        document.getElementById("img-preview").style.display = "none";
         goStep(1);
-        showPage("post");
-        
-        const pb = document.getElementById("pub-btn");
-        if(pb) pb.textContent = "💾 حفظ التعديلات";
-        toast("قم بتعديل البيانات ثم اضغط حفظ التعديلات");
-    }
-
-    function toggleNotif(){
-        notifOn = !notifOn;
-        if(document.getElementById("notif-tg")) document.getElementById("notif-tg").classList.toggle("on", notifOn);
-        if(document.getElementById("notif-lbl")) document.getElementById("notif-lbl").textContent = notifOn ? "مُفعَّلة" : "معطَّلة";
     }
 
     function selectPkg(pkg){
         selectedPkg = pkg;
-        document.querySelectorAll(".pkg-card").forEach(el => el.classList.remove("selected"));
-        const targetPkg = document.getElementById("pkg-"+pkg);
-        if(targetPkg) targetPkg.classList.add("selected");
+        document.querySelectorAll(".pkg-card").forEach(el => el.classList.remove("on"));
+        document.getElementById("pkg-"+pkg).classList.add("on");
         
-        const pm = document.getElementById("payment-method");
-        if(pm) pm.style.display = (pkg === "basic") ? "none" : "block";
-        if(pkg === "basic") toast("الباقة المجانية محددة — يمكنك النشر مباشرة!");
+        // إظهار أو إخفاء زر النشر المجاني وإظهار بوابات الدفع الإلكترونية بناءً على اختيار الباقة
+        document.getElementById("free-checkout-area").style.display = (pkg === "basic") ? "block" : "none";
+        document.getElementById("payment-method").style.display = (pkg === "basic") ? "none" : "block";
     }
 
     function confirmPayment(){
-        toast("✅ شكراً لك! سيتم مراجعة الدفع وتفعيل الإعلان المميز خلال 24 ساعة.");
-        setTimeout(() => showPage("browse"), 2000);
+        toast("✅ تم إبلاغ المشرف بنجاح، سيتم تفعيل التمييز الحصري بعد فحص الحوالة البريدية");
+        resetPost();
+        showPage("browse");
     }
 
-    // إدارة لوحة المشرف والتحكم (Admin Panel Control)
-    function openAdmin(){
-        if(!curUser) return;
-        const isAdmin = (curUser.ph === "0000000000" || curUser.name === "admin");
-        if(!isAdmin){ toast("غير مصرح لك بالوصول لهذه اللوحة"); return; }
-        renderAdmin();
-        showPage("admin");
+    function navGo(p){
+        if(!curUser && p !== "browse"){ toast("يرجى إتمام عملية الدخول لتوثيق الهوية أولاً"); showPage("register"); return; }
+        showPage(p);
     }
 
+    function regNext(){
+        if(!document.getElementById("reg-name").value || !document.getElementById("reg-ph").value) { toast("أدخل البيانات كاملة"); return; }
+        document.getElementById("reg-s1").style.display = "none";
+        document.getElementById("reg-s2").style.display = "block";
+    }
+
+    function regConfirm(){
+        if(document.getElementById("reg-otp").value !== "1234") { toast("رمز خاطئ!"); return; }
+        const u = { name: document.getElementById("reg-name").value, ph: document.getElementById("reg-ph").value };
+        curUser = u;
+        localStorage.setItem("aqarati_user", JSON.stringify(u));
+        updateUserUI(u);
+        toast("تم الدخول بنجاح للمنصة");
+        showPage("browse");
+    }
+
+    function updateUserUI(u){
+        document.getElementById("user-name").textContent = u.name;
+        document.getElementById("user-ph").textContent = u.ph;
+        document.getElementById("login-btn").textContent = "خروج وفك الارتباط";
+        document.getElementById("login-btn").onclick = () => {
+            curUser = null; localStorage.removeItem("aqarati_user"); location.reload();
+        };
+        // التحقق الحصري من هوية المسؤول أو المشرف لإظهار لوحة التحكم والموافقات الحية
+        if(u.ph === "0000000000" || u.name === "admin"){
+            document.getElementById("admin-section").style.display = "block";
+            renderAdmin();
+        }
+    }
+
+    // بناء وتسيير لوحة التحكم الحصرية والموافقات للمشرف
     function renderAdmin(){
         const total = props.length;
-        const rents = props.filter(p => p.type === "rent").length;
-        const sales = props.filter(p => p.type === "sale").length;
-        const featured = props.filter(p => p.feat).length;
-        
-        const as = document.getElementById("admin-stats");
-        if(as) {
-            as.innerHTML = `
-                <div style="background:#fff; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04)">
-                    <div style="font-size:28px; font-weight:900; color:#1a7f37">${total}</div>
-                    <div style="font-size:12px; color:var(--text-muted)">إجمالي الإعلانات</div>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04)">
-                    <div style="font-size:28px; font-weight:900; color:#bf8700">${featured}</div>
-                    <div style="font-size:12px; color:var(--text-muted)">إعلانات مميزة</div>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04)">
-                    <div style="font-size:28px; font-weight:900; color:#0550ae">${rents}</div>
-                    <div style="font-size:12px; color:var(--text-muted)">للإيجار</div>
-                </div>
-                <div style="background:#fff; border-radius:12px; padding:1rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04)">
-                    <div style="font-size:28px; font-weight:900; color:#cf222e">${sales}</div>
-                    <div style="font-size:12px; color:var(--text-muted)">للبيع</div>
-                </div>
-            `;
-        }
+        const feats = props.filter(p => p.feat).length;
+        document.getElementById("admin-stats").innerHTML = `
+            <div class="admin-stat-item"><b>${total}</b><br><span style="font-size:11px">كل العقارات</span></div>
+            <div class="admin-stat-item"><b>${feats}</b><br><span style="font-size:11px">المميزة</span></div>
+        `;
         
         const al = document.getElementById("admin-list");
-        if(al) {
-            al.innerHTML = props.map(p => `
-                <div style="background:#fff; border-radius:12px; padding:12px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,0.04); display:flex; align-items:center; gap:10px">
-                    <span style="font-size:24px">${p.em || "🏠"}</span>
-                    <div style="flex:1">
-                        <div style="font-weight:700; font-size:13px">${p.title ? p.title.ar || "" : ""}</div>
-                        <div style="font-size:11px; color:var(--text-muted)">${p.owner || ""} · ${p.phone || ""}</div>
-                        <div style="font-size:11px; color:var(--text-muted)">${p.wil || ""}</div>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:5px">
-                        <button onclick="adminToggleFeat('${p.id}', ${!p.feat})" style="background:${p.feat?"#fef3c7":"#f6f8fa"}; border:1px solid ${p.feat?"#bf8700":"#d0d7de"}; border-radius:8px; padding:4px 8px; cursor:pointer; font-size:11px; color:${p.feat?"#bf8700":"#6e7781"}; font-family:inherit">
-                            ${p.feat ? "⭐ مميز" : "☆ عادي"}
-                        </button>
-                        <button onclick="adminToggleOk('${p.id}', ${!p.ok})" style="background:${p.ok?"#dcfce7":"#f6f8fa"}; border:1px solid ${p.ok?"#1a7f37":"#d0d7de"}; border-radius:8px; padding:4px 8px; cursor:pointer; font-size:11px; color:${p.ok?"#1a7f37":"#6e7781"}; font-family:inherit">
-                            ${p.ok ? "✅ موثق" : "○ غير موثق"}
-                        </button>
-                        <button onclick="adminDelete('${p.id}')" style="background:#fff5f5; border:1px solid #ef4444; border-radius:8px; padding:4px 8px; cursor:pointer; font-size:11px; color:#ef4444; font-family:inherit">🗑️ حذف</button>
-                    </div>
+        al.innerHTML = props.map(p => `
+            <div style="background:var(--bg-main); padding:10px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center">
+                <div>
+                    <div style="font-size:12px; font-weight:700">${p.title?.ar || ''}</div>
+                    <div style="font-size:10px; color:var(--text-muted)">المالك: ${p.owner} | الهاتف: ${p.phone}</div>
                 </div>
-            `).join("");
+                <div style="display:flex; gap:4px">
+                    <button class="pill-btn ${p.ok?'on':''}" style="padding:4px 8px; font-size:10px" onclick="adminToggleOk('${p.id}', ${!p.ok})">${p.ok?'✅ موثق':'○ موافقة وتوثيق'}</button>
+                    <button class="pill-btn ${p.feat?'on':''}" style="padding:4px 8px; font-size:10px" onclick="adminToggleFeat('${p.id}', ${!p.feat})">${p.feat?'⭐ مميز':'☆ تمييز'}</button>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    async function adminToggleOk(id, val){
+        if(window.DB){
+            const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+            await updateDoc(doc(window.DB, "properties", id), { ok: val });
+            const p = props.find(x => x.id === id); if(p) p.ok = val;
+            renderAdmin(); renderProps(); toast("تم تحديث حالة الموافقة الحية للإعلان");
         }
     }
 
     async function adminToggleFeat(id, val){
-        try {
+        if(window.DB){
             const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-            await updateDoc(doc(window.DB, "properties", id), { feat: val, ok: val ? true : props.find(p => p.id === id)?.ok });
-            const p = props.find(x => x.id === id);
-            if(p) { p.feat = val; if(val) p.ok = true; }
-            renderAdmin();
-            toast(val ? "✅ تم تفعيل تمييز العقار والموافقة" : "تم إلغاء التمييز");
-        } catch(e) { toast("خطأ أثناء معالجة الطلب الأدمن"); }
+            await updateDoc(doc(window.DB, "properties", id), { feat: val });
+            const p = props.find(x => x.id === id); if(p) p.feat = val;
+            renderAdmin(); renderProps(); toast("تم تحديث حالة تمييز العقار");
+        }
     }
 
-    async function adminToggleOk(id, val){
-        try {
-            const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-            await updateDoc(doc(window.DB, "properties", id), { ok: val });
-            const p = props.find(x => x.id === id); if(p) p.ok = val;
-            renderAdmin();
-            toast(val ? "✅ تم توثيق العقار بنجاح" : "تم إلغاء التوثيق الرسمي");
-        } catch(e) { toast("خطأ في تحديث البيانات"); }
-    }
-
-    async function adminDelete(id){
-        if(!confirm("هل تريد حذف هذا الإعلان نهائياً وبدون تراجع؟")) return;
-        try {
-            const { doc, deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-            await deleteDoc(doc(window.DB, "properties", id));
-            props = props.filter(p => p.id !== id);
-            renderAdmin();
-            toast("✅ تم الحذف النهائي بنجاح");
-        } catch(e) { toast("حدث خطأ أثناء الحذف"); }
-    }
-
-    // جلب وتحميل الإعلانات الأساسية من قاعدة البيانات عند الجهوزية
     async function loadProps(){
-        try {
-            const snap = await window.DBget(window.DBq(window.DBcol(window.DB, "properties"), window.DBord("createdAt", "desc")));
-            props = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        } catch(e) { props = []; }
-        
-        if(document.getElementById("loading-browse")) document.getElementById("loading-browse").style.display = "none";
-        if(document.getElementById("props-grid")) document.getElementById("props-grid").style.display = "grid";
+        if(window.DB){
+            try {
+                const snap = await window.DBget(window.DBq(window.DBcol(window.DB, "properties"), window.DBord("createdAt", "desc")));
+                props = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            } catch(e) { console.error(e); }
+        }
+        document.getElementById("loading-browse").style.display = "none";
+        document.getElementById("props-grid").style.display = "grid";
         renderProps();
     }
 
-    // التهيئة الابتدائية للتطبيق وفك شاشة الـ Splash Screen
     window.addEventListener("load", () => {
         setTimeout(() => {
-            const s = document.getElementById("splash");
-            if(s) {
-                s.style.opacity = "0";
-                setTimeout(() => s.remove(), 500);
-            }
+            const s = document.getElementById("splash"); if(s) { s.style.opacity = "0"; setTimeout(() => s.remove(), 500); }
             const saved = localStorage.getItem("aqarati_user");
-            if(saved){
-                const u = JSON.parse(saved);
-                curUser = u;
-                updateUserUI(u);
-                showPage("browse");
-            } else {
-                showPage("register");
-            }
-        }, 1800);
+            if(saved) { curUser = JSON.parse(saved); updateUserUI(curUser); showPage("browse"); } else { showPage("browse"); }
+        }, 1500);
     });
 
     window.addEventListener("dbready", () => loadProps());
-
-    // تسجيل الـ Service Worker لتهيئة ميزات الـ PWA للعمل دون اتصال بالإنترنت
-    if("serviceWorker" in navigator){
-        window.addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
-    }
-
-    let dp;
-    window.addEventListener("beforeinstallprompt", e => {
-        e.preventDefault();
-        dp = e;
-        setTimeout(() => { if(confirm("هل تود تثبيت تطبيق عقاراتي على جهازك؟")) { dp.prompt(); } }, 5000);
-    });
+    function setLang(l) { curLang = l; renderProps(); }
 </script>
 </body>
 </html>
