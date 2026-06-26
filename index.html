@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#116329"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="عقاراتي"/>
+<title>عقاراتي</title>
+<style>
+/* المتغيرات للوضع المظلم والفاتح */
+:root {
+    --bg-color: #f6f8fa;
+    --card-bg: #ffffff;
+    --text-primary: #1f2328;
+    --text-secondary: #6e7781;
+    --accent: #116329;
+    --accent-light: #1a7f37;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+body.dark {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent: #4caf50;
+    --accent-light: #81c784;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+*{margin:0;padding:0;box-sizing:border-box; transition: background 0.3s, color 0.3s;}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif; background: var(--bg-color); color: var(--text-primary);}
+
+/* Splash Screen (Original Styles Maintained) */
+#splash{position:fixed;inset:0;background:linear-gradient(135deg,#116329,#1a7f37);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+.spe{font-size:72px;margin-bottom:16px;animation:bo 1s infinite alternate}
+.sph{color:#fff;font-size:32px;font-weight:900;margin-bottom:6px}
+.spp{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:40px}
+.ld{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes bo{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+
+/* Pages */
+.page{display:none;min-height:100vh;padding-bottom:80px}
+.page.active{display:block}
+
+/* Header & UI Modernized */
+header{background: var(--accent); color: #fff; position:sticky; top:0; z-index:100; padding:0 14px; box-shadow: var(--shadow);}
+.ht{display:flex;align-items:center;justify-content:space-between;padding:11px 0}
+.hb{background:rgba(255,255,255,.1);border:none;border-radius:7px;padding:4px 8px;color:#fff;cursor:pointer;font-size:11px}
+.hb.on{background:rgba(255,255,255,.3);font-weight:700}
+.sb{background:rgba(255,255,255,.15);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.sb input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;text-align:right}
+
+/* Nav */
+#nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background: var(--card-bg); border-top:1px solid rgba(0,0,0,0.1);display:flex;padding:6px 8px 10px;gap:4px}
+.nb{flex:1;background:transparent;color: var(--text-secondary);border:none;border-radius:10px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px}
+.nb.on{background: var(--accent); color:#fff; font-weight:700}
+
+/* Cards */
+.card{background: var(--card-bg); border-radius:16px; overflow:hidden; box-shadow: var(--shadow); cursor:pointer; border: 1px solid rgba(0,0,0,0.05);}
+.cimg{height:120px; background-size: cover; background-position: center; display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+
+/* General Elements */
+.fbox{background: var(--card-bg); border-radius:14px; padding:10px 12px; margin:12px 12px 0; box-shadow: var(--shadow);}
+.btn-p{background: var(--accent-light); color:#fff; border:none; border-radius:11px; padding:13px; font-weight:700; cursor:pointer; font-size:14px; width:100%;}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background: var(--accent);color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+
+/* Theme Toggle */
+#theme-toggle { background:transparent; border:none; cursor:pointer; font-size:18px; padding:5px; margin-right: 10px; }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="spe">🏘️</div>
+  <h1 class="sph">عقاراتي</h1>
+  <p class="spp">منصة العقارات الجزائرية الأولى</p>
+  <div class="ld"></div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<header id="main-header">
+  <div class="ht">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:24px">🏘️</span>
+      <div>
+        <div style="font-size:17px;font-weight:900" id="app-name">عقاراتي</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:5px;align-items:center">
+      <button id="theme-toggle" onclick="toggleTheme()">☀️/🌙</button>
+      <button class="hb on" id="btn-ar" onclick="setLang('ar')">ع</button>
+      <button class="hb" id="btn-fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+  <div class="sb" id="search-bar">
+    <span>🔍</span>
+    <input type="text" id="search-inp" placeholder="ابحث..." oninput="filterProps()"/>
+  </div>
+</header>
+
+<div id="nav">
+  <button class="nb on" onclick="navGo('browse')">🏠<span id="nav-browse">تصفح</span></button>
+  <button class="nb" onclick="navGo('post')">➕<span id="nav-post">أضف</span></button>
+  <button class="nb" onclick="navGo('favs')">❤️<span id="nav-favs">المفضلة</span></button>
+  <button class="nb" onclick="navGo('cfg')">⚙️<span id="nav-cfg">إعدادات</span></button>
+</div>
+
+<div id="browse-page" class="page active"></div>
+<script>
+// وظيفة تبديل الوضع المظلم
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.contains('dark');
+    localStorage.setItem('darkMode', isDark);
+}
+
+// تطبيق الوضع المحفوظ عند التحميل
+window.addEventListener('load', () => {
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark');
+    }
+    
+    // هنا تقوم بإضافة كود التهيئة الخاص بك (Splash logic, Firebase, etc.)
+    // استمر في كتابة كود الـ JavaScript الخاص بك هنا...
+});
+
+// [هنا ضع باقي كود الـ JavaScript الخاص بك من الملف الأصلي]
+</script>
+
+</body>
+</html>
