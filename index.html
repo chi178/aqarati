@@ -107,7 +107,7 @@ main{max-width:640px;margin:0 auto;padding:1rem;padding-bottom:90px}
 .pb{background:#fff;border-radius:20px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.08);max-width:500px;margin:0 auto}
 .ph2{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .ph3{color:#1f2328;margin:0;font-size:18px}
-.ps{font-size:12px;color:#6e7781}
+.ps}
 .pg{display:flex;gap:5px;margin-bottom:1.4rem}
 .pgb{flex:1;height:5px;border-radius:3px;background:#d0d7de}
 .pgb.on{background:#1a7f37}
@@ -187,7 +187,6 @@ label{font-size:12px;color:#6e7781;display:block;margin-bottom:5px;font-weight:6
 <div id="toast" class="toast"></div>
 <div id="app"></div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -219,7 +218,7 @@ const W=["01-أدرار","02-الشلف","03-الأغواط","04-أم البوا
 const CE={apartment:"🏢",villa:"🏡",commercial:"🏪",land:"🌿",office:"🏗️",studio:"🛋️"};
 const CATS=["all","apartment","villa","commercial","land","office","studio"];
 const TL={ar:{dir:"rtl",app:"عقاراتي",tag:"منصة العقارات الجزائرية الأولى",srch:"ابحث...",browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",rent:"إيجار",sale:"بيع",all:"الكل",allW:"كل الولايات",apartment:"شقة",villa:"فيلا",commercial:"محل",land:"أرض",office:"مكتب",studio:"ستوديو",res:"نتيجة",rooms:"غرف",area:"م²",floor:"طابق",ok:"موثق",snd:"إرسال",sent:"✅ تم الإرسال!",back:"رجوع",add:"أضف إعلانك",of:"من",atype:"نوع الإعلان",ptype:"نوع العقار",wil:"الولاية",com:"البلدية",ttl:"عنوان الإعلان",pr:"السعر (دج)",ar2:"المساحة (م²)",rm:"غرف",dsc:"الوصف",ph:"الهاتف",nxt:"التالي",prv:"رجوع",pub:"🚀 نشر",ptit:"تم النشر!",psub:"إعلانك محفوظ وسيظهر للجميع!",br:"تصفح",nores:"لا نتائج",pm:"/شهر",pu:"دج",lng:"اللغة",thm:"المظهر",drk:"داكن",lgt:"فاتح",ntf:"الإشعارات",fave:"لا توجد مفضلة",selW:"اختر الولاية",own:"المالك",call:"اتصل",neg:"قابل للتفاوض",feat:"مميزة",lat:"إعلانات المستخدمين",lgn:"دخول",logt:"خروج",gst:"زائر",non:"مُفعَّلة",nof:"معطَّلة",minp:"السعر الأدنى",maxp:"السعر الأقصى",rst:"إعادة تعيين",step:"الخطوة",loading:"جاري التحميل...",saving:"جاري الحفظ..."},
-fr:{dir:"ltr",app:"Aqarati",tag:"La 1ère plateforme immobilière algérienne",srch:"Rechercher...",browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",rent:"Location",sale:"Vente",all:"Tout",allW:"Toutes wilayas",apartment:"Appartement",villa:"Villa",commercial:"Local",land:"Terrain",office:"Bureau",studio:"Studio",res:"résultat(s)",rooms:"pièces",area:"m²",floor:"étage",ok:"Vérifié",snd:"Envoyer",sent:"✅ Envoyé!",back:"Retour",add:"Publier annonce",of:"sur",atype:"Type",ptype:"Bien",wil:"Wilaya",com:"Commune",ttl:"Titre",pr:"Prix (DA)",ar2:"Superficie",rm:"Pièces",dsc:"Description",ph:"Téléphone",nxt:"Suivant",prv:"Retour",pub:"🚀 Publier",ptit:"Publié!",psub:"Votre annonce est visible par tous!",br:"Annonces",nores:"Aucun résultat",pm:"/mois",pu:"DA",lng:"Langue",thm:"Thème",drk:"Sombre",lgt:"Clair",ntf:"Notifications",fave:"Aucun favori",selW:"Choisir wilaya",own:"Propriétaire",call:"Appeler",neg:"Négociable",feat:"À la une",lat:"Annonces utilisateurs",lgn:"Connexion",logt:"Déconnexion",gst:"Visiteur",non:"Activées",nof:"Désactivées",minp:"Prix min",maxp:"Prix max",rst:"Réinitialiser",step:"Étape",loading:"Chargement...",saving:"Enregistrement..."},
+fr:{dir:"ltr",app:"Aqarati",tag:"La 1ère plateforme immobilière algérienne",srch:"Rechercher...",browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",rent:"Location",sale:"Vente",all:"Tout",allW:"Toutes wilayas",apartment:"Appartement",villa:"Villa",commercial:"Local",land:"Terrain",office:"Bureau",studio:"Studio",res:"résultat(s)",rooms:"pièces",area:"m²",floor:"étage",ok:"Vérifié",snd:"Envoyer",sent:"✅ Envoyé!",back:"Retour",add:"Publier annonce",of:"sur",atype:"Type",ptype:"Bien",wil:"Wilaya",com:"Commune",ttl:"Titre",pr:"Prix (DA)",ar2:"Superficie",rm:"Pièces",dsc:"Description",ph:"Téléphone",nxt:"Suivant",prv:"Retour",pub:"🚀 Publier",ptit:"Publié!",psub:"Votre annonce est visible par tous!",br:"Annonces",nores:"Aucun résultat",pm:"/mois",pu:"DA",lng:"Langue",thm:"Thème",drk:"Sombre",lgt:"Clair",ntf:"Notifications",fave:"Aucun favori",selW:"Choisir wilaya",own:"Propriétaire",call:"Appeler",neg:"Négociable",feat:"À la une",lat:"Annonces utilisateurs",lgn:"Connexion",logt:"Déconnexion",gst:"Visiteur",non:"Activées",nof:"Désactivées",minp:"Prix min",maxp:"Max Price",rst:"Réinitialiser",step:"Étape",loading:"Chargement...",saving:"Enregistrement..."},
 en:{dir:"ltr",app:"Aqarati",tag:"Algeria's #1 Real Estate Platform",srch:"Search...",browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",rent:"Rent",sale:"Sale",all:"All",allW:"All Wilayas",apartment:"Apartment",villa:"Villa",commercial:"Shop",land:"Land",office:"Office",studio:"Studio",res:"result(s)",rooms:"rooms",area:"m²",floor:"floor",ok:"Verified",snd:"Send",sent:"✅ Sent!",back:"Back",add:"Post Property",of:"of",atype:"Ad Type",ptype:"Property",wil:"Wilaya",com:"District",ttl:"Title",pr:"Price (DZD)",ar2:"Area (m²)",rm:"Rooms",dsc:"Description",ph:"Phone",nxt:"Next",prv:"Back",pub:"🚀 Publish",ptit:"Published!",psub:"Your ad is live for everyone!",br:"Browse",nores:"No results",pm:"/month",pu:"DZD",lng:"Language",thm:"Theme",drk:"Dark",lgt:"Light",ntf:"Notifications",fave:"No favorites",selW:"Select Wilaya",own:"Owner",call:"Call",neg:"Negotiable",feat:"Featured",lat:"User Listings",lgn:"Login",logt:"Logout",gst:"Guest",non:"Enabled",nof:"Disabled",minp:"Min Price",maxp:"Max Price",rst:"Reset",step:"Step",loading:"Loading...",saving:"Saving..."}};
 
 let S={lang:"ar",tab:"browse",q:"",fT:"all",fW:"all",fC:"all",minP:"",maxP:"",sel:null,favs:[],stp:1,done:false,msg:"",msgOk:false,notif:true,user:null,showL:false,lstp:1,lph:"",lotp:"",form:{type:"rent",cat:"apartment",wil:"",com:"",ttl:"",pr:"",ar:"",rm:0,dsc:"",ph:"",neg:false},props:[],loading:true,saving:false};
@@ -286,7 +285,7 @@ function renderHeader(){
         <button class="hb${S.lang==="ar"?" on":""}" onclick="setLang('ar')">ع</button>
         <button class="hb${S.lang==="fr"?" on":""}" onclick="setLang('fr')">FR</button>
         <button class="hb${S.lang==="en"?" on":""}" onclick="setLang('en')">EN</button>
-        <button class="hbi" onclick="setState({showL:true})">${S.user?"👤":"🔑"}</button>
+        <button class="hbi" onclick="setState({showL:true})">👤</button>
       </div>
     </div>
     ${S.tab==="browse"?`<div class="sb"><span>🔍</span><input placeholder="${tk.srch}" value="${S.q}" oninput="updateQ(this.value)">${S.q?`<button onclick="setState({q:''})" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer">✕</button>`:""}</div>`:""}
@@ -353,7 +352,7 @@ function renderBrowse(){
   return`<div>
     <div class="fb">
       <div class="fr">
-        <div style="display:flex;gap:4px">${["all","rent","sale"].map(tp=>`<button class="tb${S.fT===tp?" on":""}" onclick="setState({fT:'${tp}'})">${tp==="all"?tk.all:tp==="rent"?tk.rent:tk.sale}</button>`).join("")}</div>
+        <div style="display:flex;gap:4px">${["all","rent","sale"].map(tp=>`<button class="tb${S.fT===tp?" on":""}" onclick="setState({fT:'${tp}'})">${tp==="all"?tk.all:tp==="rent"?tk.rent:tp==="sale}</button>`).join("")}</div>
         <select class="fs" onchange="setState({fW:this.value})"><option value="all">${tk.allW}</option>${W.map(w=>`<option value="${w}"${S.fW===w?" selected":""}>${w}</option>`).join("")}</select>
         <select class="fs" style="flex:0" onchange="setState({fC:this.value})">${CATS.map(c=>`<option value="${c}"${S.fC===c?" selected":""}>${c==="all"?tk.all:tk[c]}</option>`).join("")}</select>
       </div>
@@ -464,77 +463,4 @@ function renderPost(){
 function renderFavs(){
   const tk=t();
   const list=S.props.filter(p=>S.favs.includes(p.id));
-  return`<div style="padding:1rem;padding-bottom:90px"><h2 style="margin:0 0 1rem;font-size:19px">❤️ ${tk.favs}</h2>
-    ${list.length===0?`<div class="em"><div class="ee">🤍</div><p>${tk.fave}</p></div>`:`<div class="gr">${list.map(p=>renderCard(p)).join("")}</div>`}
-  </div>`;
-}
-
-function renderCfg(){
-  const tk=t();
-  return`<div style="padding:1rem;padding-bottom:90px"><div class="cfg">
-    <div class="pc">
-      <div class="pa">${S.user?"👤":"🔑"}</div>
-      <div style="flex:1"><div class="pn">${S.user?S.user.name:tk.gst}</div><div class="pp">${S.user?S.user.lph||"":""}</div></div>
-      ${S.user?`<button class="pbt" onclick="setState({user:null})">${tk.logt}</button>`:`<button class="pbt" onclick="setState({showL:true})">${tk.lgn}</button>`}
-    </div>
-    <div class="cs2"><div class="cl2">🌍 ${tk.lng}</div><div class="lr">
-      ${[["ar","العربية","🇩🇿"],["fr","Français","🇫🇷"],["en","English","🇬🇧"]].map(([c,lb,fl])=>`<button class="lb${S.lang===c?" on":""}" onclick="setLang('${c}')"><span class="lf">${fl}</span>${lb}</button>`).join("")}
-    </div></div>
-    <div class="cs2"><div class="nr">
-      <div><div class="nl">🔔 ${tk.ntf}</div><div class="ns">${S.notif?tk.non:tk.nof}</div></div>
-      <button class="tg${S.notif?" on":""}" onclick="setState({notif:!S.notif})"><div class="tgd"></div></button>
-    </div></div>
-    <div class="cs2"><div class="cl2">🔥 Firebase</div>
-      ${[["🔥","Firestore DB","aqarati-ca546"],["🌐","Project ID","aqarati-ca546"],["📱","App ID","658752167015"]].map(([em,nm,vl])=>`<div class="api"><span class="apie">${em}</span><div><div class="apin">${nm}</div><div class="apiv">${vl}</div></div><span class="apib">متصل ✅</span></div>`).join("")}
-      <div class="af"><div>🏘️ ${tk.app} · الإصدار 2.0</div><div>🗺️ 58 ولاية جزائرية</div><div>⚖️ جميع الحقوق محفوظة 2026</div></div>
-    </div>
-  </div></div>`;
-}
-
-function renderLogin(){
-  const tk=t();
-  return`<div class="lw" dir="${tk.dir}"><div class="lb2">
-    <div class="lc"><div class="le">🏘️</div><h2 class="lh">${tk.app}</h2><p class="lp">${S.lstp===1?"أدخل رقم هاتفك":"أدخل رمز التحقق"}</p></div>
-    ${S.lstp===1?`
-      <label>${tk.ph}</label>
-      <input class="inp" id="lph" type="tel" value="${S.lph}" onblur="setState({lph:this.value})" placeholder="0555 000 000" style="text-align:center;font-size:16px;letter-spacing:2px;margin-bottom:14px"/>
-      <button class="bp" onclick="if(S.lph.length>=9)setState({lstp:2})">${tk.nxt} →</button>
-    `:`
-      <div class="oh">رمز التجربة: <b>1234</b></div>
-      <input class="inp" id="lotp" type="number" value="${S.lotp}" onblur="setState({lotp:this.value})" placeholder="0 0 0 0" maxlength="4" style="text-align:center;font-size:24px;letter-spacing:8px;margin-bottom:14px"/>
-      <button class="bp" style="margin-bottom:10px" onclick="checkOtp()">تأكيد</button>
-      <button class="bsc" onclick="setState({lstp:1})">← ${tk.prv}</button>
-    `}
-    <button class="bl" onclick="setState({showL:false,lstp:1})">${tk.back}</button>
-  </div></div>`;
-}
-
-function updateQ(v){S.q=v;re();}
-function setState(upd){Object.assign(S,typeof upd==="function"?upd(S):upd);re();}
-function setLang(l){setState({lang:l});}
-function setTab(id){setState({tab:id,sel:null,done:false,stp:1});}
-function togFav(id){setState(s=>({favs:s.favs.includes(id)?s.favs.filter(x=>x!==id):[...s.favs,id]}));}
-function selProp(id){setState({sel:S.props.find(p=>p.id===id)||null,msgOk:false,msg:""});}
-function setForm(k,v){setState(s=>({form:{...s.form,[k]:v}}));}
-function sendMsg(){const ta=document.getElementById("msg-ta");if(ta&&ta.value.trim())setState({msgOk:true,msg:ta.value});}
-function checkOtp(){if(S.lotp==="1234")setState({user:{name:"سيدي شهاب",lph:S.lph},showL:false,lstp:1,lotp:""});}
-
-// SPLASH
-window.addEventListener("load",()=>{
-  setTimeout(()=>{const s=document.getElementById("splash");if(s){s.classList.add("hd");setTimeout(()=>s.remove(),500);}},1800);
-});
-
-// SW
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}
-
-// PWA
-let dp;
-window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;setTimeout(()=>{if(confirm("ثبّت تطبيق عقاراتي على شاشتك؟")){dp.prompt();}},4000);});
-
-// START
-re();
-window.addEventListener("dbready",()=>{loadProps();});
-if(window._dbReady)loadProps();
-</script>
-</body>
-</html>
+  return`<div style="padding:1rem;padding-bottom:90px"><h2 style="margin:0 0 1rem;
