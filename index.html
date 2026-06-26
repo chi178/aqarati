@@ -155,7 +155,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <button class="hb on" id="btn-ar" onclick="setLang('ar')">ع</button>
       <button class="hb" id="btn-fr" onclick="setLang('fr')">FR</button>
       <button class="hb" id="btn-en" onclick="setLang('en')">EN</button>
-      <button class="hbi" onclick="showPage('login')">🔑</button>
+      
     </div>
   </div>
   <div class="sb" id="search-bar">
@@ -366,7 +366,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <button class="tg on" id="notif-tg" onclick="toggleNotif()"><div class="tgd"></div></button>
     </div>
   </div>
-  <div class="cbox">
+  <div class="cbox" id="admin-section" style="display:none">
     <div class="clbl">🔥 Firebase — متصل</div>
     <div class="apirow"><span>🔥</span><div><div style="font-size:11px;font-weight:700">Firestore DB</div><div style="font-size:10px;color:#6e7781;font-family:monospace">aqarati-ca546</div></div><span class="apibadge">✅ متصل</span></div>
     <div class="apirow"><span>🌐</span><div><div style="font-size:11px;font-weight:700">Project ID</div><div style="font-size:10px;color:#6e7781;font-family:monospace">aqarati-ca546</div></div><span class="apibadge">✅</span></div>
@@ -375,6 +375,41 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <div>🗺️ 58 ولاية جزائرية</div>
       <div>⚖️ جميع الحقوق محفوظة 2026</div>
     </div>
+  </div>
+  <div class="cbox">
+    <div style="font-size:11px;color:#6e7781;line-height:1.9;text-align:center">
+      <div>🏘️ عقاراتي · الإصدار 2.0</div>
+      <div>🗺️ 58 ولاية جزائرية</div>
+      <div>⚖️ جميع الحقوق محفوظة 2026</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="register-page" class="page">
+  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(135deg,#f0fdf4,#dcfce7)">
+  <div style="background:#fff;border-radius:20px;padding:2rem;width:100%;max-width:360px;box-shadow:0 8px 32px rgba(0,0,0,.12)">
+    <div style="text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:56px">🏘️</div>
+      <h2 style="color:#116329;margin:8px 0 4px;font-size:22px">عقاراتي</h2>
+      <p style="color:#6e7781;font-size:13px">سجّل للوصول للإعلانات</p>
+    </div>
+    <div id="reg-s1">
+      <label>الاسم الكامل</label>
+      <input type="text" id="reg-name" placeholder="مثال: محمد بن علي" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
+      <label>رقم الهاتف</label>
+      <input type="tel" id="reg-ph" placeholder="0555 000 000" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:center;letter-spacing:2px;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
+      <button class="btn-p" onclick="regNext()" style="width:100%">التالي ←</button>
+    </div>
+    <div id="reg-s2" style="display:none">
+      <div style="background:#dcfce7;border-radius:12px;padding:10px;text-align:center;margin-bottom:14px;font-size:13px;color:#116329">رمز التحقق: <b>1234</b></div>
+      <label>أدخل رمز التحقق</label>
+      <input type="number" id="reg-otp" placeholder="0 0 0 0" maxlength="4" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:24px;background:#fff;color:#1f2328;text-align:center;letter-spacing:8px;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
+      <button class="btn-p" onclick="regConfirm()" style="width:100%;margin-bottom:10px">تأكيد ✓</button>
+      <button class="btn-s" onclick="document.getElementById('reg-s1').style.display='block';document.getElementById('reg-s2').style.display='none'" style="width:100%">← رجوع</button>
+    </div>
+    <p style="text-align:center;font-size:11px;color:#6e7781;margin-top:16px">بالتسجيل توافق على شروط الاستخدام</p>
   </div>
   </div>
 </div>
@@ -687,6 +722,50 @@ function resetPost(){
   document.getElementById("p-ph").value="";
 }
 
+// REGISTER
+function regNext(){
+  const name=document.getElementById("reg-name").value.trim();
+  const ph=document.getElementById("reg-ph").value.trim();
+  if(!name){toast("أدخل اسمك الكامل");return;}
+  if(ph.length<9){toast("أدخل رقم هاتف صحيح");return;}
+  document.getElementById("reg-s1").style.display="none";
+  document.getElementById("reg-s2").style.display="block";
+}
+
+function regConfirm(){
+  const otp=document.getElementById("reg-otp").value;
+  if(otp!=="1234"){toast("رمز خاطئ! الرمز هو 1234");return;}
+  const name=document.getElementById("reg-name").value.trim();
+  const ph=document.getElementById("reg-ph").value.trim();
+  const u={name,ph};
+  curUser=u;
+  localStorage.setItem("aqarati_user",JSON.stringify(u));
+  updateUserUI(u);
+  toast("✅ مرحباً "+name+"!");
+  showPage("browse");
+}
+
+function updateUserUI(u){
+  document.getElementById("user-name").textContent=u.name;
+  document.getElementById("user-ph").textContent=u.ph;
+  document.getElementById("user-av").textContent="👤";
+  const lb=document.getElementById("login-btn");
+  if(lb){lb.textContent="خروج";lb.onclick=()=>{
+    curUser=null;
+    localStorage.removeItem("aqarati_user");
+    document.getElementById("user-name").textContent="زائر";
+    document.getElementById("user-av").textContent="🔑";
+    lb.textContent="دخول";
+    lb.onclick=()=>showPage("register");
+    toast("تم تسجيل الخروج");
+  };}
+  // Show admin section only for admin phone
+  if(u.ph==="0000000000"||u.name==="admin"){
+    const as=document.getElementById("admin-section");
+    if(as)as.style.display="block";
+  }
+}
+
 // LOGIN
 function loginNext(){
   const ph=document.getElementById("login-ph").value;
@@ -731,7 +810,20 @@ async function loadProps(){
 
 // INIT
 window.addEventListener("load",()=>{
-  setTimeout(()=>{const s=document.getElementById("splash");if(s){s.style.opacity="0";setTimeout(()=>s.remove(),500);}},1800);
+  setTimeout(()=>{
+    const s=document.getElementById("splash");
+    if(s){s.style.opacity="0";setTimeout(()=>s.remove(),500);}
+    // Check if user already registered
+    const saved=localStorage.getItem("aqarati_user");
+    if(saved){
+      const u=JSON.parse(saved);
+      curUser=u;
+      updateUserUI(u);
+      showPage("browse");
+    } else {
+      showPage("register");
+    }
+  },1800);
 });
 
 window.addEventListener("dbready",()=>loadProps());
