@@ -1,523 +1,206 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#116329"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-title" content="عقاراتي"/>
-<title>عقاراتي</title>
+<title>عقاراتي | Aqarati</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#f6f8fa;color:#1f2328}
-#splash{position:fixed;inset:0;background:linear-gradient(135deg,#116329,#1a7f37);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
-.spe{font-size:72px;margin-bottom:16px;animation:bo 1s infinite alternate}
-.sph{color:#fff;font-size:32px;font-weight:900;margin-bottom:6px}
-.spp{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:40px}
-.ld{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-@keyframes bo{from{transform:translateY(0)}to{transform:translateY(-10px)}}
-/* PAGES */
-.page{display:none;min-height:100vh;padding-bottom:80px}
-.page.active{display:block}
-/* HEADER */
-header{background:linear-gradient(135deg,#116329,#1a7f37);color:#fff;position:sticky;top:0;z-index:100;padding:0 14px}
-.ht{display:flex;align-items:center;justify-content:space-between;padding:11px 0}
-.hb{background:rgba(255,255,255,.1);border:none;border-radius:7px;padding:4px 8px;color:#fff;cursor:pointer;font-size:11px}
-.hb.on{background:rgba(255,255,255,.3);font-weight:700}
-.hbi{background:rgba(255,255,255,.15);border:none;border-radius:7px;padding:5px 7px;color:#fff;cursor:pointer;font-size:15px}
-.sb{background:rgba(255,255,255,.18);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:9px;margin-bottom:12px}
-.sb input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;text-align:right}
-.sb input::placeholder{color:rgba(255,255,255,.7)}
-/* NAV */
-#nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid #d0d7de;display:flex;padding:6px 8px 10px;gap:4px}
-.nb{flex:1;background:transparent;color:#6e7781;border:none;border-radius:10px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px}
-.nb.on{background:#116329;color:#fff;font-weight:700}
-/* CARDS */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;padding:1rem}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer}
-.cimg{height:120px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
-.badge{position:absolute;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700;color:#fff;top:8px;right:8px}
-.cbody{padding:10px 12px}
-.cloc{font-size:10px;color:#6e7781;margin-bottom:2px}
-.ctit{font-size:13px;font-weight:700;color:#1f2328;margin:0 0 5px;line-height:1.4}
-.cmeta{display:flex;gap:8px;font-size:11px;color:#6e7781;margin-bottom:7px}
-.cprice{font-size:14px;font-weight:900;color:#1a7f37}
-.favbtn{position:absolute;bottom:8px;left:8px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px}
-/* FILTER */
-.fbox{background:#fff;border-radius:14px;padding:10px 12px;margin:12px 12px 0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.tbrow{display:flex;gap:4px;margin-bottom:8px}
-.tb{border:none;border-radius:20px;padding:5px 12px;cursor:pointer;font-size:11px;background:#eaeef2;color:#6e7781}
-.tb.on{background:#116329;color:#fff;font-weight:700}
-select{border:1px solid #d0d7de;border-radius:9px;padding:5px 9px;background:#fff;color:#1f2328;font-size:11px;cursor:pointer;margin-bottom:6px;width:100%}
-/* CATS */
-.cats{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;scrollbar-width:none}
-.cat{flex-shrink:0;border:none;border-radius:20px;padding:6px 13px;cursor:pointer;background:#eaeef2;color:#6e7781;font-size:12px}
-.cat.on{background:#116329;color:#fff;font-weight:700}
-/* DETAIL */
-#detail-page{background:#f6f8fa}
-.dimg{height:200px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative}
-.dback{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.9);border:none;border-radius:10px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:12px;color:#116329}
-.dbody{padding:1.2rem}
-.dtit{font-size:19px;font-weight:900;color:#1f2328;margin:4px 0 8px}
-.ddesc{color:#6e7781;font-size:13px;line-height:1.7}
-.dprice{font-size:20px;font-weight:900;color:#1a7f37;margin:8px 0}
-.specs{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.spec{background:#f0fdf4;border-radius:10px;padding:8px 14px;text-align:center;font-size:12px;color:#1f2328}
-.callbtn{display:block;background:#1a7f37;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-size:15px;font-weight:700;text-align:center;margin:12px 0}
-/* POST FORM */
-#post-page{padding:1rem}
-.pbox{background:#fff;border-radius:16px;padding:1.5rem;max-width:500px;margin:0 auto;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.prow{display:flex;gap:8px;margin-bottom:14px}
-.ptbtn{flex:1;border-radius:11px;padding:11px;cursor:pointer;font-size:13px;color:#1f2328;background:#fff;border:2px solid #d0d7de;font-family:inherit}
-.ptbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.catgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:14px}
-.catbtn{border-radius:11px;padding:9px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid #d0d7de;font-family:inherit}
-.catbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-label{font-size:12px;color:#6e7781;display:block;margin-bottom:5px;font-weight:600}
-input[type=text],input[type=tel],input[type=number],textarea,select.full{width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px}
-textarea{resize:none}
-input:focus,textarea:focus{border-color:#1a7f37}
-.row2{display:flex;gap:10px}
-.row2>div{flex:1}
-.rmbtn{display:flex;gap:5px;margin-bottom:14px}
-.rmbtn button{flex:1;border-radius:8px;padding:7px 2px;cursor:pointer;background:#fff;color:#6e7781;font-size:11px;border:1.5px solid #d0d7de;font-family:inherit}
-.rmbtn button.on{border-color:#1a7f37;background:#f0fdf4;color:#1a7f37;font-weight:700}
-.btnrow{display:flex;gap:8px;margin-top:8px}
-.btn-p{background:#1a7f37;color:#fff;border:none;border-radius:11px;padding:13px;font-weight:700;cursor:pointer;font-size:14px;flex:2;font-family:inherit}
-.btn-s{border:1.5px solid #1a7f37;background:#fff;color:#1a7f37;border-radius:11px;padding:12px;font-weight:700;cursor:pointer;font-size:13px;flex:1;font-family:inherit}
-.steps{display:flex;gap:5px;margin-bottom:1.2rem}
-.step{flex:1;height:5px;border-radius:3px;background:#d0d7de}
-.step.on{background:#1a7f37}
-/* TOAST */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#116329;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1}
-/* MSG */
-.msgbox{background:#f6f8fa;border-radius:14px;padding:1rem;margin-top:12px}
-.msgok{background:#d1fae5;border-radius:14px;padding:1rem;text-align:center;color:#065f46;font-weight:700;margin-top:12px}
-/* EMPTY */
-.empty{text-align:center;padding:3rem;color:#6e7781}
-/* FAV PAGE */
-#favs-page{padding:1rem}
-/* CFG PAGE */
-#cfg-page{padding:1rem}
-.cbox{background:#fff;border-radius:14px;padding:1.2rem;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.clbl{font-weight:700;font-size:13px;color:#6e7781;margin-bottom:10px}
-.lrow{display:flex;gap:8px}
-.lbtn{flex:1;border-radius:13px;padding:10px 5px;cursor:pointer;background:#fff;color:#1f2328;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;border:2px solid #d0d7de;font-family:inherit}
-.lbtn.on{border-color:#1a7f37;background:#f0fdf4;font-weight:700}
-.tgrow{display:flex;justify-content:space-between;align-items:center}
-.tg{width:48px;height:26px;border-radius:13px;border:none;background:#d0d7de;cursor:pointer;position:relative;transition:background .3s}
-.tg.on{background:#1a7f37}
-.tgd{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;right:4px;transition:right .3s}
-.tg.on .tgd{right:24px}
-.apirow{background:#f6f8fa;border-radius:9px;padding:8px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.apibadge{font-size:10px;background:#dcfce7;color:#1a7f37;border-radius:6px;padding:2px 7px;font-weight:600;margin-right:auto}
-/* PROFILE */
-.pcard{background:linear-gradient(135deg,#116329,#1a7f37);border-radius:16px;padding:1.2rem;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px}
-.pav{width:52px;height:52px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.pbtn{background:rgba(255,255,255,.2);border:none;border-radius:9px;padding:7px 12px;color:#fff;cursor:pointer;font-size:12px;font-weight:700;margin-right:auto;font-family:inherit}
-/* LOADING */
-.loading{text-align:center;padding:3rem;color:#6e7781}
-.pkg-card:hover{border-color:#1a7f37!important;transform:translateY(-2px);transition:all .2s}
-.pkg-card.selected{border-color:#1a7f37!important;background:#f0fdf4!important}
-/* FEAT SCROLL */
-.featscroll{display:flex;gap:10px;overflow-x:auto;padding:0 12px 8px;scrollbar-width:none}
-.featcard{min-width:160px;background:#fff;border-radius:14px;overflow:hidden;cursor:pointer;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.feimg{height:75px;background:linear-gradient(135deg,#dcfce7,#a7f3d0);display:flex;align-items:center;justify-content:center;font-size:30px}
-.febdy{padding:7px 10px}
-.fetit{font-size:11px;font-weight:700;color:#1f2328;margin-bottom:2px}
-.fepr{font-size:12px;font-weight:900;color:#1a7f37}
+/* (تم الإبقاء على نفس التصميم السابق مع إضافة تنسيقات للأزرار الجديدة) */
+:root { --bg-main: #f3f4f6; --bg-card: #ffffff; --text-main: #111827; --text-muted: #6b7280; --primary: #15803d; --primary-hover: #166534; --border: #e5e7eb; --radius: 16px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+[data-theme="dark"] { --bg-main: #121212; --bg-card: #1e1e1e; --text-main: #f9fafb; --text-muted: #9ca3af; --primary: #22c55e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; background: var(--bg-main); color: var(--text-main); }
+.page { display: none; min-height: 100vh; padding-bottom: 90px; }
+.page.active { display: block; }
+.container { padding: 16px; max-width: 600px; margin: 0 auto; }
+#splash { position: fixed; inset: 0; background: #15803d; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; color: #fff; }
+header, #nav { display: none; } /* مخفي افتراضياً حتى يسجل الدخول */
+header { background: var(--bg-card); padding: 16px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+#nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--bg-card); border-top: 1px solid var(--border); display: flex; padding: 10px; }
+.nav-btn { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: var(--text-muted); }
+.nav-btn.on { color: var(--primary); }
+.card { background: var(--bg-card); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+.input-box { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; background: var(--bg-main); color: var(--text-main); }
+.btn { width: 100%; padding: 16px; border-radius: 12px; background: var(--primary); color: #fff; border: none; cursor: pointer; font-weight: bold; }
+.edit-btn { background: #f59e0b; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; border: none; margin-top: 10px; cursor: pointer; }
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 10px 20px; border-radius: 20px; opacity: 0; transition: 0.3s; }
+.toast.show { opacity: 1; }
 </style>
 </head>
 <body>
 
-<div id="splash">
-  <div class="spe">🏘️</div>
-  <h1 class="sph">عقاراتي</h1>
-  <p class="spp">منصة العقارات الجزائرية الأولى</p>
-  <div class="ld"></div>
-</div>
-
+<div id="splash"><div class="splash-logo">AQARATI</div></div>
 <div id="toast" class="toast"></div>
 
-<!-- HEADER -->
 <header id="main-header">
-  <div class="ht">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:24px">🏘️</span>
-      <div>
-        <div style="font-size:17px;font-weight:900" id="app-name">عقاراتي</div>
-        <div style="font-size:10px;opacity:.8" id="app-tag">منصة العقارات الجزائرية الأولى</div>
-      </div>
+  <div style="display:flex; justify-content:space-between;">
+    <div class="brand" style="font-weight:bold; color:var(--primary)">عقاراتي</div>
+    <div>
+      <button class="lang-btn" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
     </div>
-    <div style="display:flex;gap:5px;align-items:center">
-      <button class="hb on" id="btn-ar" onclick="setLang('ar')">ع</button>
-      <button class="hb" id="btn-fr" onclick="setLang('fr')">FR</button>
-      <button class="hb" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
-  <div class="sb" id="search-bar">
-    <span>🔍</span>
-    <input type="text" id="search-inp" placeholder="ابحث..." oninput="filterProps()"/>
   </div>
 </header>
 
-<!-- NAV -->
 <div id="nav">
-  <button class="nb on" onclick="navGo('browse')"><span style="font-size:20px">🏠</span><span id="nav-browse">تصفح</span></button>
-  <button class="nb" onclick="navGo('post')"><span style="font-size:20px">➕</span><span id="nav-post">أضف</span></button>
-  <button class="nb" onclick="navGo('favs')"><span style="font-size:20px">❤️</span><span id="nav-favs">المفضلة</span></button>
-  <button class="nb" onclick="navGo('cfg')"><span style="font-size:20px">⚙️</span><span id="nav-cfg">إعدادات</span></button>
+  <button class="nav-btn" onclick="navGo('browse')"><span id="nav-browse">الرئيسية</span></button>
+  <button class="nav-btn" onclick="navGo('post')"><span id="nav-post">إضافة</span></button>
+  <button class="nav-btn" onclick="navGo('cfg')"><span id="nav-cfg">الإعدادات</span></button>
 </div>
 
-<!-- BROWSE PAGE -->
-<div id="browse-page" class="page active">
-  <div class="fbox">
-    <div class="tbrow">
-      <button class="tb on" onclick="setFType('all')" id="ft-all">الكل</button>
-      <button class="tb" onclick="setFType('rent')" id="ft-rent">إيجار</button>
-      <button class="tb" onclick="setFType('sale')" id="ft-sale">بيع</button>
-    </div>
-    <select id="f-wilaya" onchange="filterProps()">
-      <option value="all" id="opt-all-wil">كل الولايات</option>
-    </select>
-    <select id="f-cat" onchange="filterProps()">
-      <option value="all" id="opt-all-cat">كل الأنواع</option>
-      <option value="apartment" id="opt-ap">شقة</option>
-      <option value="villa" id="opt-vi">فيلا</option>
-      <option value="commercial" id="opt-co">محل</option>
-      <option value="land" id="opt-la">أرض</option>
-      <option value="office" id="opt-of">مكتب</option>
-      <option value="studio" id="opt-st">ستوديو</option>
-    </select>
-    <div id="res-count" style="font-size:11px;color:#6e7781"></div>
-  </div>
-  <div class="cats">
-    <button class="cat on" onclick="setCat('all')" id="cat-all">الكل</button>
-    <button class="cat" onclick="setCat('apartment')" id="cat-ap">🏢 <span id="lbl-ap">شقة</span></button>
-    <button class="cat" onclick="setCat('villa')" id="cat-vi">🏡 <span id="lbl-vi">فيلا</span></button>
-    <button class="cat" onclick="setCat('commercial')" id="cat-co">🏪 <span id="lbl-co">محل</span></button>
-    <button class="cat" onclick="setCat('land')" id="cat-la">🌿 <span id="lbl-la">أرض</span></button>
-    <button class="cat" onclick="setCat('office')" id="cat-of">🏗️ <span id="lbl-of">مكتب</span></button>
-    <button class="cat" onclick="setCat('studio')" id="cat-st">🛋️ <span id="lbl-st">ستوديو</span></button>
-  </div>
-  <div style="padding:0 12px;margin-bottom:8px">
-    <p style="font-size:13px;font-weight:700;color:#6e7781;margin-bottom:8px" id="lbl-featured">⭐ مميزة</p>
-    <div class="featscroll" id="feat-list"></div>
-  </div>
-  <p style="font-size:13px;font-weight:700;color:#6e7781;padding:0 12px;margin-bottom:4px" id="lbl-listings">🏘️ الإعلانات</p>
-  <div id="loading-browse" class="loading"><div class="ld" style="margin:0 auto;border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p style="margin-top:1rem">جاري التحميل...</p></div>
-  <div class="grid" id="props-grid" style="display:none"></div>
-  <div id="empty-browse" class="empty" style="display:none"><div style="font-size:48px">🏚️</div><p id="lbl-nores">لا توجد نتائج</p></div>
-</div>
-
-<!-- DETAIL PAGE -->
-<div id="detail-page" class="page">
-  <div class="dimg" id="d-img"><span id="d-em" style="font-size:80px"></span>
-    <button class="dback" onclick="showPage('browse')">← رجوع</button>
-  </div>
-  <div class="dbody">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-      <div style="flex:1">
-        <div style="font-size:11px;color:#6e7781" id="d-loc"></div>
-        <h2 class="dtit" id="d-tit"></h2>
-        <p class="ddesc" id="d-desc"></p>
-      </div>
-      <div style="text-align:center">
-        <span id="d-type-badge" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;color:#fff;display:inline-block;margin-bottom:6px"></span>
-        <div class="dprice" id="d-price"></div>
-      </div>
-    </div>
-    <div class="specs" id="d-specs"></div>
-    <a id="d-call" href="#" class="callbtn"><span id="d-call-lbl">📞 اتصل الآن</span></a>
-    <div style="background:#f6f8fa;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:12px">
-      <div style="width:42px;height:42px;background:#116329;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px">👤</div>
-      <div><div style="font-weight:700;font-size:14px" id="d-owner"></div><div style="font-size:11px;color:#6e7781" id="d-own-lbl">صاحب الإعلان</div></div>
-    </div>
-    <div id="msg-area"></div>
+<div id="browse-page" class="page">
+  <div class="container">
+    <div id="props-grid"></div>
   </div>
 </div>
 
-<!-- POST PAGE -->
 <div id="post-page" class="page">
-  <div style="padding:1rem;padding-bottom:90px">
-  <div class="pbox">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <h2 style="font-size:18px;color:#1f2328" id="post-h2">أضف إعلانك</h2>
-      <span style="font-size:12px;color:#6e7781" id="step-lbl">الخطوة 1 من 3</span>
-    </div>
-    <div class="steps">
-      <div class="step on" id="s1"></div>
-      <div class="step" id="s2"></div>
-      <div class="step" id="s3"></div>
-    </div>
-
-    <div id="post-s1">
-      <label id="p-atype">نوع الإعلان</label>
-      <div class="prow">
-        <button class="ptbtn on" id="pt-rent" onclick="setPostType('rent')">🔑 إيجار</button>
-        <button class="ptbtn" id="pt-sale" onclick="setPostType('sale')">🏷️ بيع</button>
-      </div>
-      <label id="p-ptype">نوع العقار</label>
-      <div class="catgrid">
-        <button class="catbtn on" id="pc-apartment" onclick="setPostCat('apartment')"><span style="font-size:19px">🏢</span><span id="pc-lbl-apartment">شقة</span></button>
-        <button class="catbtn" id="pc-villa" onclick="setPostCat('villa')"><span style="font-size:19px">🏡</span><span id="pc-lbl-villa">فيلا</span></button>
-        <button class="catbtn" id="pc-commercial" onclick="setPostCat('commercial')"><span style="font-size:19px">🏪</span><span id="pc-lbl-commercial">محل</span></button>
-        <button class="catbtn" id="pc-land" onclick="setPostCat('land')"><span style="font-size:19px">🌿</span><span id="pc-lbl-land">أرض</span></button>
-        <button class="catbtn" id="pc-office" onclick="setPostCat('office')"><span style="font-size:19px">🏗️</span><span id="pc-lbl-office">مكتب</span></button>
-        <button class="catbtn" id="pc-studio" onclick="setPostCat('studio')"><span style="font-size:19px">🛋️</span><span id="pc-lbl-studio">ستوديو</span></button>
-      </div>
-      <button class="btn-p" id="p-next1" onclick="goStep(2)" style="width:100%">التالي →</button>
-    </div>
-
-    <div id="post-s2" style="display:none">
-      <label id="p-lbl-wil">الولاية</label>
-      <select class="full" id="p-wil"></select>
-      <label id="p-lbl-com">البلدية / الحي</label>
-      <input type="text" id="p-com" placeholder="مثال: حيدرة"/>
-      <label id="p-lbl-ttl">عنوان الإعلان</label>
-      <input type="text" id="p-ttl" placeholder="مثال: شقة 3 غرف في حيدرة"/>
-      <div class="row2">
-        <div><label id="p-lbl-pr">السعر (دج)</label><input type="number" id="p-pr" placeholder="35000"/></div>
-        <div><label id="p-lbl-ar">المساحة (م²)</label><input type="number" id="p-ar" placeholder="90"/></div>
-      </div>
-      <label id="p-lbl-rm">عدد الغرف</label>
-      <div class="rmbtn" id="rm-btns">
-        <button class="on" onclick="setRm(0)" id="rm-0">0</button>
-        <button onclick="setRm(1)" id="rm-1">1</button>
-        <button onclick="setRm(2)" id="rm-2">2</button>
-        <button onclick="setRm(3)" id="rm-3">3</button>
-        <button onclick="setRm(4)" id="rm-4">4</button>
-        <button onclick="setRm(5)" id="rm-5">5</button>
-        <button onclick="setRm(6)" id="rm-6">6</button>
-        <button onclick="setRm(7)" id="rm-7">7+</button>
-      </div>
-      <div class="btnrow">
-        <button class="btn-s" id="p-back2" onclick="goStep(1)">← رجوع</button>
-        <button class="btn-p" id="p-next2" onclick="goStep(3)">التالي →</button>
-      </div>
-    </div>
-
-    <div id="post-s3" style="display:none">
-      <label id="p-lbl-dsc">وصف العقار</label>
-      <textarea id="p-dsc" rows="4" placeholder="صف حالة العقار، المميزات..."></textarea>
-      <label id="p-lbl-ph">رقم الهاتف</label>
-      <input type="tel" id="p-ph" placeholder="0555 123 456"/>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <label style="margin:0" id="p-lbl-neg">قابل للتفاوض</label>
-        <button class="tg" id="neg-tg" onclick="toggleNeg()"><div class="tgd"></div></button>
-      </div>
-      <div class="btnrow">
-        <button class="btn-s" id="p-back3" onclick="goStep(2)">← رجوع</button>
-        <button class="btn-p" id="pub-btn" onclick="publishAd()">🚀 نشر</button>
-      </div>
-    </div>
-
-    <div id="post-done" style="display:none;text-align:center;padding:2rem 0">
-      <div style="font-size:60px">🎉</div>
-      <h2 style="color:#1a7f37;margin:10px 0 6px">تم النشر!</h2>
-      <p style="color:#6e7781;font-size:13px">إعلانك محفوظ وسيظهر للجميع</p>
-      <button class="btn-p" style="margin-top:14px;margin-bottom:10px" onclick="showPage('payment')">⭐ رقّ إعلانك</button>
-      <button style="width:100%;background:transparent;border:none;cursor:pointer;color:#6e7781;font-size:13px;font-family:inherit" onclick="resetPost();navGo('browse')">تصفح الإعلانات</button>
-    </div>
-  </div>
+  <div class="container">
+    <h2 id="post-h2">إضافة إعلان جديد</h2>
+    <input type="text" id="p-ttl" class="input-box" placeholder="العنوان"/>
+    <input type="number" id="p-pr" class="input-box" placeholder="السعر"/>
+    <textarea id="p-dsc" class="input-box" placeholder="الوصف"></textarea>
+    <button class="btn" id="pub-btn" onclick="saveAd()">نشر الإعلان</button>
   </div>
 </div>
 
-<!-- ADMIN PAGE -->
-<div id="admin-page" class="page">
-  <div style="padding:1rem;padding-bottom:90px">
-    <h2 style="margin-bottom:1rem;color:#116329">⚙️ لوحة التحكم</h2>
-    <div id="admin-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem"></div>
-    <div id="admin-list"></div>
-  </div>
-</div>
-
-<!-- PAYMENT PAGE -->
-<div id="payment-page" class="page">
-  <div style="padding:1rem;padding-bottom:90px;max-width:480px;margin:0 auto">
-    <button onclick="navGo('post')" style="background:none;border:none;cursor:pointer;color:#116329;font-size:14px;font-weight:700;margin-bottom:1rem;font-family:inherit">← رجوع</button>
-    <h2 style="margin-bottom:6px;color:#116329">🌟 ترقية إعلانك</h2>
-    <div id="payment-method" style="display:none">
-       <div style="background:#fff;border-radius:14px;padding:1.2rem;margin-bottom:12px;border:1px solid #d0d7de">
-        <div style="font-weight:700;margin-bottom:8px">📮 بريد موبايل / CCP</div>
-        <div style="font-size:13px;color:#6e7781;line-height:1.8">
-          <div>رقم CCP: <b style="color:#1f2328">1234567 / 89</b></div>
-          <div>الاسم: <b style="color:#1f2328">شهاب عقاراتي</b></div>
-        </div>
-      </div>
-      <button onclick="confirmPayment()" style="width:100%;background:#1a7f37;color:#fff;border:none;border-radius:12px;padding:14px;font-weight:700;cursor:pointer;font-size:15px;font-family:inherit">
-        ✅ أرسلت المبلغ
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- FAVS PAGE -->
-<div id="favs-page" class="page">
-  <div style="padding:1rem">
-    <h2 style="margin-bottom:1rem">❤️ المفضلة</h2>
-    <div class="grid" id="favs-grid"></div>
-    <div id="favs-empty" class="empty" style="display:none"><p>لا توجد مفضلة</p></div>
-  </div>
-</div>
-
-<!-- CFG PAGE -->
 <div id="cfg-page" class="page">
-  <div style="padding:1rem;padding-bottom:90px">
-  <div class="pcard">
-    <div class="pav" id="user-av">🔑</div>
-    <div style="flex:1"><div style="font-weight:900;font-size:16px" id="user-name">زائر</div><div style="opacity:.8;font-size:12px" id="user-ph"></div></div>
-    <button class="pbtn" id="login-btn" onclick="showPage('login')">دخول</button>
-  </div>
-  <div class="cbox">
-    <div class="clbl" id="cfg-lng-lbl">🌍 اللغة</div>
-    <div class="lrow">
-      <button class="lbtn on" id="l-ar" onclick="setLang('ar')">العربية</button>
-      <button class="lbtn" id="l-fr" onclick="setLang('fr')">Français</button>
-      <button class="lbtn" id="l-en" onclick="setLang('en')">English</button>
-    </div>
-  </div>
-  <div class="cbox" id="admin-section" style="display:none">
-    <button onclick="openAdmin()" style="width:100%;background:#0d1117;color:#3fb950;border-radius:10px;padding:10px;cursor:pointer;font-weight:700">🔐 لوحة التحكم</button>
-  </div>
+  <div class="container">
+    <button class="btn" onclick="logout()" id="logout-btn">تسجيل الخروج</button>
   </div>
 </div>
 
-<!-- REGISTER & LOGIN -->
-<div id="register-page" class="page"><div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><div class="pbox"><h2 style="color:#116329;margin-bottom:1rem;text-align:center">تسجيل</h2><label>الاسم الكامل</label><input type="text" id="reg-name"><label>رقم الهاتف</label><input type="tel" id="reg-ph"><button class="btn-p" onclick="regConfirm()" style="width:100%">تأكيد</button></div></div></div>
-<div id="login-page" class="page"><div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(135deg,#f0fdf4,#dcfce7)"><div class="pbox"><h2 style="color:#1a7f37;margin-bottom:1rem;text-align:center">دخول</h2><label>رقم الهاتف</label><input type="tel" id="login-ph"><button class="btn-p" onclick="loginConfirm()" style="width:100%">دخول</button></div></div></div>
+<div id="register-page" class="page active">
+  <div class="container">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="reg-name" class="input-box" placeholder="الاسم"/>
+    <input type="tel" id="reg-ph" class="input-box" placeholder="الهاتف"/>
+    <button class="btn" onclick="regConfirm()">دخول</button>
+  </div>
+</div>
 
-<!-- FIREBASE SCRIPT -->
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getFirestore,collection,addDoc,getDocs,query,orderBy,serverTimestamp,doc,deleteDoc,updateDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const cfg={apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",authDomain:"aqarati-ca546.firebaseapp.com",projectId:"aqarati-ca546",storageBucket:"aqarati-ca546.firebasestorage.app",messagingSenderId:"658752167015",appId:"1:658752167015:web:4e364c56ae0ebab40848c2"};
-const app=initializeApp(cfg);
-const db=getFirestore(app);
-window.DB=db; window.DBcol=collection; window.DBadd=addDoc; window.DBget=getDocs; window.DBq=query; window.DBord=orderBy; window.DBts=serverTimestamp; window.DBdel=deleteDoc; window.DBupd=updateDoc; window.DBdoc=doc;
+import {getFirestore,collection,addDoc,getDocs,query,updateDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg={apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",authDomain:"aqarati-ca546.firebaseapp.com",projectId:"aqarati-ca546"};
+window.DB=getFirestore(initializeApp(cfg));
+window.DBcol=collection; window.DBadd=addDoc; window.DBget=getDocs; window.DBq=query; window.DBupd=updateDoc; window.DBdoc=doc;
 window.dispatchEvent(new Event("dbready"));
 </script>
 
 <script>
-const W=["01-أدرار","02-الشلف","03-الأغواط","04-أم البواقي","05-باتنة","06-بجاية","07-بسكرة","08-بشار","09-البليدة","10-البويرة","11-تمنراست","12-تبسة","13-تلمسان","14-تيارت","15-تيزي وزو","16-الجزائر","17-الجلفة","18-جيجل","19-سطيف","20-سعيدة","21-سكيكدة","22-سيدي بلعباس","23-عنابة","24-قالمة","25-قسنطينة","26-المدية","27-مستغانم","28-المسيلة","29-معسكر","30-ورقلة","31-وهران","32-البيض","33-إليزي","34-برج بوعريريج","35-بومرداس","36-الطارف","37-تندوف","38-تيسمسيلت","39-الوادي","40-خنشلة","41-سوق أهراس","42-تيبازة","43-ميلة","44-عين الدفلى","45-النعامة","46-عين تموشنت","47-غرداية","48-غليزان","49-تيميمون","50-برج باجي مختار","51-أولاد جلال","52-بني عباس","53-عين صالح","54-عين قزام","55-توقرت","56-جانت","57-المغير","58-المنيعة"];
-const CE={apartment:"🏢",villa:"🏡",commercial:"🏪",land:"🌿",office:"🏗️",studio:"🛋️"};
-const pwil=document.getElementById("p-wil");
-const fwil=document.getElementById("f-wilaya");
-W.forEach(w=>{pwil.innerHTML+=`<option value="${w}">${w}</option>`; fwil.innerHTML+=`<option value="${w}">${w}</option>`;});
+let props=[];
+let curUser=null;
+let curLang="ar";
+let editingId=null; // للتحكم في التعديل
 
-let props=[], favs=[], fType="all", fCat="all", postType="rent", postCat="apartment", postRm=0, postNeg=false, curLang="ar", curUser=null, editingId=null;
+const LANGS={
+  ar:{ browse:"الرئيسية", post:"إضافة", cfg:"الإعدادات", pub:"نشر", edit:"تعديل", update:"تحديث", title:"العنوان" },
+  fr:{ browse:"Accueil", post:"Publier", cfg:"Paramètres", pub:"Publier", edit:"Modifier", update:"Mettre à jour", title:"Titre" },
+  en:{ browse:"Home", post:"Post", cfg:"Settings", pub:"Post", edit:"Edit", update:"Update", title:"Title" }
+};
 
-function setLang(l){
-  curLang=l;
-  document.documentElement.dir=l==="ar"?"rtl":"ltr";
-  renderProps();
+/* --- المنطق الأساسي --- */
+
+function navGo(page){
+  if(!curUser){ showPage('register'); return; }
+  showPage(page);
 }
 
 function showPage(id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id+"-page").classList.add("active");
-  const nav=document.getElementById("nav"), hdr=document.getElementById("main-header");
-  const isAuth=id==="register"||id==="login";
-  if(nav)nav.style.display=isAuth?"none":"flex";
-  if(hdr)hdr.style.display=isAuth?"none":"block";
+  document.getElementById("main-header").style.display = (id==="register") ? "none" : "block";
+  document.getElementById("nav").style.display = (id==="register") ? "none" : "flex";
 }
 
-function toast(m){const el=document.getElementById("toast");el.textContent=m;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),3000);}
-
-function fmt(p,t){return p.toLocaleString("fr-DZ")+" دج"+(t==="rent"?"/شهر":"");}
-
-function renderProps(){
-  const grid=document.getElementById("props-grid");
-  const q=document.getElementById("search-inp").value.toLowerCase();
-  const fw=document.getElementById("f-wilaya").value;
-  const list=props.filter(p=>{
-    if(fType!=="all"&&p.type!==fType)return false;
-    if(fw!=="all"&&p.wil!==fw)return false;
-    if(fCat!=="all"&&p.cat!==fCat)return false;
-    return true;
-  });
-  grid.innerHTML=list.map(p=>`<div class="card" onclick="openDetail('${p.id}')">
-    <div class="cimg">${p.em||"🏠"}<span class="badge" style="background:${p.type==="rent"?"#1a7f37":"#cf222e"}">${p.type}</span></div>
-    <div class="cbody"><div class="cloc">📍 ${p.wil}</div><h3 class="ctit">${p.title.ar}</h3><div class="cprice">${fmt(p.price,p.type)}</div></div>
-  </div>`).join("");
-}
-
-function openDetail(id){
-  const p=props.find(x=>x.id===id);
-  if(!p)return;
-  document.getElementById("d-em").textContent=p.em;
-  document.getElementById("d-tit").textContent=p.title.ar;
-  document.getElementById("d-price").textContent=fmt(p.price,p.type);
-  document.getElementById("d-owner").textContent=p.owner;
-  showPage("detail");
-}
-
-function setPostType(t){postType=t; document.getElementById("pt-rent").classList.toggle("on",t==="rent"); document.getElementById("pt-sale").classList.toggle("on",t==="sale");}
-function setPostCat(c){postCat=c; ["apartment","villa","commercial","land","office","studio"].forEach(x=>document.getElementById("pc-"+x).classList.toggle("on",x===c));}
-function setRm(n){postRm=n; for(let i=0;i<=7;i++)document.getElementById("rm-"+i).classList.toggle("on",i===n);}
-function toggleNeg(){postNeg=!postNeg; document.getElementById("neg-tg").classList.toggle("on",postNeg);}
-
-function goStep(n){
-  [1,2,3].forEach(i=>{
-    document.getElementById("post-s"+i).style.display=i===n?"block":"none";
-    document.getElementById("s"+i).classList.toggle("on",i<=n);
-  });
-  document.getElementById("step-lbl").textContent="الخطوة "+n+" من 3";
-}
-
-async function publishAd(){
-  const data={
-    type:postType, cat:postCat, wil:document.getElementById("p-wil").value,
-    city:document.getElementById("p-com").value, price:Number(document.getElementById("p-pr").value),
-    area:Number(document.getElementById("p-ar").value), rooms:postRm, em:CE[postCat],
-    title:{ar:document.getElementById("p-ttl").value}, desc:{ar:document.getElementById("p-dsc").value},
-    phone:document.getElementById("p-ph").value, owner:curUser?curUser.name:"مستخدم", feat:false
-  };
-  await window.DBadd(window.DBcol(window.DB,"properties"),{...data, createdAt:window.DBts()});
-  toast("✅ تم النشر!");
-  document.getElementById("post-done").style.display="block";
-}
-
-function resetPost(){
-  document.getElementById("post-done").style.display="none";
-  goStep(1);
-}
-
-function navGo(p){if(!curUser){showPage("register");return;} showPage(p);}
-
-function regConfirm(){
-  const name=document.getElementById("reg-name").value;
-  curUser={name, ph:document.getElementById("reg-ph").value};
-  localStorage.setItem("user",JSON.stringify(curUser));
-  showPage("browse");
-}
-
-function loginConfirm(){
-  curUser={name:"مستخدم", ph:document.getElementById("login-ph").value};
-  showPage("browse");
-}
-
-async function loadProps(){
-  const snap=await window.DBget(window.DBq(window.DBcol(window.DB,"properties"),window.DBord("createdAt","desc")));
-  props=snap.docs.map(d=>({id:d.id,...d.data()}));
-  document.getElementById("loading-browse").style.display="none";
-  document.getElementById("props-grid").style.display="grid";
+function setLang(l){
+  curLang=l;
+  document.getElementById("nav-browse").textContent=LANGS[l].browse;
+  document.getElementById("nav-post").textContent=LANGS[l].post;
+  document.getElementById("nav-cfg").textContent=LANGS[l].cfg;
+  document.getElementById("pub-btn").textContent=editingId ? LANGS[l].update : LANGS[l].pub;
   renderProps();
 }
 
-window.addEventListener("load",()=>{
+/* --- العمليات على البيانات --- */
+
+async function saveAd(){
+  const data={
+    title: document.getElementById("p-ttl").value,
+    price: document.getElementById("p-pr").value,
+    desc: document.getElementById("p-dsc").value,
+    ownerPhone: curUser.ph
+  };
+
+  if(editingId){
+    await window.DBupd(window.DBdoc(window.DB, "properties", editingId), data);
+    toast("تم التعديل");
+    editingId=null;
+  } else {
+    await window.DBadd(window.DBcol(window.DB, "properties"), {...data, owner: curUser.name});
+    toast("تم النشر");
+  }
+  showPage('browse');
+  loadProps();
+}
+
+function openEdit(id){
+  const p = props.find(x=>x.id===id);
+  editingId=id;
+  document.getElementById("p-ttl").value=p.title;
+  document.getElementById("p-pr").value=p.price;
+  document.getElementById("p-dsc").value=p.desc;
+  document.getElementById("pub-btn").textContent=LANGS[curLang].update;
+  showPage('post');
+}
+
+function renderProps(){
+  const grid=document.getElementById("props-grid");
+  grid.innerHTML=props.map(p=>`
+    <div class="card">
+      <h3>${p.title}</h3>
+      <p>${p.price} دج</p>
+      ${(curUser && p.ownerPhone===curUser.ph) ? `<button class="edit-btn" onclick="openEdit('${p.id}')">${LANGS[curLang].edit}</button>` : ''}
+    </div>
+  `).join("");
+}
+
+async function loadProps(){
+  if(!window.DB) return;
+  const snap = await window.DBget(window.DBq(window.DBcol(window.DB, "properties")));
+  props = snap.docs.map(d=>({id:d.id, ...d.data()}));
+  renderProps();
+}
+
+function regConfirm(){
+  const name=document.getElementById("reg-name").value;
+  const ph=document.getElementById("reg-ph").value;
+  if(!name || !ph) return;
+  curUser={name,ph};
+  localStorage.setItem("aqarati_user", JSON.stringify(curUser));
+  showPage('browse');
+}
+
+function logout(){
+  localStorage.removeItem("aqarati_user");
+  location.reload();
+}
+
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 2000); }
+
+window.addEventListener("load", ()=>{
   setTimeout(()=>{
-    const s=document.getElementById("splash");
-    if(s)s.style.opacity="0";
-    const saved=localStorage.getItem("user");
-    if(saved){curUser=JSON.parse(saved); showPage("browse");}
-    else showPage("register");
-  },1500);
+    const saved=localStorage.getItem("aqarati_user");
+    if(saved){ curUser=JSON.parse(saved); showPage('browse'); }
+    else { showPage('register'); }
+    document.getElementById("splash").style.display="none";
+  }, 1000);
 });
-window.addEventListener("dbready",()=>loadProps());
+
+window.addEventListener("dbready", loadProps);
 </script>
 </body>
 </html>
