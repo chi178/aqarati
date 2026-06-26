@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>عقاراتي | Aqarati</title>
+<style>
+/* (تم الإبقاء على نفس التصميم السابق مع إضافة تنسيقات للأزرار الجديدة) */
+:root { --bg-main: #f3f4f6; --bg-card: #ffffff; --text-main: #111827; --text-muted: #6b7280; --primary: #15803d; --primary-hover: #166534; --border: #e5e7eb; --radius: 16px; --shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+[data-theme="dark"] { --bg-main: #121212; --bg-card: #1e1e1e; --text-main: #f9fafb; --text-muted: #9ca3af; --primary: #22c55e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; background: var(--bg-main); color: var(--text-main); }
+.page { display: none; min-height: 100vh; padding-bottom: 90px; }
+.page.active { display: block; }
+.container { padding: 16px; max-width: 600px; margin: 0 auto; }
+#splash { position: fixed; inset: 0; background: #15803d; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; color: #fff; }
+header, #nav { display: none; } /* مخفي افتراضياً حتى يسجل الدخول */
+header { background: var(--bg-card); padding: 16px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+#nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: var(--bg-card); border-top: 1px solid var(--border); display: flex; padding: 10px; }
+.nav-btn { flex: 1; border: none; background: none; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: var(--text-muted); }
+.nav-btn.on { color: var(--primary); }
+.card { background: var(--bg-card); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; border: 1px solid var(--border); }
+.input-box { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; background: var(--bg-main); color: var(--text-main); }
+.btn { width: 100%; padding: 16px; border-radius: 12px; background: var(--primary); color: #fff; border: none; cursor: pointer; font-weight: bold; }
+.edit-btn { background: #f59e0b; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; border: none; margin-top: 10px; cursor: pointer; }
+.toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 10px 20px; border-radius: 20px; opacity: 0; transition: 0.3s; }
+.toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="splash"><div class="splash-logo">AQARATI</div></div>
+<div id="toast" class="toast"></div>
+
+<header id="main-header">
+  <div style="display:flex; justify-content:space-between;">
+    <div class="brand" style="font-weight:bold; color:var(--primary)">عقاراتي</div>
+    <div>
+      <button class="lang-btn" onclick="setLang('ar')">ع</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<div id="nav">
+  <button class="nav-btn" onclick="navGo('browse')"><span id="nav-browse">الرئيسية</span></button>
+  <button class="nav-btn" onclick="navGo('post')"><span id="nav-post">إضافة</span></button>
+  <button class="nav-btn" onclick="navGo('cfg')"><span id="nav-cfg">الإعدادات</span></button>
+</div>
+
+<div id="browse-page" class="page">
+  <div class="container">
+    <div id="props-grid"></div>
+  </div>
+</div>
+
+<div id="post-page" class="page">
+  <div class="container">
+    <h2 id="post-h2">إضافة إعلان جديد</h2>
+    <input type="text" id="p-ttl" class="input-box" placeholder="العنوان"/>
+    <input type="number" id="p-pr" class="input-box" placeholder="السعر"/>
+    <textarea id="p-dsc" class="input-box" placeholder="الوصف"></textarea>
+    <button class="btn" id="pub-btn" onclick="saveAd()">نشر الإعلان</button>
+  </div>
+</div>
+
+<div id="cfg-page" class="page">
+  <div class="container">
+    <button class="btn" onclick="logout()" id="logout-btn">تسجيل الخروج</button>
+  </div>
+</div>
+
+<div id="register-page" class="page active">
+  <div class="container">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="reg-name" class="input-box" placeholder="الاسم"/>
+    <input type="tel" id="reg-ph" class="input-box" placeholder="الهاتف"/>
+    <button class="btn" onclick="regConfirm()">دخول</button>
+  </div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {getFirestore,collection,addDoc,getDocs,query,updateDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const cfg={apiKey:"AIzaSyDhDPAs3PLd8kwwMhi06QYa170FtZ1NjHA",authDomain:"aqarati-ca546.firebaseapp.com",projectId:"aqarati-ca546"};
+window.DB=getFirestore(initializeApp(cfg));
+window.DBcol=collection; window.DBadd=addDoc; window.DBget=getDocs; window.DBq=query; window.DBupd=updateDoc; window.DBdoc=doc;
+window.dispatchEvent(new Event("dbready"));
+</script>
+
+<script>
+let props=[];
+let curUser=null;
+let curLang="ar";
+let editingId=null; // للتحكم في التعديل
+
+const LANGS={
+  ar:{ browse:"الرئيسية", post:"إضافة", cfg:"الإعدادات", pub:"نشر", edit:"تعديل", update:"تحديث", title:"العنوان" },
+  fr:{ browse:"Accueil", post:"Publier", cfg:"Paramètres", pub:"Publier", edit:"Modifier", update:"Mettre à jour", title:"Titre" },
+  en:{ browse:"Home", post:"Post", cfg:"Settings", pub:"Post", edit:"Edit", update:"Update", title:"Title" }
+};
+
+/* --- المنطق الأساسي --- */
+
+function navGo(page){
+  if(!curUser){ showPage('register'); return; }
+  showPage(page);
+}
+
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id+"-page").classList.add("active");
+  document.getElementById("main-header").style.display = (id==="register") ? "none" : "block";
+  document.getElementById("nav").style.display = (id==="register") ? "none" : "flex";
+}
+
+function setLang(l){
+  curLang=l;
+  document.getElementById("nav-browse").textContent=LANGS[l].browse;
+  document.getElementById("nav-post").textContent=LANGS[l].post;
+  document.getElementById("nav-cfg").textContent=LANGS[l].cfg;
+  document.getElementById("pub-btn").textContent=editingId ? LANGS[l].update : LANGS[l].pub;
+  renderProps();
+}
+
+/* --- العمليات على البيانات --- */
+
+async function saveAd(){
+  const data={
+    title: document.getElementById("p-ttl").value,
+    price: document.getElementById("p-pr").value,
+    desc: document.getElementById("p-dsc").value,
+    ownerPhone: curUser.ph
+  };
+
+  if(editingId){
+    await window.DBupd(window.DBdoc(window.DB, "properties", editingId), data);
+    toast("تم التعديل");
+    editingId=null;
+  } else {
+    await window.DBadd(window.DBcol(window.DB, "properties"), {...data, owner: curUser.name});
+    toast("تم النشر");
+  }
+  showPage('browse');
+  loadProps();
+}
+
+function openEdit(id){
+  const p = props.find(x=>x.id===id);
+  editingId=id;
+  document.getElementById("p-ttl").value=p.title;
+  document.getElementById("p-pr").value=p.price;
+  document.getElementById("p-dsc").value=p.desc;
+  document.getElementById("pub-btn").textContent=LANGS[curLang].update;
+  showPage('post');
+}
+
+function renderProps(){
+  const grid=document.getElementById("props-grid");
+  grid.innerHTML=props.map(p=>`
+    <div class="card">
+      <h3>${p.title}</h3>
+      <p>${p.price} دج</p>
+      ${(curUser && p.ownerPhone===curUser.ph) ? `<button class="edit-btn" onclick="openEdit('${p.id}')">${LANGS[curLang].edit}</button>` : ''}
+    </div>
+  `).join("");
+}
+
+async function loadProps(){
+  if(!window.DB) return;
+  const snap = await window.DBget(window.DBq(window.DBcol(window.DB, "properties")));
+  props = snap.docs.map(d=>({id:d.id, ...d.data()}));
+  renderProps();
+}
+
+function regConfirm(){
+  const name=document.getElementById("reg-name").value;
+  const ph=document.getElementById("reg-ph").value;
+  if(!name || !ph) return;
+  curUser={name,ph};
+  localStorage.setItem("aqarati_user", JSON.stringify(curUser));
+  showPage('browse');
+}
+
+function logout(){
+  localStorage.removeItem("aqarati_user");
+  location.reload();
+}
+
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"), 2000); }
+
+window.addEventListener("load", ()=>{
+  setTimeout(()=>{
+    const saved=localStorage.getItem("aqarati_user");
+    if(saved){ curUser=JSON.parse(saved); showPage('browse'); }
+    else { showPage('register'); }
+    document.getElementById("splash").style.display="none";
+  }, 1000);
+});
+
+window.addEventListener("dbready", loadProps);
+</script>
+</body>
+</html>
