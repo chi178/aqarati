@@ -204,10 +204,10 @@ input:focus,textarea:focus{border-color:#1a7f37}
     <button class="cat" onclick="setCat('studio')" id="cat-st">🛋️ ستوديو</button>
   </div>
   <div style="padding:0 12px;margin-bottom:8px">
-    <p style="font-size:13px;font-weight:700;color:#6e7781;margin-bottom:8px">⭐ مميزة</p>
+    <p style="font-size:13px;font-weight:700;color:#6e7781;margin-bottom:8px" id="lbl-featured">⭐ مميزة</p>
     <div class="featscroll" id="feat-list"></div>
   </div>
-  <p style="font-size:13px;font-weight:700;color:#6e7781;padding:0 12px;margin-bottom:4px">🏘️ الإعلانات</p>
+  <p style="font-size:13px;font-weight:700;color:#6e7781;padding:0 12px;margin-bottom:4px" id="lbl-listings">🏘️ الإعلانات</p>
   <div id="loading-browse" class="loading"><div class="ld" style="margin:0 auto;border-top-color:#116329;border-color:rgba(17,99,41,.2)"></div><p style="margin-top:1rem">جاري التحميل...</p></div>
   <div class="grid" id="props-grid" style="display:none"></div>
   <div id="empty-browse" class="empty" style="display:none"><div style="font-size:48px">🏚️</div><p>لا توجد نتائج</p></div>
@@ -251,7 +251,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
   <div style="padding:1rem;padding-bottom:90px">
   <div class="pbox">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <h2 style="font-size:18px;color:#1f2328">أضف إعلانك</h2>
+      <h2 style="font-size:18px;color:#1f2328" id="post-h2">أضف إعلانك</h2>
       <span style="font-size:12px;color:#6e7781" id="step-lbl">الخطوة 1 من 3</span>
     </div>
     <div class="steps">
@@ -262,36 +262,36 @@ input:focus,textarea:focus{border-color:#1a7f37}
 
     <!-- STEP 1 -->
     <div id="post-s1">
-      <label>نوع الإعلان</label>
+      <label id="p-atype">نوع الإعلان</label>
       <div class="prow">
         <button class="ptbtn on" id="pt-rent" onclick="setPostType('rent')">🔑 إيجار</button>
         <button class="ptbtn" id="pt-sale" onclick="setPostType('sale')">🏷️ بيع</button>
       </div>
-      <label>نوع العقار</label>
+      <label id="p-ptype">نوع العقار</label>
       <div class="catgrid">
-        <button class="catbtn on" id="pc-apartment" onclick="setPostCat('apartment')"><span style="font-size:19px">🏢</span>شقة</button>
-        <button class="catbtn" id="pc-villa" onclick="setPostCat('villa')"><span style="font-size:19px">🏡</span>فيلا</button>
-        <button class="catbtn" id="pc-commercial" onclick="setPostCat('commercial')"><span style="font-size:19px">🏪</span>محل</button>
-        <button class="catbtn" id="pc-land" onclick="setPostCat('land')"><span style="font-size:19px">🌿</span>أرض</button>
-        <button class="catbtn" id="pc-office" onclick="setPostCat('office')"><span style="font-size:19px">🏗️</span>مكتب</button>
-        <button class="catbtn" id="pc-studio" onclick="setPostCat('studio')"><span style="font-size:19px">🛋️</span>ستوديو</button>
+        <button class="catbtn on" id="pc-apartment" onclick="setPostCat('apartment')"><span style="font-size:19px">🏢</span><span id="pc-lbl-apartment">شقة</span></button>
+        <button class="catbtn" id="pc-villa" onclick="setPostCat('villa')"><span style="font-size:19px">🏡</span><span id="pc-lbl-villa">فيلا</span></button>
+        <button class="catbtn" id="pc-commercial" onclick="setPostCat('commercial')"><span style="font-size:19px">🏪</span><span id="pc-lbl-commercial">محل</span></button>
+        <button class="catbtn" id="pc-land" onclick="setPostCat('land')"><span style="font-size:19px">🌿</span><span id="pc-lbl-land">أرض</span></button>
+        <button class="catbtn" id="pc-office" onclick="setPostCat('office')"><span style="font-size:19px">🏗️</span><span id="pc-lbl-office">مكتب</span></button>
+        <button class="catbtn" id="pc-studio" onclick="setPostCat('studio')"><span style="font-size:19px">🛋️</span><span id="pc-lbl-studio">ستوديو</span></button>
       </div>
-      <button class="btn-p" onclick="goStep(2)">التالي →</button>
+      <button class="btn-p" id="p-next1" onclick="goStep(2)">التالي →</button>
     </div>
 
     <!-- STEP 2 -->
     <div id="post-s2" style="display:none">
-      <label>الولاية</label>
+      <label id="p-lbl-wil">الولاية</label>
       <select class="full" id="p-wil"></select>
-      <label>البلدية / الحي</label>
+      <label id="p-lbl-com">البلدية / الحي</label>
       <input type="text" id="p-com" placeholder="مثال: حيدرة"/>
-      <label>عنوان الإعلان</label>
+      <label id="p-lbl-ttl">عنوان الإعلان</label>
       <input type="text" id="p-ttl" placeholder="مثال: شقة 3 غرف في حيدرة"/>
       <div class="row2">
-        <div><label>السعر (دج)</label><input type="number" id="p-pr" placeholder="35000"/></div>
-        <div><label>المساحة (م²)</label><input type="number" id="p-ar" placeholder="90"/></div>
+        <div><label id="p-lbl-pr">السعر (دج)</label><input type="number" id="p-pr" placeholder="35000"/></div>
+        <div><label id="p-lbl-ar">المساحة (م²)</label><input type="number" id="p-ar" placeholder="90"/></div>
       </div>
-      <label>عدد الغرف</label>
+      <label id="p-lbl-rm">عدد الغرف</label>
       <div class="rmbtn" id="rm-btns">
         <button class="on" onclick="setRm(0)" id="rm-0">—</button>
         <button onclick="setRm(1)" id="rm-1">1</button>
@@ -303,19 +303,19 @@ input:focus,textarea:focus{border-color:#1a7f37}
         <button onclick="setRm(7)" id="rm-7">7+</button>
       </div>
       <div class="btnrow">
-        <button class="btn-s" onclick="goStep(1)">← رجوع</button>
-        <button class="btn-p" onclick="goStep(3)">التالي →</button>
+        <button class="btn-s" id="p-back2" onclick="goStep(1)">← رجوع</button>
+        <button class="btn-p" id="p-next2" onclick="goStep(3)">التالي →</button>
       </div>
     </div>
 
     <!-- STEP 3 -->
     <div id="post-s3" style="display:none">
-      <label>وصف العقار</label>
+      <label id="p-lbl-dsc">وصف العقار</label>
       <textarea id="p-dsc" rows="4" placeholder="صف حالة العقار، المميزات..."></textarea>
-      <label>رقم الهاتف</label>
+      <label id="p-lbl-ph">رقم الهاتف</label>
       <input type="tel" id="p-ph" placeholder="0555 123 456"/>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <label style="margin:0">قابل للتفاوض</label>
+        <label style="margin:0" id="p-lbl-neg">قابل للتفاوض</label>
         <button class="tg" id="neg-tg" onclick="toggleNeg()"><div class="tgd"></div></button>
       </div>
       <div class="btnrow">
@@ -340,7 +340,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
   <div style="padding:1rem">
     <h2 style="margin-bottom:1rem">❤️ المفضلة</h2>
     <div class="grid" id="favs-grid"></div>
-    <div id="favs-empty" class="empty" style="display:none"><div style="font-size:48px">🤍</div><p>لا توجد مفضلة</p></div>
+    <div id="favs-empty" class="empty" style="display:none"><div style="font-size:48px">🤍</div><p id="favs-empty-txt">لا توجد مفضلة</p></div>
   </div>
 </div>
 
@@ -353,7 +353,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
     <button class="pbtn" id="login-btn" onclick="showPage('login')">دخول</button>
   </div>
   <div class="cbox">
-    <div class="clbl">🌍 اللغة</div>
+    <div class="clbl" id="cfg-lng-lbl">🌍 اللغة</div>
     <div class="lrow">
       <button class="lbtn on" id="l-ar" onclick="setLang('ar')"><span style="font-size:20px">🇩🇿</span>العربية</button>
       <button class="lbtn" id="l-fr" onclick="setLang('fr')"><span style="font-size:20px">🇫🇷</span>Français</button>
@@ -362,7 +362,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
   </div>
   <div class="cbox">
     <div class="tgrow">
-      <div><div style="font-weight:700;font-size:14px">🔔 الإشعارات</div><div style="font-size:11px;color:#6e7781" id="notif-lbl">مُفعَّلة</div></div>
+      <div><div style="font-weight:700;font-size:14px" id="cfg-ntf-lbl">🔔 الإشعارات</div><div style="font-size:11px;color:#6e7781" id="notif-lbl">مُفعَّلة</div></div>
       <button class="tg on" id="notif-tg" onclick="toggleNotif()"><div class="tgd"></div></button>
     </div>
   </div>
@@ -393,12 +393,12 @@ input:focus,textarea:focus{border-color:#1a7f37}
     <div style="text-align:center;margin-bottom:1.5rem">
       <div style="font-size:56px">🏘️</div>
       <h2 style="color:#116329;margin:8px 0 4px;font-size:22px">عقاراتي</h2>
-      <p style="color:#6e7781;font-size:13px">سجّل للوصول للإعلانات</p>
+      <p style="color:#6e7781;font-size:13px" id="reg-title">سجّل للوصول للإعلانات</p>
     </div>
     <div id="reg-s1">
-      <label>الاسم الكامل</label>
+      <label id="reg-lbl-name">الاسم الكامل</label>
       <input type="text" id="reg-name" placeholder="مثال: محمد بن علي" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:right;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
-      <label>رقم الهاتف</label>
+      <label id="reg-lbl-ph">رقم الهاتف</label>
       <input type="tel" id="reg-ph" placeholder="0555 000 000" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:14px;background:#fff;color:#1f2328;text-align:center;letter-spacing:2px;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
       <button class="btn-p" onclick="regNext()" style="width:100%">التالي ←</button>
     </div>
@@ -406,7 +406,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
       <div style="background:#dcfce7;border-radius:12px;padding:10px;text-align:center;margin-bottom:14px;font-size:13px;color:#116329">رمز التحقق: <b>1234</b></div>
       <label>أدخل رمز التحقق</label>
       <input type="number" id="reg-otp" placeholder="0 0 0 0" maxlength="4" style="width:100%;border:1.5px solid #d0d7de;border-radius:10px;padding:11px 13px;font-size:24px;background:#fff;color:#1f2328;text-align:center;letter-spacing:8px;box-sizing:border-box;font-family:inherit;outline:none;margin-bottom:14px"/>
-      <button class="btn-p" onclick="regConfirm()" style="width:100%;margin-bottom:10px">تأكيد ✓</button>
+      <button class="btn-p" id="reg-confirm" onclick="regConfirm()" style="width:100%;margin-bottom:10px">تأكيد ✓</button>
       <button class="btn-s" onclick="document.getElementById('reg-s1').style.display='block';document.getElementById('reg-s2').style.display='none'" style="width:100%">← رجوع</button>
     </div>
     <p style="text-align:center;font-size:11px;color:#6e7781;margin-top:16px">بالتسجيل توافق على شروط الاستخدام</p>
@@ -430,7 +430,7 @@ input:focus,textarea:focus{border-color:#1a7f37}
     </div>
     <div id="login-s2" style="display:none">
       <div style="background:#dcfce7;border-radius:12px;padding:10px;text-align:center;margin-bottom:14px;font-size:13px;color:#1a7f37">رمز التجربة: <b>1234</b></div>
-      <label>رمز التحقق</label>
+      <label id="reg-lbl-code">رمز التحقق</label>
       <input type="number" id="login-otp" placeholder="0 0 0 0" maxlength="4" style="text-align:center;font-size:24px;letter-spacing:8px"/>
       <button class="btn-p" style="margin-bottom:10px" onclick="loginConfirm()">تأكيد</button>
       <button class="btn-s" onclick="document.getElementById('login-s1').style.display='block';document.getElementById('login-s2').style.display='none'">← رجوع</button>
@@ -485,25 +485,137 @@ let curProp=null;
 
 // LANG
 const LANGS={
-  ar:{browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",tag:"منصة العقارات الجزائرية الأولى"},
-  fr:{browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",tag:"La 1ère plateforme immobilière algérienne"},
-  en:{browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",tag:"Algeria's #1 Real Estate Platform"}
+  ar:{
+    browse:"تصفح",post:"أضف",favs:"المفضلة",cfg:"إعدادات",tag:"منصة العقارات الجزائرية الأولى",
+    addAd:"أضف إعلانك",step:"الخطوة",of:"من",
+    adType:"نوع الإعلان",rent:"إيجار",sale:"بيع",
+    propType:"نوع العقار",apartment:"شقة",villa:"فيلا",commercial:"محل",land:"أرض",office:"مكتب",studio:"ستوديو",
+    next:"التالي →",back:"← رجوع",
+    wilaya:"الولاية",commune:"البلدية / الحي",title:"عنوان الإعلان",
+    price:"السعر (دج)",area:"المساحة (م²)",rooms:"عدد الغرف",
+    desc:"وصف العقار",phone:"رقم الهاتف",neg:"قابل للتفاوض",
+    publish:"🚀 نشر",published:"تم النشر!",pubSub:"إعلانك محفوظ وسيظهر للجميع",
+    browseBt:"تصفح الإعلانات",selWil:"اختر الولاية",
+    noResults:"لا توجد نتائج",loading:"جاري التحميل...",
+    featured:"⭐ مميزة",listings:"🏘️ الإعلانات",
+    owner:"صاحب الإعلان",call:"اتصل الآن",send:"إرسال",sent:"✅ تم الإرسال!",
+    msgPh:"مرحباً، أنا مهتم...",verified:"موثق",negLabel:"قابل للتفاوض",
+    favEmpty:"لا توجد مفضلة",language:"اللغة",notifications:"الإشعارات",
+    notifOn:"مُفعَّلة",notifOff:"معطَّلة",about:"عن التطبيق",
+    regTitle:"سجّل للوصول للإعلانات",regName:"الاسم الكامل",
+    regNamePh:"مثال: محمد بن علي",regPhone:"رقم الهاتف",
+    regCode:"رمز التحقق",regConfirm:"تأكيد ✓",regAgree:"بالتسجيل توافق على شروط الاستخدام",
+    titlePh:"مثال: شقة 3 غرف في حيدرة",descPh:"صف حالة العقار والمميزات...",phonePh:"0555 123 456"
+  },
+  fr:{
+    browse:"Annonces",post:"Publier",favs:"Favoris",cfg:"Paramètres",tag:"La 1ère plateforme immobilière algérienne",
+    addAd:"Publier une annonce",step:"Étape",of:"sur",
+    adType:"Type d'annonce",rent:"Location",sale:"Vente",
+    propType:"Type de bien",apartment:"Appartement",villa:"Villa",commercial:"Local",land:"Terrain",office:"Bureau",studio:"Studio",
+    next:"Suivant →",back:"← Retour",
+    wilaya:"Wilaya",commune:"Commune / Quartier",title:"Titre de l'annonce",
+    price:"Prix (DA)",area:"Superficie (m²)",rooms:"Nbre de pièces",
+    desc:"Description",phone:"Téléphone",neg:"Négociable",
+    publish:"🚀 Publier",published:"Publié !",pubSub:"Votre annonce est visible par tous",
+    browseBt:"Voir les annonces",selWil:"Choisir la wilaya",
+    noResults:"Aucun résultat",loading:"Chargement...",
+    featured:"⭐ À la une",listings:"🏘️ Annonces",
+    owner:"Propriétaire",call:"Appeler",send:"Envoyer",sent:"✅ Envoyé !",
+    msgPh:"Bonjour, je suis intéressé...",verified:"Vérifié",negLabel:"Négociable",
+    favEmpty:"Aucun favori",language:"Langue",notifications:"Notifications",
+    notifOn:"Activées",notifOff:"Désactivées",about:"À propos",
+    regTitle:"Inscrivez-vous pour accéder",regName:"Nom complet",
+    regNamePh:"Ex: Mohamed Ben Ali",regPhone:"Téléphone",
+    regCode:"Code de vérification",regConfirm:"Confirmer ✓",regAgree:"En vous inscrivant vous acceptez nos CGU",
+    titlePh:"Ex: Appartement F3 à Hydra",descPh:"Décrivez le bien et ses équipements...",phonePh:"0555 123 456"
+  },
+  en:{
+    browse:"Browse",post:"Post",favs:"Favorites",cfg:"Settings",tag:"Algeria's #1 Real Estate Platform",
+    addAd:"Post Your Property",step:"Step",of:"of",
+    adType:"Ad Type",rent:"Rent",sale:"Sale",
+    propType:"Property Type",apartment:"Apartment",villa:"Villa",commercial:"Shop",land:"Land",office:"Office",studio:"Studio",
+    next:"Next →",back:"← Back",
+    wilaya:"Wilaya",commune:"District / Area",title:"Ad Title",
+    price:"Price (DZD)",area:"Area (m²)",rooms:"Rooms",
+    desc:"Description",phone:"Phone Number",neg:"Negotiable",
+    publish:"🚀 Publish",published:"Published!",pubSub:"Your ad is live for everyone",
+    browseBt:"Browse Properties",selWil:"Select Wilaya",
+    noResults:"No results found",loading:"Loading...",
+    featured:"⭐ Featured",listings:"🏘️ Listings",
+    owner:"Owner",call:"Call Now",send:"Send",sent:"✅ Sent!",
+    msgPh:"Hello, I'm interested...",verified:"Verified",negLabel:"Negotiable",
+    favEmpty:"No favorites yet",language:"Language",notifications:"Notifications",
+    notifOn:"Enabled",notifOff:"Disabled",about:"About",
+    regTitle:"Register to access listings",regName:"Full Name",
+    regNamePh:"E.g. Mohamed Ben Ali",regPhone:"Phone Number",
+    regCode:"Verification Code",regConfirm:"Confirm ✓",regAgree:"By registering you agree to our Terms",
+    titlePh:"E.g. 3-room apartment in Hydra",descPh:"Describe the property and features...",phonePh:"0555 123 456"
+  }
 };
 
 function setLang(l){
   curLang=l;
   ["ar","fr","en"].forEach(x=>{
-    document.getElementById("btn-"+x).classList.toggle("on",x===l);
-    document.getElementById("l-"+x).classList.toggle("on",x===l);
+    const b1=document.getElementById("btn-"+x);
+    const b2=document.getElementById("l-"+x);
+    if(b1)b1.classList.toggle("on",x===l);
+    if(b2)b2.classList.toggle("on",x===l);
   });
   const L=LANGS[l];
-  document.getElementById("nav-browse").textContent=L.browse;
-  document.getElementById("nav-post").textContent=L.post;
-  document.getElementById("nav-favs").textContent=L.favs;
-  document.getElementById("nav-cfg").textContent=L.cfg;
-  document.getElementById("app-tag").textContent=L.tag;
-  document.documentElement.dir=l==="ar"?"rtl":"ltr";
+  const rtl=l==="ar";
+  document.documentElement.dir=rtl?"rtl":"ltr";
   document.documentElement.lang=l;
+  // Nav
+  const nb=document.getElementById("nav-browse"); if(nb)nb.textContent=L.browse;
+  const np=document.getElementById("nav-post"); if(np)np.textContent=L.post;
+  const nf=document.getElementById("nav-favs"); if(nf)nf.textContent=L.favs;
+  const nc=document.getElementById("nav-cfg"); if(nc)nc.textContent=L.cfg;
+  const at=document.getElementById("app-tag"); if(at)at.textContent=L.tag;
+  // Post page labels
+  const ph2=document.getElementById("post-h2"); if(ph2)ph2.textContent=L.addAd;
+  const pat=document.getElementById("p-atype"); if(pat)pat.textContent=L.adType;
+  const prt=document.getElementById("pt-rent"); if(prt)prt.textContent="🔑 "+L.rent;
+  const psl=document.getElementById("pt-sale"); if(psl)psl.textContent="🏷️ "+L.sale;
+  const ppt=document.getElementById("p-ptype"); if(ppt)ppt.textContent=L.propType;
+  const pnx=document.getElementById("p-next1"); if(pnx)pnx.textContent=L.next;
+  // Cat buttons
+  const cats={apartment:L.apartment,villa:L.villa,commercial:L.commercial,land:L.land,office:L.office,studio:L.studio};
+  Object.entries(cats).forEach(([k,v])=>{const el=document.getElementById("pc-lbl-"+k);if(el)el.textContent=v;});
+  // Step 2 labels
+  ["p-lbl-wil","p-lbl-com","p-lbl-ttl","p-lbl-pr","p-lbl-ar","p-lbl-rm"].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=[L.wilaya,L.commune,L.title,L.price,L.area,L.rooms][i];
+  });
+  const pb2=document.getElementById("p-back2"); if(pb2)pb2.textContent=L.back;
+  const pn2=document.getElementById("p-next2"); if(pn2)pn2.textContent=L.next;
+  // Step 3 labels
+  ["p-lbl-dsc","p-lbl-ph","p-lbl-neg"].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=[L.desc,L.phone,L.neg][i];
+  });
+  const pb3=document.getElementById("p-back3"); if(pb3)pb3.textContent=L.back;
+  const pub=document.getElementById("pub-btn"); if(pub)pub.textContent=L.publish;
+  // Placeholders
+  const pttl=document.getElementById("p-ttl"); if(pttl)pttl.placeholder=L.titlePh;
+  const pdsc=document.getElementById("p-dsc"); if(pdsc)pdsc.placeholder=L.descPh;
+  const pph=document.getElementById("p-ph"); if(pph)pph.placeholder=L.phonePh;
+  const pwil=document.getElementById("p-wil"); if(pwil&&pwil.options[0])pwil.options[0].textContent=L.selWil;
+  // Browse
+  const lb=document.getElementById("lbl-featured"); if(lb)lb.textContent=L.featured;
+  const ll=document.getElementById("lbl-listings"); if(ll)ll.textContent=L.listings;
+  // Register page
+  const rts=document.getElementById("reg-title"); if(rts)rts.textContent=L.regTitle;
+  const rnl=document.getElementById("reg-lbl-name"); if(rnl)rnl.textContent=L.regName;
+  const rn=document.getElementById("reg-name"); if(rn)rn.placeholder=L.regNamePh;
+  const rpl=document.getElementById("reg-lbl-ph"); if(rpl)rpl.textContent=L.regPhone;
+  const rp=document.getElementById("reg-ph"); if(rp)rp.placeholder=L.phonePh;
+  const rc=document.getElementById("reg-lbl-code"); if(rc)rc.textContent=L.regCode;
+  const rcf=document.getElementById("reg-confirm"); if(rcf)rcf.textContent=L.regConfirm;
+  // Favs
+  const fe=document.getElementById("favs-empty-txt"); if(fe)fe.textContent=L.favEmpty;
+  // Cfg
+  const cl=document.getElementById("cfg-lng-lbl"); if(cl)cl.textContent=L.language;
+  const cn=document.getElementById("cfg-ntf-lbl"); if(cn)cn.textContent=L.notifications;
   renderProps();
 }
 
